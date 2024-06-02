@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <record id="s_res_partner_otp_view_tree" model="ir.ui.view">
+            <field name="name">s_res_partner_otp_view_tree</field>
+            <field name="model">s.res.partner.otp</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="phone_number" readonly="True"/>
+                    <field name="zalo_otp" readonly="True"/>
+                    <field name="status_otp" readonly="True"/>
+                    <field name="message_otp" readonly="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="s_res_partner_otp_view_search" model="ir.ui.view">
+            <field name="name">s_res_partner_otp_view_search</field>
+            <field name="model">s.res.partner.otp</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="phone_number"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="s_res_partner_otp_act_window_m2" model="ir.actions.act_window">
+            <field name="name">Menu Log ZNS OTP M2</field>
+            <field name="res_model">s.res.partner.otp</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type_otp', '=', 'm2')]</field>
+            <field name="search_view_id" ref="s_res_partner_otp_view_search"/>
+        </record>
+
+        <menuitem name="Menu Log ZNS OTP M2" id="menu_log_zns_otp_m2" parent="sale.menu_sale_report" groups="base.group_system"
+                  action="s_res_partner_otp_act_window_m2"/>
+
+        <record id="s_res_partner_otp_act_window_pos" model="ir.actions.act_window">
+            <field name="name">Menu Log ZNS OTP POS</field>
+            <field name="res_model">s.res.partner.otp</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type_otp', '=', 'pos')]</field>
+            <field name="search_view_id" ref="s_res_partner_otp_view_search"/>
+        </record>
+
+        <menuitem name="Menu Log ZNS OTP POS" id="menu_log_zns_otp_pos" parent="point_of_sale.menu_point_rep"
+                  action="s_res_partner_otp_act_window_pos" groups="base.group_system"/>
+    </data>
+</odoo>

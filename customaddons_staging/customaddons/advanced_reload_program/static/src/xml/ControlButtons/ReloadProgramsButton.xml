@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ReloadProgramsButton" owl="1">
+        <span class="control-button">
+            <i class="fa fa-star"></i>
+            <span> </span>
+            <span>Reload Programs</span>
+        </span>
+    </t>
+</templates>

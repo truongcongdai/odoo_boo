@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_stock_scrap_search_view" model="ir.ui.view">
+        <field name="name">stock.scrap.search</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/filter[@name='transfer']" position="after">
+                <filter string="Thương hiệu" name="thuong_hieu" context="{'group_by':'thuong_hieu'}"/>
+                <filter string="Nhóm sản phẩm" name="category_id" context="{'group_by':'category_id'}"/>
+                <filter string="Size" name="kich_thuoc" context="{'group_by':'kich_thuoc'}"/>
+                <filter string="Màu" name="mau_sac" context="{'group_by':'mau_sac'}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="s_stock_scrap_tree_view" model="ir.ui.view">
+        <field name="name">s.stock.scrap.tree.view</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="mau_sac"/>
+                <field name="kich_thuoc"/>
+                <field name="thuong_hieu"/>
+                <field name="category_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="advanced_helpdesk.OrderThreadViewTopbar" owl="1">
+            <div t-on-click="_onClickOrder" title="Add to Cart">
+                            <i class="fa fa-lg fa-shopping-cart"/>
+                        </div>
+    </t>
+</templates>

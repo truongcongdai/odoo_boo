@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_internal_transfer_line_tree_view" model="ir.ui.view">
+            <field name="name">##Bảng kê chi tiết phiếu điều chuyển</field>
+            <field name="model">s.internal.transfer.line</field>
+            <field name="arch" type="xml">
+                <tree string="##Bảng kê chi tiết phiếu điều chuyển">
+                    <field name="transfer_create_date" string="Ngày tạo phiếu"/>
+                    <field name="transfer_code" string="Mã phiếu"/>
+                    <field name="transfer_note" string="Ghi chú"/>
+                    <field name="transfer_location_out_id" string="Kho xuất"/>
+                    <field name="transfer_location_in_id" string="Kho nhập"/>
+                    <field name="product_barcode" string="Barcode"/>
+                    <field name="product_ma_cu" string="Mã cũ"/>
+                    <field name="product_default_code" string="SKU"/>
+                    <field name="ma_phieu_xuat"/>
+                    <field name="ma_phieu_nhap"/>
+                    <field name="product_ma_san_pham" string="Mã hàng"/>
+                    <field name="product_id" string="Tên hàng" required="1"/>
+                    <field name="picking_out_undone_count" string="Số lượng phiếu xuất chưa hoàn thành"/>
+                    <field name="picking_in_undone_count" string="Số lượng phiếu nhập chưa hoàn thành"/>
+                    <field name="qty_expect" string="Số lượng đề xuất" required="1"/>
+                    <field name="qty_out_real" string="Số lượng thực xuất" sum="Tổng số lượng thực xuất"/>
+                    <field name="chenh_lech_dieu_chuyen" string="Chênh lệch điều chuyển" sum="Tổng chênh lệch điều chuyển"/>
+                    <field name="qty_in_real" string="Số lượng thực nhận" sum="Tổng số lượng thực nhận"/>
+                    <field name="chech_lech_xuat" string="Chênh lệch xuất" sum="Tổng chênh lệch xuất"/>
+                    <field name="ton_kho_xuat" string="Tồn kho xuất" />
+                    <field name="ton_kho_nhap" string="Tồn kho nhập" />
+                    <field name="status" string="Trạng thái"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="s_internal_transfer_line_action" model="ir.actions.act_window">
+            <field name="name">##Bảng kê chi tiết phiếu điều chuyển</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.internal.transfer.line</field>
+            <field name="context">{'edit':0, 'delete': 0, 'create': 0}</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="s_internal_transfer_line_tree_view"/>
+        </record>
+
+        <record id="s_internal_transfer_search_view" model="ir.ui.view">
+            <field name="name">Tìm kiếm bảng kê chi tiết phiếu điều chuyển</field>
+            <field name="model">s.internal.transfer.line</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="transfer_code"/>
+                    <field name="ma_phieu_nhap"/>
+                    <field name="ma_phieu_xuat"/>
+                    <field name="product_default_code"/>
+                    <field name="transfer_note"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+        <menuitem id="menu_valuation" name="## Bảng kê chi tiết phiếu điều chuyển" parent="stock.menu_warehouse_report" sequence="210" action="s_internal_transfer_line_action"/>
+
+    </data>
+</odoo>

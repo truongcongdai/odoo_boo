@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="s_report_saledetails_inherit" inherit_id="point_of_sale.report_saledetails" name="Daily Report">
+            <xpath expr="//h3[3]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//table[hasclass('table-sm')][2]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//h3[2]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//table[hasclass('table-sm')][3]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('page')]/strong" position="replace">
+
+            </xpath>
+            <xpath expr="//h3[1]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//table[hasclass('table-sm')][1]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('text-center')]" position="after">
+                <h3>Điểm bán hàng</h3>
+                <p><t t-out="pos"/></p>
+                <table  class="table table-sm" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Tổng số bill phát sinh</th>
+                            <th>Doanh thu trả hàng</th>
+                            <th>Tổng doanh thu</th>
+                            <th>Doanh thu thuần</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><t t-out="s_bill_counter"/> Đơn</td>
+                            <td><t t-out="s_return_order_revenue"/></td>
+                            <td><t t-out="s_order_revenue"/></td>
+                            <td><t t-out="s_net_revenue"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Phương thức thanh toán</h3>
+                <table  class="table table-sm" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Phương thức thanh toán</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach='s_payment_method_counter' t-as='line'>
+                            <tr>
+                                <td><t t-out="line['payment_method']"/></td>
+                                <td><t t-out="line['amount']"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="boo_sale_report_tree_view" model="ir.ui.view">
+            <field name="name">Dữ liệu bán hàng</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Dữ liệu bán hàng">
+                    <field name="order_id" string="Mã đơn hàng"/>
+                    <field name="shipping_code" string="Mã vận đơn"/>
+                    <field name="order_partner_id" string="Khách hàng"/>
+                    <field name="name" string="Mô tả"/>
+                    <field name="thuong_hieu" string="Thương hiệu"/>
+                    <field name="categ_id" string="Nhóm sản phẩm"/>
+                    <field name="is_product_green" string="Product green"/>
+                    <field name="salesman_id" string="Nhân viên kinh doanh"/>
+                    <field name="product_uom_qty" string="SL"/>
+                    <field name="qty_delivered" string="Số lượng đã giao"/>
+                    <field name="boo_total_discount" string="Chiết khấu trực tiếp trên sản phẩm"/>
+                    <field name="boo_total_discount_percentage" string="Chiết khấu đơn hàng phân bổ ( % )"/>
+                    <field name="product_uom" string="Đơn vị đo"/>
+                    <field name="price_total" string="Thành tiền"/>
+                </tree>
+            </field>
+        </record>
+        <record id="boo_sale_report_action" model="ir.actions.act_window">
+            <field name="name">Dữ liệu bán hàng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('m2_is_global_discount','=',False)]</field>
+
+        </record>
+
+        <menuitem name="Dữ liệu bán hàng" id="boo_sale_report_menu" parent="sale.sale_menu_root" action="boo_sale_report_action" sequence="6"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_location_inventory_report_file_view_form" model="ir.ui.view">
+            <field name="name">s_location_inventory_report_file_view_form</field>
+            <field name="model">s.location.inventory.report.file</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="file_name" invisible="1"/>
+                            <field name="file" filename="file_name" readonly="1" string="Result"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Cancel" type="object" class="oe_highlight" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="s_location_inventory_report_view_form" model="ir.ui.view">
+            <field name="name">s_location_inventory_report_view_form</field>
+            <field name="model">s.location.inventory.report</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="location_default_ids" invisible="1"/>
+                            <field name="location_ids" widget="many2many_tags" required="1"
+                                   domain="[('usage', '=', 'internal'),('scrap_location', '=', False), ('id', 'in', location_default_ids), ('warehouse_id_store', '!=', False), ('s_is_transit_location', '=', False)]"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="confirm_export" type="object" string="Xác nhận"
+                                class="oe_highlight"/>
+                        <button string="Huỷ" type="object" class="oe_highlight" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="s_location_inventory_report_action" model="ir.actions.act_window">
+            <field name="name">###Báo cáo kho theo nhiều địa điểm</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.location.inventory.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="advanced_inventory.s_location_inventory_report_view_form"/>
+        </record>
+
+        <menuitem id="s_location_inventory_report_menu" name="### Báo cáo kho theo nhiều địa điểm"
+                  parent="stock.menu_warehouse_report" action="s_location_inventory_report_action"
+                  sequence="300"/>
+
+    </data>
+</odoo>

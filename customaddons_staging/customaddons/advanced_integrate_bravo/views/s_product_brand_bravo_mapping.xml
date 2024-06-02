@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_product_brand_mapping_tree_views" model="ir.ui.view">
+            <field name="name">s.product.brand.mapping.tree</field>
+            <field name="model">s.product.brand.bravo.mapping</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="s_first_character" />
+                    <field name="s_bravo_lines" />
+                    <field name="s_bravo_brand" />
+                    <field name="s_odoo_brand" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_brand_mapping_action" model="ir.actions.act_window">
+            <field name="name">Mappings thương hiệu</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.product.brand.bravo.mapping</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem id="product_brand_mapping_menu" name="Mappings thương hiệu"
+                  parent="stock.menu_warehouse_report"
+                  action="product_brand_mapping_action" sequence="10" groups="base.group_user"/>
+    </data>
+</odoo>

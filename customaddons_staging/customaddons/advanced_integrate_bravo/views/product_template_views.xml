@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="bravo_product_template_form_inherit" model="ir.ui.view">
+            <field name="name">bravo.product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//field[@name='ma_san_pham']" position="after">-->
+<!--                    <field name="parent_code"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='season']" position="after">-->
+<!--                    <field name="chat_lieu"/>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='wk_default_code']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_product_color_tree_view" model="ir.ui.view">
+        <field name="name">s.product.color.tree</field>
+        <field name="model">s.product.color</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+    <record id="s_product_color_act_window" model="ir.actions.act_window">
+        <field name="name">Màu sắc</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">s.product.color</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem name="#Màu sắc" id="s_product_color_menu" parent="advanced_inventory.s_product_information_menu" action="s_product_color_act_window" sequence="8" active="False"/>
+</odoo>

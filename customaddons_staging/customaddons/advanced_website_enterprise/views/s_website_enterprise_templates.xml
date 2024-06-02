@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_user_navbar" inherit_id="website_enterprise.user_navbar">
+        <xpath expr="//a[hasclass('o_menu_toggle')]" position="replace">
+            <a href="web" class="fa fa-th o_menu_toggle" accesskey="h"/>
+        </xpath>
+    </template>
+</odoo>

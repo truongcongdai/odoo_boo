@@ -1,0 +1,59 @@
+.payment-screen .employee-button {
+    margin-bottom: 10px;
+}
+
+.salePersonPopupFooter {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.pos .popup.popup-selection .selection-sale-person {
+    width: auto;
+    background: rgb(230, 230, 230);
+    cursor: pointer;
+    text-align: left;
+    padding: 0px 16px;
+}
+
+.pos .popup.popup-selection .selection-sale-person:nth-child(odd) {
+    background: rgb(247, 247, 247);
+}
+
+.select_sale_person {
+    flex-flow: wrap;
+    display: flex;
+    /* width: 80%; */
+    flex-direction: column;
+}
+
+.is-bag {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.paymentlines-empty .message {
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+}
+.js_customer_name{
+    padding-left: 50px;
+}
+.pos .paymentline {
+    border-top-width: thin;
+}
+.payment_note{
+    margin-bottom: 16px;
+    border: solid 1px rgb(202, 202, 202);
+}
+.payment_note input{
+    width: 100%;
+    box-shadow: none;
+}
+.s_payment{
+    padding-bottom: 10px;
+}
+.s_payment:last-child{
+    padding-bottom: 0;
+}

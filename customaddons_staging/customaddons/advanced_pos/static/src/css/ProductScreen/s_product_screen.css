@@ -1,0 +1,132 @@
+.pos .products-widget .products-widget-control {
+    display: none;
+}
+
+.s_product_list {
+    z-index: 999;
+    margin-top: 48px;
+    width: 35%;
+    padding-left: 520px;
+}
+
+.boo-product-list-container {
+    display: none;
+    padding-left: 10px;
+    padding-top: 15px;
+}
+
+.pos .boo-product-list-container {
+    overflow: hidden;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.s_search_product_item {
+    background: rgba(140, 143, 183, 0.2);
+    height: auto;
+    font-size: medium;
+    border: solid 1px rgb(234, 233, 233);
+    border-top: none;
+    /*padding-top: 15px !important;*/
+    /*padding-left: 15px !important;*/
+    border-bottom-width: 1px;
+}
+.s_search_product_item:hover{
+    background-color: white;
+}
+
+.s_search_product_item_content {
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+.s_search_product_item_content_name {
+    font-size: larger;
+}
+
+.s_search_product_item_content_price {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.product-list-empty {
+    padding-top: 10px;
+}
+
+.pos .search-bar-portal .modal-dialog {
+    background-color: #e2e2e2;
+}
+
+.pos .pos-rightheader {
+    overflow: unset;
+    overflow-x: unset;
+}
+
+.search-bar-portal {
+    position: relative;
+}
+
+.search-bar-portal .modal-dialog {
+    position: absolute;
+    top: 48px;
+    height: auto;
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.s_search_product_item_dialog {
+    padding: 0px;
+    max-width: 500px;
+    margin: -1px 15px 0px 15px;
+}
+
+.pos .leftpane {
+    max-width: none;
+}
+
+.pos .order {
+    max-width: none;
+}
+
+.pos .rightpane {
+    flex-basis: 5%;
+    max-width: 500px;
+    min-width: 500px;
+}
+
+.pos .rightpane .pads {
+    border-top: solid 3px rgb(110, 200, 155);
+}
+
+.pos .rightpane .pads .subpads {
+    display: flex;
+    flex-direction: row;
+}
+
+.clientlist-screen {
+    height: inherit;
+}
+.pos .actionpad {
+    width: 45%;
+    flex-grow: unset;
+}
+
+.pos .numpad {
+    width: 53%;
+    margin-right: 16px;
+}
+
+.pos .numpad button {
+    height: 81px;
+    width: 25%;
+}
+
+.s_hide-reward-button {
+    display: none !important;
+}
+.section-product-info-title .column.flex-start.s_product_information{
+    text-align: initial;
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_view_location_form" model="ir.ui.view">
+        <field name="name">s.stock.location.view.form.inherit</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="advanced_inventory.stock_location_transit_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='s_code']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='s_is_transit_location']" position="after">
+                <field name="s_is_inventory_adjustment_location" />
+                <field name="is_inventory_unsync" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

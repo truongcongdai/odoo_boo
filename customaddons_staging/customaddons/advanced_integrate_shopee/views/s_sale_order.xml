@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="s_sale_order_shopee_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.shopee.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header/button[1]" position="after">
+                <button name="btn_infor_customer_shopee"
+                        type="object" string="Cập nhật thông tin khách hàng" class="btn-primary"
+                        attrs="{'invisible':[ '|', '|', ('sale_order_status', 'in', ['hoan_thanh','huy']), ('is_magento_order', '=',True) , ('s_shopee_is_order', '=', False)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='is_done_delivery']" position="before">
+                <field name="s_shopee_is_order" attrs="{'invisible':[('s_shopee_is_order', '=',False)]}"/>
+                <field name="s_shopee_id_order" attrs="{'invisible':[('s_shopee_is_order', '=',False)]}"/>
+                <field name="s_shopee_return_sn" attrs="{'invisible':[('s_shopee_return_sn', '=',False)]}"/>
+                <field name="s_shopee_status_return" attrs="{'invisible':['|',('s_shopee_return_sn', '=',False),('s_shopee_status_return', '=',False)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='is_magento_order'][2]" position="attributes">
+                <attribute name="attrs">{'invisible': [('s_shopee_is_order', '=', True)]}
+                </attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_view_picking_form" model="ir.ui.view">
+        <field name="name">s.view.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_label_layout']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_open_shipping_label" type="object" string="Shipping label"
+                        attrs="{'invisible': [('shipping_label', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="mappings" string="Mappings">
+                    <field name="channel_mapping_ids" readonly="1"/>
+                </page>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                <h3 attrs="{'invisible': [('shipping_label', '=', False)]}">
+                    <label for="shipping_label" />
+                    <field name="shipping_label" />
+                </h3>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="is_boo_do_return" readonly="1"/>
+                <field name="shipment_status" readonly="1"/>
+                <field name="is_return_magento" invisible="1"/>
+            </xpath>
+<!--            <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">-->
+<!--                <attribute name="attrs">{'invisible': [('is_return_magento', '=', True)]}</attribute>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_s_logistic_report_pivot" model="ir.ui.view">
+        <field name="name">s.logistic.report.pivot</field>
+        <field name="model">s.logistic.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Logistic Analysis" sample="1">
+                <field name="s_state" type="row"/>
+                <field name="s_code" type="row"/>
+                <field name="s_transfer_quantity" type="measure"/>
+                <field name="s_delivery_time" type="measure" widget="float_time"/>
+                <field name="s_total_time" type="measure" widget="float_time"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_s_logistic_report_list_views" model="ir.ui.view">
+        <field name="name">s.logistic.report.list.views</field>
+        <field name="model">s.logistic.report</field>
+        <field name="arch" type="xml">
+            <tree string="Logistic Analysis" sample="1">
+                <field name="s_state"/>
+                <field name="s_code"/>
+                <field name="s_internal_transfer_id" invisible="1"/>
+                <field name="s_transfer_quantity" />
+                <field name="s_delivery_time"/>
+                <field name="s_total_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_s_logistic_report_search" model="ir.ui.view">
+        <field name="name">s.logistic.report.search</field>
+        <field name="model">s.logistic.report</field>
+        <field name="arch" type="xml">
+            <search string="Logistic Analysis">
+                <group expand="1" string="Group By">
+                    <filter string="Trạng thái" name="s_state" context="{'group_by':'s_state'}"/>
+                    <filter name="s_code" context="{'group_by':'s_code'}"/>
+                    <filter name="s_internal_transfer_id" context="{'group_by':'s_internal_transfer_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_s_logistic" model="ir.actions.act_window">
+        <field name="name">Logistics Analysis</field>
+        <field name="res_model">s.logistic.report</field>
+        <field name="context">{'group_by_no_leaf':1,'group_by':[], }</field>
+        <field name="view_mode">pivot</field>
+        <field name="search_view_id" ref="view_s_logistic_report_search"/>
+    </record>
+
+    <menuitem name="Logistics"
+			id="advanced_logistic_report_menu_root"
+			groups="base.group_user"
+			action="action_report_s_logistic"
+			sequence="150"/>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="RemoveMultiFreeProduct" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup popup-selection">
+                    <header class="drag-handle">
+                        <p>Sản phẩm có gắn với sản phẩm miễn phí</p>
+                    </header>
+                    <t>
+                        <p class="tip_content">Sản phẩm miễn phí sẽ bị xóa khỏi đơn hàng</p>
+                        <footer class="footer salePersonPopupFooter">
+                            <div class="button confirm" t-on-click="confirmMultiFreeProductRewardLines">
+                                Xác nhận
+                            </div>
+                            <div class="button cancel" t-on-click="cancelMultiFreeProductRewardLines">
+                                Hủy
+                            </div>
+                        </footer>
+                    </t>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+</templates>

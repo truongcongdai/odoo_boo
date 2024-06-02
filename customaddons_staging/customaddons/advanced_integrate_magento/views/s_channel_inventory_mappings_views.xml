@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_channel_inventory_mappings_search" model="ir.ui.view">
+        <field name="name">s.channel.inventory.mappings.search</field>
+        <field name="model">s.channel.inventory.mappings</field>
+        <field name="arch" type="xml">
+            <search string="Channel Inventory Mappings">
+                <field name ="partner_id"
+                       filter_domain="[('partner_id.name', '=ilike', self)]" />
+
+                <group expand="0" string="Group By...">
+                    <filter
+                        string ="Instance"
+                        name   ="filter_by_partner_id"
+                        context="{'group_by':'partner_id'}"
+                    />
+                    <filter
+                        string ="Need Update"
+                        name   ="need_sync"
+                        domain ="[]"
+                        context="{'group_by':'need_sync'}"
+                    />
+                </group>
+                <searchpanel>
+                    <field name="ecom_store" string="Channels" enable_counters="1"/>
+                    <field name="partner_id" string="Instances" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="s_channel_inventory_mappings_form" model="ir.ui.view">
+        <field name="name">s.channel.inventory.mappings.form</field>
+        <field name="model">s.channel.inventory.mappings</field>
+        <field name="arch" type="xml">
+            <form edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="s_channel_inventory_mappings_tree" model="ir.ui.view">
+        <field name="name">s.channel.inventory.mappings.tree</field>
+        <field name="model">s.channel.inventory.mappings</field>
+        <field name="arch" type="xml">
+            <tree string="Warehouse">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="partner_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="s_channel_inventory_mappings_action" model="ir.actions.act_window">
+        <field name="name">Channel Inventory Mappings</field>
+        <field name="res_model">s.channel.inventory.mappings</field>
+        <field name="view_mode">tree,form,search</field>
+    </record>
+
+    <menuitem id="s_channel_inventory_mappings_menu" name="Inventory" parent="odoo_multi_channel_sale.menu_id_channel_mappings" action="s_channel_inventory_mappings_action" sequence="13" />
+</odoo>

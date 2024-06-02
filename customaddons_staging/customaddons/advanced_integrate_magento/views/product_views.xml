@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+        <record id="s_product_template_search_view" model="ir.ui.view">
+            <field name="name">s.product.template.search.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='favorites']" position="after">
+                    <filter name="sync_push_magento" string="Sync to Magento"
+                            domain="[('sync_push_magento', '=', True)]" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+    <record id="s_product_template_tree_view" model="ir.ui.view">
+        <field name="name">s.product.template.tree.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="sync_push_magento" widget="boolean_toggle" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="s_product_template_kanban_view" model="ir.ui.view">
+        <field name="name">s.product.template.kanban.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='activity_state']" position="after">
+                <field name="sync_push_magento" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="s_product_template_form_view" model="ir.ui.view">
+        <field name="name">s.product.template.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]//h1" position="after">
+                <h3>
+                    <label for="m2_url" class="oe_edit_only" attrs="{'invisible': [('m2_url', '=', False)]}" />
+                    <field name="m2_url" readonly="1" attrs="{'invisible': [('m2_url', '=', False)]}" />
+                </h3>
+
+            </xpath>
+            <xpath expr="//div[@name='options']" position="inside">
+                <span class="d-inline-block">
+                    <field name="sync_push_magento" />
+                    <label for="sync_push_magento" />
+                    <field name="is_gift_card"/>
+                    <label for="is_gift_card" />
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

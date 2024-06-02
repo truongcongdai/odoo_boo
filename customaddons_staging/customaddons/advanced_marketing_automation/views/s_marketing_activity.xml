@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_marketing_activity_view_form" model="ir.ui.view">
+        <field name="name">s.marketing.activity.view.form</field>
+        <field name="model">marketing.activity</field>
+        <field name="inherit_id" ref="marketing_automation.marketing_activity_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='activity_type']" position="after">
+                  <field name="s_is_zalo_activity" attrs="{'invisible': [('activity_type', '!=', 'sms')]}" widget="boolean_toggle"/>
+            </xpath>
+            <xpath expr="//label[@for='mass_mailing_id']" position="after">
+                <div class="o_td_label">
+                    <label for="s_mass_mailing_zalo_id" string="SMS Template"
+                           attrs="{'invisible': [('s_is_zalo_activity', '=', False)]}"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='mass_mailing_id']" position="after">
+                    <field name="s_mass_mailing_zalo_id" context="{
+                                        'default_state': 'done',
+                                        'default_mailing_model_id': model_id,
+                                        'default_use_in_marketing_automation': True,
+                                        'default_campaign_id': utm_campaign_id,
+                                        'default_mailing_type': mass_mailing_id_mailing_type,
+                                        'form_view_ref': 'marketing_automation.mailing_mailing_view_form_marketing_activity'}"
+                           domain="[('s_is_zalo_sms_marketing','=',True), ('use_in_marketing_automation', '=', True)]"
+                           attrs="{'invisible': [('s_is_zalo_activity', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+      <record id="marketing_automation_sms.marketing_activity_view_form" model="ir.ui.view">
+        <field name="name">marketing.activity.view.form</field>
+        <field name="model">marketing.activity</field>
+        <field name="inherit_id" ref="marketing_automation.marketing_activity_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='mass_mailing_id']" position="after">
+                <label for="mass_mailing_id" string="SMS Template" attrs="{'invisible': ['|',('activity_type', '!=', 'sms'),('s_is_zalo_activity', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='mass_mailing_id']" position="attributes">
+                <attribute name="attrs">{
+                        'required': [('activity_type', 'in', ['email', 'sms'])],
+                        'invisible': ['|',('activity_type', 'not in', ['email', 'sms']),('s_is_zalo_activity', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

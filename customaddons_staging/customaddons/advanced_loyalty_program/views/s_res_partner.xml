@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="advanced_integrate_magento.s_m2_view_partner_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='fail_sync_cusomter_rank']" position="before">
+                <field name="total_period_revenue" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_select_update_customer_rank" model="ir.actions.server">
+        <field name="name">Cập nhật hạng khách hàng</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            for rec in records:
+                rec._compute_customer_rank()
+        </field>
+    </record>
+</odoo>

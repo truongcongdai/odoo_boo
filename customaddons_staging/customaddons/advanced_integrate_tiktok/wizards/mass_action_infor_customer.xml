@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="infor_customer_type_form_view" model="ir.ui.view">
+        <field name="name">infor.customer.type.form.view</field>
+        <field name="model">mass.action.infor.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="s_infor_customer" string="Chọn khách hàng"/>
+                </group>
+                <footer>
+                    <button name="s_submit_customer_sale_order"
+                            string="Submit"
+                            type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

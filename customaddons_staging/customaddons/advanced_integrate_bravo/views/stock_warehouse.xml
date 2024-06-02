@@ -1,0 +1,13 @@
+<data>
+    <record id="bravo_stock_warehouse_form_inherit" model="ir.ui.view">
+        <field name="name">stock.warehouse.form.inherit</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='status_stock_warehouse']" position="after">
+                <field name="is_test_location" widget="boolean_toggle"/>
+                <field name="is_location_online" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+</data>

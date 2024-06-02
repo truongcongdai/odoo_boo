@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sell_wholesale_action" model="ir.actions.act_window">
+            <field name="name">Đơn hàng bán buôn</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_sell_wholesale','=',True)]</field>
+            <field name="context">{'default_is_sell_wholesale': True}</field>
+        </record>
+
+        <menuitem name="Đơn hàng bán buôn" id="sell_wholesale_menu" parent="sale.sale_order_menu" action="sell_wholesale_action" sequence="999"/>
+
+    </data>
+</odoo>

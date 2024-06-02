@@ -1,0 +1,76 @@
+.pos .clientlist-screen .client-details input, .pos .clientlist-screen .client-details select{
+    width: 100%;
+    height: 35px;
+}
+.pos .clientlist-screen .client-detail > .label {
+    width: auto;
+}
+.pos .clientlist-screen .client-details-box {
+    display: flex;
+}
+.pos .clientlist-screen .client-details-left {
+    margin-right: 10px;
+}
+@media screen and (max-width: 768px){
+    .pos .clientlist-screen .client-details-left {
+        width: auto;
+        float: none;
+        flex-grow: 1;
+        margin-right: 0;
+    }
+    .pos .clientlist-screen .client-details input.client-name {
+        margin: 18px 0;
+    }
+}
+.client-details-right .client-detail:nth-child(1) {
+    display: none;
+}
+.client-details-right .client-detail:nth-child(4) {
+    display: none;
+}
+.client-details-right .client-detail:nth-child(5) {
+    display: none;
+}
+.client-details-left .client-detail:nth-child(3) {
+    display: none;
+}
+.client-details-left .client-detail:nth-child(2) > span.label, .client-details-left .client-detail:nth-child(2) > input.client-address-city{
+    display: none;
+}
+.client-details-left .client-detail:nth-child(5) > span.label, .client-details-left .client-detail:nth-child(5) > select.client-address-country {
+    display: none;
+}
+.client-details-left .client-detail:nth-child(6) {
+    display: none;
+}
+.client-details-left .client-detail:nth-child(4) {
+    display: none;
+}
+
+/*!* Format input date dd/mm/yyyy *!*/
+/*.client-detail-detail input[type="date"]::-webkit-datetime-edit, input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button {*/
+/*    color: #fff;*/
+/*    position: relative;*/
+/*}*/
+/*.client-detail-detail input[type="date"]::-webkit-datetime-edit-year-field{*/
+/*    position: absolute !important;*/
+/*    border-left:1.5px solid #8c8c8c;*/
+/*    color:#000;*/
+/*    left: 63px;*/
+/*    width: 38px !important;*/
+/*    text-align: center;*/
+/*}*/
+/*.client-detail-detail input[type="date"]::-webkit-datetime-edit-month-field{*/
+/*    position: absolute !important;*/
+/*    border-left:1.5px solid #8c8c8c;*/
+/*    color:#000;*/
+/*    left: 32px;*/
+/*    width: 28px !important;*/
+/*    text-align: center;*/
+/*}*/
+/*.client-detail-detail input[type="date"]::-webkit-datetime-edit-day-field{*/
+/*    position: absolute !important;*/
+/*    color:#000;*/
+/*    width: 25px !important;*/
+/*    text-align: center;*/
+/*}*/

@@ -1,0 +1,147 @@
+<odoo>
+    <data>
+        <template id="template_register_member_zalo">
+            <t t-call="web.layout">
+                <meta name="viewport"
+                      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+                <link rel="stylesheet" type="text/css"
+                      href="/advanced_integrate_zalo/static/src/css/s_template_register_member.css"/>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script type="text/javascript"
+                        src="/advanced_integrate_zalo/static/src/js/s_district_filter.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+                <t t-set="body_classname" t-value="'body_template_zalo'"/>
+                <div class="container template_zalo">
+                    <t t-if="edit_customer_zalo">
+                        <div style="text-align:center" id="thank_you_message">
+                            <h1>Đăng ký thành công. Cảm ơn bạn!</h1>
+                        </div>
+                    </t>
+                    <t t-else="not edit_customer_zalo">
+                        <h1 class="form-title">Đăng ký thành viên</h1>
+                        <!--                        <t t-if="zalo_call_error">-->
+                        <!--                            <t t-if="zalo_error_message">-->
+                        <!--                                <div id="zalo-error-message" class="zalo-error-message">-->
+                        <!--                                    <t t-esc="zalo_error_message"/>-->
+                        <!--                                </div>-->
+                        <!--                            </t>-->
+                        <!--                        </t>-->
+                        <!--                        <t t-else="not zalo_call_error">-->
+                        <form action="/zalo/register_member_submit" method="post">
+                            <div class="main-user-info">
+                                <input type="hidden" id="s_zalo_sender_id" class="s_zalo_sender_id"
+                                       name="s_zalo_sender_id"
+                                       t-att-value="id"/>
+                                <div class="user-input-box">
+                                    <label for="ho_ten">Họ tên</label>
+                                    <input type="text"
+                                           id="ho_ten"
+                                           name="ho_ten"
+                                           placeholder="Nhập họ tên"
+                                           required="required"/>
+                                </div>
+                                <div class="user-input-box">
+                                    <label for="dob">Ngày sinh</label>
+                                    <input type="text"
+                                           id="dob"
+                                           name="dob"
+                                           placeholder="DD/MM/YYYY"
+                                           required="required"/>
+                                </div>
+                                <div class="user-input-box">
+                                    <label for="email">Email</label>
+                                    <input type="email"
+                                           id="email"
+                                           name="email"
+                                           placeholder="Nhập Email"
+                                           required="required"/>
+                                </div>
+                                <div class="user-input-box">
+                                    <label for="so_dien_thoai">Số điện thoại</label>
+                                    <input type="text"
+                                           id="so_dien_thoai"
+                                           name="so_dien_thoai"
+                                           placeholder="Nhập số điện thoại"
+                                           required="required"/>
+                                </div>
+                                <div class="user-input-box user-select_box">
+                                    <div class="user-select-box">
+                                        <label for="city_id">Tỉnh/thành phố</label>
+                                        <select id="city_id" t-attf-name="city_id" required="required">
+                                            <option value="">Chọn tỉnh/thành phố</option>
+                                            <t t-foreach="request.env['res.country.address'].search([('state_id', '!=', False),('parent_id', '=', False)])"
+                                               t-as="city">
+                                                <option t-att-value="city.id" t-att-data-name="city.name"
+                                                        t-att-data-code="city.code">
+                                                    <t t-esc="city.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="user-select-box">
+                                        <label for="country_district_id">Quận/huyện</label>
+                                        <select id="country_district_id" t-attf-name="country_district_id"
+                                                required="required">
+                                            <option value="" isabled="disabled">Chọn quận/huyện</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div style="margin-top:18px; width:95%" class="user-input-box">
+                                    <input class="confirm_info"
+                                           style="width:5%; border-radius: 3px; margin-right:12px"
+                                           type="checkbox" id="confirm_info" name="confirm_info"/>
+                                    <label style="width:90%; align-items:center; display:flex; margin:0;font-size: 16px"
+                                           for="confirm_info">Đồng ý chia sẻ thông tin
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-submit-btn">
+                                <input type="submit" value="Đăng ký"/>
+                            </div>
+                        </form>
+                        <!--                        </t>-->
+                    </t>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                    var dobInput = document.getElementById('dob');
+
+                    dobInput.addEventListener('input', function() {
+                    var value = dobInput.value;
+                    if (value.length == 2 || value.length == 5) {
+                    dobInput.value = value + '/';
+                    }
+                    });
+
+                    dobInput.addEventListener('blur', function() {
+                    var dateEntered = dobInput.value;
+                    var momentDate = moment(dateEntered, 'DD/MM/YYYY');
+
+                    if (momentDate.isValid()) {
+                    dobInput.value = momentDate.format('DD/MM/YYYY');
+                    } else {
+                    alert('Ngày nhập không hợp lệ. Vui lòng nhập lại theo định dạng DDMMYYYY.');
+                    dobInput.value = '';
+                    }
+                    });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function() {
+                    var zaloCallError = "<t t-raw='zalo_call_error'/>";
+                    var zaloErrorMessage = "<t t-raw='zalo_error_message'/>";
+                    if (zaloCallError) {
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: zaloErrorMessage,
+                    })
+                    }
+                    });
+                </script>
+            </t>
+        </template>
+    </data>
+</odoo>

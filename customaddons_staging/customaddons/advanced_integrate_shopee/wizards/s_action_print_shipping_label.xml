@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_action_print_shipping_label" model="ir.ui.view">
+        <field name="name">s.action.print.shipping.label</field>
+        <field name="model">shipping.label.report.shopee</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0">
+                <group>
+                    <field name="file_name" invisible="1"/>
+                    <field name="binary_data" string="File" widget="binary" filename="file_name" readonly="1"/>
+                    <field name="failed_print_label">
+                        <tree editable="bottom">
+                            <field name="name" readonly="1"/>
+                            <field name="message" readonly="1"/>
+                         </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="s_product_template_wizard_action" model="ir.actions.act_window">
+        <field name="name">Update warranty</field>
+        <field name="res_model">shipping.label.report.shopee</field>
+        <field name="view_mode">form,tree</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_shipping_label_report_shopee"/>
+    </record>
+
+</odoo>

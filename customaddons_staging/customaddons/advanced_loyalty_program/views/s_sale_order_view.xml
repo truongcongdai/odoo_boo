@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_sale_order_loyalty_program_inherit_page" model="ir.ui.view">
+        <field name="name">sale.order.form.loyalty.inherit.page</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='other_information']/group[1]/group[@name='sale_info']" position="after">
+                <group name="sale_point_order" string="Loyalty Program">
+                    <field name="s_sale_point_order" string="Loyalty Points" readonly="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', '|', '|',('is_invisible_ecommerce','=',True),('state', 'not in', ['draft', 'sent','sale']),
+                    ('id', '=', False), ('sale_order_status', 'in', ['hoan_thanh', 'hoan_thanh_1_phan'])]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

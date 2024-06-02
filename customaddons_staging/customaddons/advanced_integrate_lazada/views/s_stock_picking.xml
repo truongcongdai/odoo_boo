@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+      <record id="s_stock_picking_lazada_form_view" model="ir.ui.view">
+        <field name="name">s.stock.picking.lazada.form.view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <field name="package_lazada_id" invisible="1"/>
+                <field name="marketplace_lazada_order_status" invisible="1"/>
+                <field name="lazada_order_id" attrs="{'invisible': [('lazada_order_id', '=', False)]}"/>
+                <field name="reverse_order_id" attrs="{'invisible': [('reverse_order_id', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="btn_open_shipping_label_lazada"
+                        type="object" string="Shipping Label"
+                        attrs="{'invisible': ['|',('package_lazada_id', '=', False),('marketplace_lazada_order_status', 'not in' , ['packed','repacked','ready_to_ship_pending'])]}"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="action_print_shipping_label_lazada" model="ir.actions.server">-->
+<!--        <field name="name">Print Shipping Label Lazada</field>-->
+<!--        <field name="model_id" ref="model_stock_picking"/>-->
+<!--        <field name="binding_model_id" ref="model_stock_picking"/>-->
+<!--        <field name="binding_view_types">list</field>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">action = records.btn_open_shipping_label_lazada()</field>-->
+<!--    </record>-->
+</odoo>

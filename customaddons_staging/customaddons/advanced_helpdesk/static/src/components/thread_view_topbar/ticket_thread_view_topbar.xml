@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="advanced_helpdesk.DoneTicketThreadViewTopbar" owl="1">
+            <button t-on-click="_onClickDoneTicket" title="Done Ticket" string="Done Ticket" class="btn btn-primary" style="width:120px">
+                <span>Done Ticket</span>
+            </button>
+    </t>
+</templates>

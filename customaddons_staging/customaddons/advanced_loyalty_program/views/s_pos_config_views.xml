@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_config_form_inherit" model="ir.ui.view">
+        <field name="name">s.pos.config.form.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='loyalty_id']" position="after">
+                <div class="mt16">
+                    <label for="s_zalo_zns_template_id" string="Template gửi OTP"/>
+                    <field name="s_zalo_zns_template_id"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

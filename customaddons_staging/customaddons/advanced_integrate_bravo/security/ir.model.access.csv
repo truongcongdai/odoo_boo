@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bravo_mapping,advanced_bravo_mapping,model_bravo_stock_picking_mappings,base.group_system,1,0,0,0
+access_create_multi_product_attributes,advanced_integrate_bravo.create_multi_product_attributes,model_create_multi_product_attributes,,1,1,1,1
+access_s_import_bravo_id,advanced_integrate_bravo.s_import_bravo_id,model_s_import_bravo_id,,1,1,1,1
+access_s_product_brand_mapping,access_s_product_brand_mapping,model_s_product_brand_bravo_mapping,,1,1,1,1

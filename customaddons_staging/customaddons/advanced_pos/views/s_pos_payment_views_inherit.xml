@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_pos_payment_tree_inherit" model="ir.ui.view">
+            <field name="name">view_pos_payment_tree_inherit</field>
+            <field name="model">pos.payment</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_payment_tree"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pos_order_id']" position="after">
+                    <field name="s_pos_reference"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_method_id']" position="after">
+                    <field name="s_pos_name"/>
+                </xpath>
+                <xpath expr="//field[@name='pos_order_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_pos_payment_form_inherit" model="ir.ui.view">
+            <field name="name">view_pos_payment_form_inherit</field>
+            <field name="model">pos.payment</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_payment_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pos_order_id']" position="after">
+                    <field name="s_pos_reference"/>
+                </xpath>
+                <xpath expr="//field[@name='session_id']" position="after">
+                    <field name="s_gift_card_id"/>
+                    <field name="s_gift_card_code" attrs="{'invisible': [('s_gift_card_id','=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_pos_payment_search_inherit" model="ir.ui.view">
+            <field name="name">view_pos_payment_search_inherit</field>
+            <field name="model">pos.payment</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_payment_search"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='group_by_session']" position="after">
+                    <filter name="group_by_s_pos_name" string="Điểm bán hàng" domain="[]"
+                            context="{'group_by':'s_pos_name'}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="s_pos_payment_access_right_act_view" model="ir.actions.act_window">
+            <field name="name">Thanh toán (Thu ngân)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.payment</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <!--        <field name="context">{'create': False,'edit': False, 'delete': False}</field>-->
+            <field name="domain">[('pos_order_id.config_id.employee_ids.user_id.user_ids', 'in', uid)]</field>
+            <field name="search_view_id" ref="point_of_sale.view_pos_payment_search"/>
+        </record>
+        <menuitem id="s_pos_payment_access_right_act_view_menu" name="Thanh toán (Thu ngân)"
+                  groups="advanced_sale.s_boo_group_thu_ngan"
+                  parent="point_of_sale.menu_point_of_sale" action="s_pos_payment_access_right_act_view"
+                  sequence="3"/>
+    </data>
+</odoo>

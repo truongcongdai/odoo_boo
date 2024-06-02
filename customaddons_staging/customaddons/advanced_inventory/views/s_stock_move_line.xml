@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_move_line_tree" model="ir.ui.view">
+            <field name="name">stock.move.line.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="picking_type_id" />
+                </xpath>
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="transfer_type" optional="show" widget="badge"
+                           decoration-primary="transfer_type == 'in'" decoration-warning="transfer_type == 'out'"/>
+                </xpath>
+                <xpath expr="//field[@name='qty_done']" position="after">
+                    <field name="product_uom_qty" string="Tồn sắp về"/>
+                    <field name="ma_san_pham"/>
+                    <field name="ma_cu"/>
+                </xpath>
+            </field>
+        </record>
+
+
+         <record id="view_move_line_form" model="ir.ui.view">
+            <field name="name">stock.move.line.form</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reference']" position="after">
+                    <field name="picking_id" string="Phiếu điều chuyển"/>
+                    <field name="transfer_type" optional="show" widget="badge"
+                           decoration-primary="transfer_type == 'in'" decoration-warning="transfer_type == 'out'"/>
+                    <field name="confirm_user_id" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_move_line_view_search_inherit" model="ir.ui.view">
+            <field name="name">stock.move.line.search.inherit</field>
+            <field name="model">stock.move.line</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='inventory']" position="after">
+                    <filter name="ma_san_pham" string="Mã sản phẩm" domain="[]" context="{'group_by': 'ma_san_pham'}"/>
+                    <filter name="ma_cu" string="Mã cũ" domain="[]" context="{'group_by': 'ma_cu'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

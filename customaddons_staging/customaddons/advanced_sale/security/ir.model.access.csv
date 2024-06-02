@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_advanced_sale_display_order_line_data,advanced_sale.display_order_line_data,model_display_order_line_data,base.group_user,1,1,1,1
+access_advanced_sale_order_report,advanced_sale.sale_order_report,model_order_line_data_report,base.group_user,1,1,1,1
+access_advanced_sale_s_sale_order_loyalty_program,advanced_sale.s_sale_order_loyalty_program,model_s_sale_order_loyalty_program,base.group_user,1,1,1,1
+access_report_sale_order_program,report.sale.order_program,model_report_sale_order_program,base.group_user,1,1,1,1
+access_report_dashboard_order,report.access_report_dashboard_order,model_s_report_dashboard_order,base.group_user,1,1,1,1

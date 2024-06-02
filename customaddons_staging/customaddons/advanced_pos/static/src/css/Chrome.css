@@ -1,0 +1,116 @@
+.pos-rightheader .searchbox-client {
+    padding: 0;
+    margin: 0;
+    margin: 7px 15px;
+    position: relative;
+}
+.pos-rightheader .searchbox-client input{
+    width: 351px;
+    padding: 7px 30px;
+    /*font-size: medium;*/
+    font-size: 16.5px;
+    position: relative;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid #875A7B;
+    padding-left: 42px;
+}
+.searchbox-client input:focus{
+    box-shadow: unset !important;
+}
+.searchbox-client input::placeholder {
+    font-size: 16px;
+}
+.top-content .searchbox-client input {
+    width: 350px;
+    height: 30px;
+    border-radius: 5px;
+    position: fixed;
+    right: 356px;
+    top: 62px;
+}
+.s_icon_customer {
+    position: fixed;
+    right: 680px;
+    top: 66px;
+}
+.pos-rightheader .search-clear-client{
+    display: none;
+}
+.pos-rightheader .searchbox-client .s_icon_customer {
+    position: absolute;
+    left: 13px;
+    z-index: 1;
+    font-size: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+}
+.ticket-screen .pos-search-bar .search input {
+    height: 100% !important;
+}
+#top-search {
+    z-index: 10;
+}
+.s_icon_customer {
+    z-index: 11 !important;
+}
+.searchbox-client {
+    position: absolute !important;
+    right: 0;
+}
+.disable-btn {
+    pointer-events:none;
+}
+/* (1366x768) WXGA Display */
+@media screen and (max-width: 1366px) {
+    .quantity-block .badge, .quantity-block .value, .entry .badge, .entry .value {
+        font-size: 20px !important;
+    }
+    .line .quantity-block {
+        margin-top: 1px !important;
+    }
+    .pos .actionpad .button.set-customer {
+        height: calc(var(--btn-height-size) * 2) !important;
+    }
+    .pos .actionpad .button.pay {
+        height: calc(var(--btn-height-size) * 2) !important;
+    }
+    .pos .numpad button {
+        height: 54px !important;
+    }
+    .pos .control-button {
+        line-height: 30px;
+    }
+    .pos .search-box {
+        max-width: 283px !important;
+    }
+    .top-content .searchbox-client input {
+        width: 205px !important;
+        right: 270px !important;
+    }
+    .s_icon_customer {
+        right: 450px !important;
+    }
+}
+/* (1600x900) HD+ Display */
+@media  screen and (max-width: 1600px) {
+    .pos .search-box {
+        max-width: 335px !important;
+    }
+    .top-content .searchbox-client input {
+        width: 300px;
+        right: 395px;
+    }
+    .s_icon_customer {
+        right: 670px;
+    }
+}
+.pos.big-scrollbars *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+.s_boo_pricelist_coupon{
+    color: lawngreen;
+    margin: 5px;
+}

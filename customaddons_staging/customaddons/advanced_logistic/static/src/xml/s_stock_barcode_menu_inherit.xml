@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="stock_barcode.main_menu" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_home_menu_background')]/div[hasclass('o_stock_barcode_main_menu')]/div[hasclass('row')]/div[hasclass('col')][1]" position="replace">
+            <div class="col">
+                <button class="button_logistics btn btn-block btn-primary mb-4" name="action_logistics_view" type="object">Logistics</button>
+            </div>
+        </xpath>
+    </t>
+</templates>

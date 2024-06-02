@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="create_multi_product_attributes_view_tree" model="ir.ui.view">
+            <field name="name">create_multi_product_attributes_view_tree</field>
+            <field name="model">create.multi.product.attributes</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" string="create_multi_product_attributes_tree">
+                    <field name="product_template_id" required="1"/>
+                    <field name="product_attribute_ids" widget="many2many_tags" options="{'no_create': True}" invisible="1"/>
+                    <field name="product_attribute_value_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    <field name="detailed_type" required="1"/>
+                    <field name="sku" required="1"/>
+                    <field name="product_code" required="1"/>
+                    <field name="lst_price"/>
+                    <field name="collection"/>
+                    <field name="categ_id" required="1"/>
+                    <field name="gender"/>
+                    <field name="barcode"/>
+                    <field name="season"/>
+                    <field name="product_line"/>
+                    <field name="brand_name"/>
+                    <field name="chat_lieu"/>
+                    <field name="old_code"/>
+                    <field name="material_code"/>
+                    <field name="chung_loai"/>
+                </tree>
+            </field>
+        </record>
+        <record id="create_multi_product_attributes_action" model="ir.actions.act_window">
+            <field name="name">Tạo sản phẩm biến thể</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">create.multi.product.attributes</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="mass_action_multi_product_attributes_action" model="ir.actions.server">
+            <field name="name">Tạo sản phẩm biến thể</field>
+            <field name="model_id" ref="model_create_multi_product_attributes"/>
+            <field name="binding_model_id" ref="advanced_integrate_bravo.model_create_multi_product_attributes"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.cron_multi_product_attributes()
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="create_multi_product_attributes_menu" name="Tạo sản phẩm biến thể"
+                  parent="stock.menu_stock_inventory_control" action="create_multi_product_attributes_action"
+                  sequence="99"/>
+    </data>
+</odoo>

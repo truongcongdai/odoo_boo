@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mass_action_infor_customer,access_mass_action_infor_customer,model_mass_action_infor_customer,,1,1,1,1
+access_s_shipping_method,access_s_shipping_method,model_shipping_method,,1,1,1,1
+access_s_sale_order_error,access_s_sale_order_error,model_s_sale_order_error,,1,1,1,1

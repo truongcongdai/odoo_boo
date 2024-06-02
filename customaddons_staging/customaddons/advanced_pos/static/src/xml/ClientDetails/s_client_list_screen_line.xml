@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ClientLine" t-inherit-mode="extension" owl="1">
+        <xpath expr="//td[hasclass('client-line-email')]" position="replace">
+        </xpath>
+        <xpath expr="//td[@t-if='env.pos.config.module_pos_loyalty']" position="replace">
+        </xpath>
+    </t>
+</templates>

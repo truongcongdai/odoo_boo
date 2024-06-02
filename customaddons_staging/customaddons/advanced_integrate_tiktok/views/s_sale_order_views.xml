@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="s_order_tiktok_view_form">
+        <field name="name">mass.action.contact.sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[1]" position="after">
+                 <button name="btn_infor_customer"
+                         type="object" string="Cập nhật thông tin khách hàng" class="btn-primary"
+                         attrs="{'invisible':[ '|', '|', ('sale_order_status', 'in', ['hoan_thanh','huy']), ('is_magento_order', '=',True), ('is_tiktok_order', '!=', True)]}"/>
+                <button name="btn_infor_customer"
+                         type="object" string="Cập nhật thông tin khách hàng" class="btn-primary"
+                         attrs="{'invisible':[ '|', '|', ('sale_order_status', 'in', ['hoan_thanh','huy']), ('is_magento_order', '=',True), ('is_lazada_order', '!=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='is_done_delivery']" position="before">
+                <field name="is_tiktok_order" attrs="{'invisible':[('is_tiktok_order', '=',False)]}"/>
+                <field name="tiktok_order_id" attrs="{'invisible':[('is_tiktok_order', '=',False)]}"/>
+                <field name="tiktok_reverse_order_id" attrs="{'invisible':[('tiktok_reverse_order_id', '=',False)]}"/>
+                <field name="s_tiktok_status_return" attrs="{'invisible':['|',('tiktok_reverse_order_id', '=',False),('s_tiktok_status_return', '=',False)]}"/>
+            </xpath>
+             <xpath expr="//field[@name='payment_term_id']" position="after">
+                 <field name="s_tiktok_payment_method"  attrs="{'invisible':[('s_tiktok_payment_method', '=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_status']" position="after">
+                <field name="marketplace_tiktok_order_status" readonly="True" invisible="True"/>
+                <field name="is_tiktok_customer_canceled" readonly="True" attrs="{'invisible':['|',('is_tiktok_order', '=',False),('sale_order_status', '!=', 'huy')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record model="ir.actions.act_window" id="advanced_sale.s_action_sale_orders_m2">-->
+<!--        <field name="domain">['|', '|', ('is_magento_order', '=', True), ('is_tiktok_order','=',True), ('is_lazada_order','=',True)]</field>-->
+<!--        <field name="context">{'create': False,'edit': False, 'delete': False, 'search_default_source_id': 1}</field>-->
+<!--    </record>-->
+
+    <record model="ir.ui.menu" id="advanced_sale.s_menu_sale_order_m2">
+      <field name="name">Đơn hàng Ecommerce</field>
+    </record>
+
+    <record model="ir.ui.menu" id="advanced_sale.s_menu_sale_order_from_m2">
+      <field name="name">Đơn hàng Ecommerce</field>
+    </record>
+
+    <record id="advanced_sale.s_action_sale_orders_m2" model="ir.actions.act_window">
+        <field name="name">Đơn hàng Ecommerce</field>
+    </record>
+
+<!--    <record model="ir.actions.act_window" id="sale_order_tiktok_action">-->
+<!--        <field name="name">Đơn hàng Tiktok</field>-->
+<!--        <field name="res_model">sale.order</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--        <field name="domain">[('is_tiktok_order','=',True)]</field>-->
+<!--    </record>-->
+
+<!--    <menuitem name="Đơn hàng Tiktok" id="sale_order_tiktok" parent="sale.sale_order_menu"-->
+<!--              action="sale_order_tiktok_action"/>-->
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rfm_score_sales_team_configuration_tree_view" model="ir.ui.view">
+            <field name="name">rfm.segment.team.configuration.tree</field>
+            <field name="model">rfm.segment.team.configuration</field>
+            <field name="arch" type="xml">
+                <tree string="RFM Score Configuration" editable="bottom" create="0" delete="0">
+
+                    <field name="segment_id" options="{'no_create': True}" readonly="1"/>
+                    <field name="team_id" options="{'no_create': True}" readonly="1" invisible="1"/>
+                    <field name="from_days" string="Recency From (In Days)"/>
+                    <field name="to_days" string="Recency To (In Days)"/>
+                    <field name="from_frequency"/>
+                    <field name="to_frequency"/>
+                    <field name="from_amount"/>
+                    <field name="to_amount"/>
+                    <field name="from_atv" string="From ATV"/>
+                    <field name="to_atv" string="To ATV"/>
+
+                </tree>
+
+            </field>
+        </record>
+
+
+        <record id="rfm_score_sales_team_configuration_act_window" model="ir.actions.act_window">
+            <field name="name">RFM Score Configuration For Teams</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rfm.segment.team.configuration</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="setu_rfm_analysis.rfm_score_sales_team_configuration_tree_view"/>
+            <field name="domain">[('team_id','=',active_id)]</field>
+        </record>
+
+        <record id="setu_rfm_segment_sales_team_kanban" model="ir.ui.view">
+            <field name="name">setu.rfm.segment.team.kanban</field>
+            <field name="model">crm.team</field>
+            <field name="arch" type="xml">
+                <kanban create="0" edit="0" delete="0">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban" style="width:max-content;">
+                                <div class="oe_kanban_details">
+                                    <div t-attf-class="oe_kanban_global_click">
+                                        <div class="text-center">
+                                            <h6>
+                                                <i class="fa fa-suitcase" role="img" aria-label="Enterprise"
+                                                   title="Enterprise"/>
+                                                <field name="name"/>
+                                            </h6>
+                                            <br/>
+                                            <button class="btn btn-primary" style="font-size:0.8rem;"
+                                                    name="%(setu_rfm_analysis.rfm_score_sales_team_configuration_act_window)d"
+                                                    type="action">Open Rules
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record id="res_company_segment_sales_team_kanban_act_window" model="ir.actions.act_window">
+            <field name="name">RFM Score Configuration For Teams</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.team</field>
+            <field name="view_mode">kanban</field>
+            <field name="context">{'show_for_default_company':True}</field>
+            <field name="view_id" ref="setu_rfm_analysis.setu_rfm_segment_sales_team_kanban"/>
+        </record>
+
+        <menuitem name="RFM Score Configuration For Sales Team"
+                  id="rfm_score_team_configuration_team_menu"
+                  parent="setu_rfm_analysis_configuration_menu"
+                  groups="setu_rfm_analysis.group_rfm_show_team_conf"
+                  action="res_company_segment_sales_team_kanban_act_window"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="s_lost_bill_tree_view" model="ir.ui.view">
+        <field name="name">s_lost_bill_tree_view</field>
+        <field name="model">s.lost.bill</field>
+        <field name="arch" type="xml">
+            <tree string="Lost Bill">
+                <field name="name"/>
+                <field name="amount_paid"/>
+                <field name="amount_total"/>
+                <field name="partner_id"/>
+                <field name="creation_date"/>
+                <field name="sale_person_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="s_lost_bill_form" model="ir.ui.view">
+        <field name="name">s_lost_bill_form_view</field>
+        <field name="model">s.lost.bill</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Thông tin đơn">
+                            <field name="name"/>
+                            <field name="creation_date"/>
+                            <field name="sale_person_id"/>
+                            <field name="partner_id" groups="advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                                    advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_hang_hoa,
+                                    advanced_sale.s_boo_group_dieu_phoi,advanced_sale.s_boo_group_ke_toan"/>
+                            <field name="employee_id"/>
+                            <field name="pos_session_id"/>
+                            <field name="pricelist_id"/>
+                            <field name="fiscal_position_id" invisible="1"/>
+                        </group>
+                        <group string="Thanh toán">
+                            <field name="amount_paid"/>
+                            <field name="amount_total"/>
+                            <field name="amount_tax"/>
+                            <field name="amount_return"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="to_invoice" invisible="1"/>
+                            <field name="to_ship" invisible="1"/>
+                            <field name="is_tipped" invisible="1"/>
+                            <field name="tip_amount" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="loyalty_points" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sản phẩm">
+                            <field name="lines">
+                                <tree>
+                                    <field name="full_product_name"/>
+                                    <field name="pack_lot_ids" widget="many2many_tags" groups="stock.group_production_lot"/>
+                                    <field name="qty"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="price_subtotal_incl"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Thanh toán">
+                            <field name="statement_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="payment_method_id"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Thông tin thêm">
+
+                        </page>
+                        <page string="Ghi chú">
+
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="lost_bill_action">
+        <field name="name">Đơn hàng bị mất</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">s.lost.bill</field>
+        <field name="view_id" ref="s_lost_bill_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Đơn hàng bị mất" id="lost_bill" parent="point_of_sale.menu_point_rep" action="lost_bill_action"/>
+
+</odoo>

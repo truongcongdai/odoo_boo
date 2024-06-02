@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_loyalty_reward_inherit_tree_views" model="ir.ui.view">
+        <field name="name">s.loyalty.reward.form</field>
+        <field name="model">loyalty.reward</field>
+        <field name="inherit_id" ref="pos_loyalty.view_loyalty_reward_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='point_cost']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('reward_type', '=', 'point'), ('reward_type','=','resale')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='minimum_points']" position="attributes">
+                <attribute name="attrs">{'invisible': [('reward_type', '=', 'point')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='discount_type']" position="attributes">
+                <attribute name="attrs">{'required':[('reward_type', '=', 'discount')], 'invisible': [('reward_type', '=', 'point')]}</attribute>
+            </xpath>
+            <xpath expr="//label[@for='discount_type']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('reward_type', '=', 'point'), ('reward_type', 'in', ('gift'))]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='discount_apply_on']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|', ('reward_type', 'in', ('product', 'gift')), ('discount_type', '!=', 'percentage'), ('reward_type', '=', 'point')]}</attribute>
+            </xpath>
+            <xpath expr="//label[@for='discount_max_amount']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|', ('reward_type', 'in', ('product', 'gift')), ('discount_type', '!=', 'percentage'), ('reward_type', '=', 'point')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='discount_max_amount']" position="attributes">
+                <attribute name="attrs">{'invisible': [('reward_type', '=', 'point')]}</attribute>
+            </xpath>
+            <xpath expr="//div/span[hasclass('oe_grey')]" position="attributes">
+                <attribute name="attrs">{'invisible': [('reward_type', '=', 'point')]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='discount_product_id']" position="attributes">
+                <attribute name="domain">[('available_in_pos', '=', True), ('detailed_type', '=', 'service')]</attribute>
+                <attribute name="context">{'default_detailed_type': 'service', 'default_available_in_pos': '1'}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='gift_product_id']" position="attributes">
+                <attribute name="domain">[('available_in_pos', '=', True), ('detailed_type', '=', 'product')]</attribute>
+                <attribute name="context">{'default_detailed_type': 'product', 'default_available_in_pos': '1'}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='discount_specific_product_ids']" position="attributes">
+                <attribute name="domain">[('available_in_pos', '=', True), ('detailed_type', '=', 'product')]</attribute>
+                <attribute name="context">{'default_detailed_type': 'product', 'default_available_in_pos': '1'}</attribute>
+            </xpath>
+
+            <xpath expr="//form/group[2]/group[1]" position="after">
+                <group attrs="{'invisible': [('reward_type', '!=', 'point')]}">
+                    <div class="s_reward_exchange_point">
+                        <div style="display: flex; align-items: center;">
+                            <div style="display: flex; align-items: center;">
+                                <div>
+                                    <group>
+                                        <field name="s_reward_exchange_point" attrs="{'required': [('reward_type', '=', 'point')]}"/>
+                                    </group>
+                                </div>
+                                <div style="display: flex;margin-right: 20px;">
+                                    <div style="margin-right: 20px;">
+                                        <span>Điểm</span>
+                                    </div>
+                                    <div>
+                                        <span>=</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; width: 30%;">
+                                <div>
+                                    <field name="s_reward_exchange_monetary" />
+                                </div>
+                                <div>
+                                    <span>VNĐ</span>
+                                </div>
+                            </div>
+                        </div>
+                        <group>
+                            <field name="s_exchange_product"
+                                   placeholder="Quy đổi điểm"
+                                   attrs="{'required': [('reward_type', '=', 'point')]}"
+                                   domain="[('detailed_type', '=', 'service'), ('s_loyalty_product_reward', '=', True)]"
+                                   context="{'default_available_in_pos': True, 'default_s_loyalty_product_reward': True, 'default_detailed_type': 'service'}"
+                            />
+                        </group>
+                        <div style="display: flex; align-items: center;width: 100%">
+                            <div style="width: 70%">
+                                <group>
+                                    <field name="s_exchange_maximum" attrs="{'required': [('reward_type', '=', 'point')]}"/>
+                                </group>
+                            </div>
+                            <div>
+                                <field name="s_type_exchange" attrs="{'required': [('reward_type', '=', 'point')]}"/>
+                            </div>
+                        </div>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
