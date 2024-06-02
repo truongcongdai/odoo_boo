@@ -1,0 +1,8 @@
+#vào psql
+sudo -u postgres -i
+
+#chạy dump
+sudo -u postgres psql boo_demo_28_6 <Documents/boo_2023-06-28_02-26-55/dump.sql
+
+
+psql boo_demo_26_6 <Documents/boo_2023-06-26_10-13-51/dump.sql
