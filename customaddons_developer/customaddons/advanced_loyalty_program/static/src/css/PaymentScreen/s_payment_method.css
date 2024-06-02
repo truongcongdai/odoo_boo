@@ -1,0 +1,45 @@
+.otp {
+    margin: auto 16px;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.info-otp{
+    display: flex;
+}
+
+.info-otp input{
+    width: 100%;
+}
+
+.otp .info-otp .label-otp {
+    padding: 8px 20px;
+    font-weight: bold;
+    background: #F7D29C;
+    border-radius: 2.5px;
+}
+
+.otp .btn-send-otp {
+    margin: 10px 0;
+    padding: 10px 10px;
+    font-size: 16px;
+    background: rgb(230, 230, 230);
+    border: solid 1px rgb(202,202,202);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+.otp .btn-send-otp:hover {
+    color: white;
+    background: rgb(110,200,155);
+}
+
+.otp #countdowntimer {
+    padding: 0 20px;
+    color: #5c5c5cd1;
+}
+
+#customer {
+    display: none;
+}

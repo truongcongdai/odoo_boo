@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit_add_shipping" model="ir.ui.view">
+            <field name="name">view.order.form.inherit.add.shipping</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="delivery.view_order_form_with_carrier"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_open_delivery_wizard'][1]" position="after">
+                    <field name="is_invisible_ecommerce" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_open_delivery_wizard'][1]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|','|', '|',('is_invisible_ecommerce','=',True),('is_all_service', '=', True), ('order_line', '=', []), ('delivery_set', '=', True), ('is_return_order', '=', True)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_open_delivery_wizard'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|','|',('is_invisible_ecommerce','=',True),('is_all_service', '=', True), ('recompute_delivery_price', '=', False), ('delivery_set', '=', False)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_open_delivery_wizard'][3]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|','|',('is_invisible_ecommerce','=',True),('is_all_service', '=', True), ('recompute_delivery_price', '=', True), ('delivery_set', '=', False)]}
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale_order_form_inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!--                todo return order -->
+<!--                <xpath expr="//button[@name='action_quotation_send']" position="after">-->
+<!--                    <button name="create_return_sale_order" id="create_return_sale_order"-->
+<!--                            string="Tạo đơn trả hàng" class="btn-primary" type="object"-->
+<!--                            groups="advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom"-->
+<!--                            attrs="{'invisible': ['|','|','|',('state', '!=', 'sale'),('is_done_delivery', '=', False),('is_return_order', '=', True),('is_magento_order', '=', False)]}"/>-->
+<!--                </xpath>-->
+                <xpath expr="//button[@name='action_quotation_send'][3]" position="attributes">
+                    <attribute name="groups">base.group_no_one</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
+                    <attribute name="groups">base.group_no_one</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|',('is_invisible_ecommerce','=',True),('state', 'not in', ['draft', 'sent','sale']),
+                        ('id', '=', False)]}
+                    </attribute>
+                    <attribute name="groups">advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                        advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_ke_toan</attribute>
+                </xpath>
+                <xpath expr="//button[@name='recompute_coupon_lines']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|','|',('is_invisible_ecommerce','=',True), ('state', 'not in', ['draft', 'sent','sale']),('is_return_order', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='recompute_coupon_lines']" position="attributes">
+                    <attribute name="states"></attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(sale_coupon.sale_coupon_apply_code_action)d']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|','|',('is_invisible_ecommerce','=',True), ('state', 'not in', ['draft', 'sent','sale']),('is_return_order', '=', True)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|',('is_invisible_ecommerce','=',True), ('invoice_status', '!=', 'to invoice'), ('is_invisible_ecommerce','=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(sale_coupon.sale_coupon_apply_code_action)d']" position="attributes">
+                    <attribute name="states"></attribute>
+                </xpath>
+                <field name="sale_order_template_id" position="after">
+                    <field name="is_return_order" attrs="{'invisible': [('is_return_order', '=', False)],'readonly': 1}" force_save="1"/>
+                    <field name="return_order_id" invisible="0" readonly="1" force_save="1" attrs="{'invisible': [('return_order_id', '=', False)]}"/>
+                    <field name="is_sell_wholesale" readonly="1" force_save="1"/>
+                    <field name="is_magento_order" invisible="0" readonly="1" groups="base.group_no_one"/>
+                    <field name="is_done_delivery" groups="base.group_no_one"/>
+                    <field name="count_return_order" invisible="1"/>
+                </field>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="coupon_code" groups="advanced_sale.s_boo_group_ecom" readonly="1" attrs="{'invisible': [('coupon_code', '=', False)]}"/>
+                    <field name="s_promo_code" groups="base.group_no_one" attrs="{'invisible': [('s_promo_code', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button name="action_view_sale_order"
+                            type="object"
+                            class="oe_stat_button order-3"
+                            icon="fa-dollar"
+                            attrs="{'invisible': [('count_return_order', '&lt;', 1)]}">
+                        <div class="o_field_widget o_stat_info">
+                            <!--                            <span class="o_stat_value">-->
+                            <!--                                <field nolabel="1" name="count_return_order"/>-->
+                            <!--                            </span>-->
+                            <span class="o_stat_text" attrs="{'invisible': [('count_return_order', '&lt;', 1)]}">Đơn
+                            </span>
+                            <span class="o_stat_text" attrs="{'invisible': [('count_return_order', '&lt;', 1)]}">Đổi Trả
+                            </span>
+                        </div>
+                    </button>
+<!--                    <field name="is_magento_order" invisible="1"/>-->
+                </xpath>
+                <!--                todo return order -->
+                <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="before">
+                    <field name="m2_is_global_discount"/>
+                    <field name="m2_total_line_discount"/>
+                    <field name="boo_total_discount"/>
+                    <field name="boo_total_discount_percentage"/>
+                    <field name="price_total"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='is_magento_order']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_ecommerce_order','=',True),('state','in', ('sale', 'cancel'))]}</attribute>
+                </xpath>
+<!--                <xpath expr="//div[@name='commitment_date_div/o_row" position="attributes">-->
+                <xpath expr="//group[@name='sale_shipping']//field[@name='warehouse_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('is_magento_order', '=', True)]}</attribute>
+                    <attribute name="attrs">{'readonly': [('is_magento_order', '=', True)]}</attribute>
+                </xpath>
+<!--                <xpath expr="//field[@name='product_uom_qty']" position="attributes">-->
+<!--                    <attribute name="sum">Tổng số lượng</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//notebook/page[@name='order_lines']//tree/field[@name='product_uom_qty']" position="attributes">
+                    <attribute name="sum">Tổng số lượng</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('type', '=', 'contact')]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="customer_ranked"/>
+                    <field name="is_invisible_ecommerce" invisible="1"/>
+                    <field name="is_ecommerce_order" invisible="1"/>
+                    <field name="s_is_admin" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook/page[@name='order_lines']//tree/field[@name='price_unit']" position="after">
+                    <field name="s_lst_price" widget="monetary"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="groups">advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                        advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi,
+                        advanced_sale.s_boo_group_ke_toan</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="groups">advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                        advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi,
+                        advanced_sale.s_boo_group_ke_toan</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="groups">advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                        advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi,
+                        advanced_sale.s_boo_group_ke_toan</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_view_invoice']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('invoice_count', '=', 0),('s_is_admin','=',False)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_ecom_action_view_order_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="sale.view_order_tree"/>
+            <field name="act_window_id" ref="s_action_sale_orders_m2"/>
+        </record>
+
+        <record id="sale_order_ecom_action_view_order_kanban" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="sale.view_sale_order_kanban"/>
+            <field name="act_window_id" ref="s_action_sale_orders_m2"/>
+        </record>
+
+        <record id="sale_order_ecom_action_view_order_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sale.view_order_form"/>
+            <field name="act_window_id" ref="s_action_sale_orders_m2"/>
+        </record>
+
+        <record id="sale_order_ecom_action_view_order_calendar" model="ir.actions.act_window.view">
+            <field name="sequence" eval="4"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="sale.view_sale_order_calendar"/>
+            <field name="act_window_id" ref="s_action_sale_orders_m2"/>
+        </record>
+
+        <record id="sale_order_ecom_action_view_order_pivot" model="ir.actions.act_window.view">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="sale.view_sale_order_pivot"/>
+            <field name="act_window_id" ref="s_action_sale_orders_m2"/>
+        </record>
+
+        <record id="sale_order_ecom_action_view_order_graph" model="ir.actions.act_window.view">
+            <field name="sequence" eval="6"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="sale.view_sale_order_graph"/>
+            <field name="act_window_id" ref="s_action_sale_orders_m2"/>
+        </record>
+
+        <record id="s_action_sale_orders_m2" model="ir.actions.act_window">
+            <field name="name">Đơn hàng Ecommerce</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">['|', '|', '|', '|',('is_magento_order', '=', True), ('is_tiktok_order','=',True), ('is_lazada_order','=',True),('s_shopee_is_order', '=', True), ('is_return_order', '=', True)]</field>
+            <field name="context">{'create': False,'edit': False, 'delete': False, 'search_default_source_id': 1}</field>
+        </record>
+
+        <menuitem id="s_menu_sale_order_m2"
+                  name="Đơn hàng Ecommerce"
+                  action="s_action_sale_orders_m2"
+                  parent="point_of_sale.menu_point_root"/>
+        <menuitem id="s_menu_sale_order_from_m2"
+                  name="Đơn hàng Ecommerce"
+                  action="s_action_sale_orders_m2"
+                  parent="sale.sale_order_menu"/>
+        <record id="sale.action_orders" model="ir.actions.act_window">
+            <field name="name">Sales Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[ '&amp;', '&amp;', '&amp;', '&amp;', '&amp;', '&amp;', '&amp;',
+                ('state', 'not in', ('draft', 'sent', 'cancel')), ('is_magento_order', '=', False),
+                ('is_lazada_order', '=', False), ('is_tiktok_order', '=', False), ('s_facebook_sender_id', '=', False),
+                ('s_zalo_sender_id', '=', False), ('s_shopee_is_order', '=', False),('is_return_order', '=', False)]
+            </field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new quotation, the first step of a new sale!
+                </p>
+                <p>
+                    Once the quotation is confirmed, it becomes a sales order.
+                    <br/>
+                    You will be able to create an invoice and collect the payment.
+                </p>
+            </field>
+        </record>
+        <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="domain">[('is_magento_order', '=', False), ('is_lazada_order', '=', False),
+                ('is_tiktok_order', '=', False), ('s_facebook_sender_id', '=', False), ('s_zalo_sender_id', '=', False),
+                ('s_shopee_is_order', '=', False)]
+            </field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="context">{'search_default_my_quotation': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new quotation, the first step of a new sale!
+                </p>
+                <p>
+                    Once the quotation is confirmed by the customer, it becomes a sales order.
+                    <br/>
+                    You will be able to create an invoice and collect the payment.
+                </p>
+            </field>
+        </record>
+        <record id="s_view_quotation_tree_with_onboarding" model="ir.ui.view">
+            <field name="name">s.view.quotation.tree.with.onboarding</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-danger">state == 'cancel'</attribute>
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-muted">state == 'sent'</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_order_tree_inherit" model="ir.ui.view">
+            <field name="name">sale.order.tree.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Mã biên lai</attribute>
+                </xpath>
+<!--                <xpath expr="//tree" position="attributes">-->
+<!--                    <attribute name="decoration-danger">state == 'cancel'</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-muted">state == 'sent'</attribute>
+                </xpath>
+                <xpath expr="//field[@name='warehouse_id']" position="replace">
+                    <!--                     <field name="warehouse_name"/>-->
+                    <field name="pos_name"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_status']" position="after">
+                    <field name="color_list"/>
+                    <field name="size_list"/>
+                    <field name="brand_list"/>
+                    <field name="category_list"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="customer_ranked"/>
+                    <field name="is_invisible_ecommerce" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="s_shipping_label" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="s_view_sales_order_filter" model="ir.ui.view">
+            <field name="name">s_view_sales_order_filter</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter string="Hạng khách hàng" name="customer_ranked" context="{'group_by': 'customer_ranked'}"/>
+                    <filter string="Thương hiệu" name="brand_list" domain="[]" context="{'group_by': 'brand_list'}"/>
+                    <filter string="Sản phẩm" name="category_list" domain="[]" context="{'group_by': 'category_list'}"/>
+                    <filter string="Màu sắc" name="color_list" domain="[]" context="{'group_by': 'color_list'}"/>
+                    <filter string="Kích thước" name="size_list" domain="[]" context="{'group_by': 'size_list'}"/>
+                    <filter string="Nguồn" name="source_id" context="{'group_by': 'source_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_quotation_tree_inherit" model="ir.ui.view">
+            <field name="name">view.quotation.tree.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Mã biên lai</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_select_record_update_sale_order_status" model="ir.actions.server">
+            <field name="name">Cập nhật tình trạng đơn hàng</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="binding_model_id" ref="model_sale_order"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">records.select_update_sale_order_status()</field>
+        </record>
+        <record id="action_select_record_update_store_code_sale_order" model="ir.actions.server">
+            <field name="name">Cập nhật store code</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="binding_model_id" ref="model_sale_order"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">records._compute_sale_order_picking_warehouse_id()</field>
+        </record>
+        <record id="action_update_list_product_size_color" model="ir.actions.server">
+            <field name="name">Cập nhật danh sách màu sắc, kích thước</field>
+            <field name="model_id" ref="model_sale_order"/>
+<!--            <field name="binding_model_id" ref="model_sale_order"/>-->
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                for rec in records:
+                    rec._compute_color_brand_size_category()
+            </field>
+        </record>
+    </data>
+</odoo>
+

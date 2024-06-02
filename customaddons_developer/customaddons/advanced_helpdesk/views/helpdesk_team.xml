@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_helpdesk_team_form_inherit" model="ir.ui.view">
+            <field name="name">helpdesk_team.form</field>
+            <field name="model">helpdesk.team</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='productivity']" position="after">
+                    <group>
+                        <group>
+                            <field name="s_select_integration" string="Tích hợp với"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+
+
+</odoo>

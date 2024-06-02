@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_view_stock_picking_form" model="ir.ui.view">
+        <field name="name">s.view.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!--            <xpath expr="//header/button[1]" position="after">-->
+            <!--                <button name="btn_push_delivery_method_shopee" type="object" string="Phương thức vận chuyển"-->
+            <!--                        class="btn-primary" attrs="{'invisible': [('is_ready_to_ship', '=', False)] }"/>-->
+            <!--            </xpath>-->
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <field name="s_shopee_id_order" attrs="{'invisible':[('s_shopee_id_order','=',False)]}"/>
+                <field name="is_do_shopee" attrs="{'invisible':[('is_do_shopee','=',False)]}"/>
+                <field name="is_ready_to_ship" invisible="1"/>
+                <field name="marketplace_shopee_order_status" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='shipment_status']" position="after">
+                <field name="shopee_shipping_method"
+                       attrs="{'invisible':['|',('shopee_shipping_method','=',False),('is_do_shopee','=',False)]}"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="btn_view_action_print_shipping_label_shopee"
+                        type="object" string="Shipping Label"
+                        attrs="{'invisible': ['|', ('is_do_shopee', '=', False),('marketplace_shopee_order_status', '!=', 'PROCESSED')] }"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <!--    <record id="action_print_shipping_label" model="ir.actions.server">-->
+    <!--        <field name="name">Print Shipping Label Shopee</field>-->
+    <!--        <field name="model_id" ref="model_stock_picking"/>-->
+    <!--        <field name="binding_model_id" ref="model_stock_picking"/>-->
+    <!--        <field name="binding_view_types">list</field>-->
+    <!--        <field name="state">code</field>-->
+    <!--        <field name="code">action = records.btn_view_action_print_shipping_label_shopee()</field>-->
+    <!--    </record>-->
+
+    <record model="ir.actions.server" id="s_mass_action_reserved_quantity">
+        <field name="name">#Maketplace: compute Done DO</field>
+        <field name="model_id" ref="model_stock_picking"/>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="groups_id" eval="[(4, ref('base.group_no_one'))]"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            records.mass_action_reserved_quantity()
+        </field>
+    </record>
+</odoo>

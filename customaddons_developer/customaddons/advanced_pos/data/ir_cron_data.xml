@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="s_pos_config_cron" forcecreate='True' model="ir.cron">
+            <field name="name">###Remove CTKM khỏi POS khi hết hạn</field>
+            <field name="active">False</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_pos_config"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_remove_program_expired()</field>
+        </record>
+
+        <record id="s_product_pricelist_cron" forcecreate='True' model="ir.cron">
+            <field name="name">###Delete line bảng giá hết hạn</field>
+            <field name="active">False</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_product_pricelist_item"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_delete_product_pricelist_expired()</field>
+        </record>
+
+        <record id="s_customer_rank" forcecreate='True' model="ir.cron">
+            <field name="name">### Magento 2x Integrate: Synchronizing Rank Detail</field>
+            <field name="active">False</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_s_customer_rank"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_sync_customer_rank_detail_magento()</field>
+        </record>
+
+        <record id="s_cron_coupon_program_with_pos_order" forcecreate='True' model="ir.cron">
+            <field name="name">### Odoo cron compute coupon program with pos order</field>
+            <field name="active">False</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_pos_order"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_compute_applied_program_ids()</field>
+        </record>
+
+        <record id="s_cron_compute_count_coupon_program_pos_order" forcecreate='True' model="ir.cron">
+            <field name="name">### Odoo cron compute count coupon program with pos order</field>
+            <field name="active">False</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_coupon_program"/>
+            <field name="state">code</field>
+            <field name="code">model.compute_count_coupon_program_pos_order()</field>
+        </record>
+
+        <record id="s_compute_pos_order_lost_coupon_program" forcecreate="True" model="ir.cron">
+            <field name="name">Compute đơn hàng bị mất CTKM do chọn CTKM ở thanh tìm kiếm sản phẩm trên POS</field>
+            <field name="active">False</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_coupon_program"/>
+            <field name="state">code</field>
+            <field name="code">model.compute_pos_order_lost_coupon_program()</field>
+        </record>
+
+<!--        <record forcecreate="True" id="ir_cron_reset_customer_ranked" model="ir.cron">-->
+<!--            <field name="name">###Odoo cron reset customer ranked</field>-->
+<!--            <field name="model_id" ref="model_reset_partner_rank"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model._cron_reset_customer_ranked()</field>-->
+<!--            <field name="user_id" ref="base.user_root"/>-->
+<!--            <field name="interval_number">5</field>-->
+<!--            <field name="interval_type">minutes</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--            <field name="active" eval="False"/>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

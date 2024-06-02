@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="advanced_pos.SProductItemList" owl="1">
+        <div class="boo-product-list-container">
+            <div role="dialog" class="modal-dialog s_search_product_item_dialog" t-on-mouseleave="_onMouseLeaveProductItem">
+                <div t-if="props.products.length != 0">
+                    <ul class="s_search_product_item_list">
+                        <t t-foreach="props.products" t-as="product" t-key="product.id">
+                            <t t-if="product.type == 'product'">
+                                <li class="s_search_product_item" t-on-click="trigger('boo-click-product', product)">
+                                    <div class="s_search_product_item_content">
+                                        <div class="s_search_product_item_content_name">
+                                            <t t-if="product.barcode" >
+                                                <t t-esc="'[' + product.barcode + ']' + product.display_name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="product.display_name"/>
+                                            </t>
+                                        </div>
+                                        <div class="s_search_product_item_content_price"><t t-esc="price"/></div>
+                                    </div>
+                                </li>
+                            </t>
+                        </t>
+                    </ul>
+                </div>
+                <div t-else="" class="product-list-empty" style="margin-top: -30px;">
+                        <div class="product-list-empty">
+                            <t t-if="props.searchWord !== ''">
+                                <p class="s_search_product_item">
+                                    Không tìm thấy kết quả cho "
+                                    <b t-esc="props.searchWord"></b>
+                                    ".
+                                </p>
+                            </t>
+                            <t t-else="">
+                                <p>There are no products in this category.</p>
+                            </t>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

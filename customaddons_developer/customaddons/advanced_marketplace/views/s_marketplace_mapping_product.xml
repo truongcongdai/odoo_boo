@@ -1,0 +1,83 @@
+<odoo>
+    <data>
+        <record id="s_marketplace_mapping_product_view_form" model="ir.ui.view">
+            <field name="name">s_marketplace_mapping_product_view_form</field>
+            <field name="model">s.marketplace.mapping.product</field>
+            <field name="arch" type="xml">
+                <form string="s_sale_order_error_form" create="false" edit="false" delete="true">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="s_product_id" attrs="{'invisible': [('s_product_id', '=', False)]}"/>
+                                <field name="s_template_id" attrs="{'invisible': [('s_template_id', '=', False)]}"/>
+                                <field name="s_mapping_ecommerce"/>
+                            </group>
+                            <group>
+                                <field name="s_check_mapping_product" invisible="1"/>
+                                <field name="s_error_type"/>
+                                <field name="message"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="s_marketplace_mapping_product_view_search" model="ir.ui.view">
+            <field name="name">s_marketplace_mapping_product_view_search</field>
+            <field name="model">s.marketplace.mapping.product</field>
+            <field name="arch" type="xml">
+                <search string="Post API">
+                    <filter name="group_marketplace" string="Loại" context="{'group_by':'s_error_type'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="s_marketplace_mapping_action_product">
+			<field name="name">Đồng bộ lại sản phẩm</field>
+			<field name="model_id" ref="model_s_marketplace_mapping_product"/>
+			<field name="binding_model_id" ref="model_s_marketplace_mapping_product"/>
+			<field name="binding_view_types">list</field>
+			<field name="state">code</field>
+			<field name="code">
+					records.mass_action_mapping_product()
+			</field>
+		</record>
+
+        <record model="ir.actions.server" id="s_marketplace_mapping_action_stock">
+			<field name="name">Đồng bộ lại tồn kho</field>
+			<field name="model_id" ref="model_s_marketplace_mapping_product"/>
+			<field name="binding_model_id" ref="model_s_marketplace_mapping_product"/>
+			<field name="binding_view_types">list</field>
+			<field name="state">code</field>
+			<field name="code">
+					records.mass_action_mapping_stock_product()
+			</field>
+		</record>
+
+        <record id="s_marketplace_mapping_product_view_tree" model="ir.ui.view">
+            <field name="name">s_marketplace_mapping_product_view_tree</field>
+            <field name="model">s.marketplace.mapping.product</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false" delete="false">
+                    <field name="s_product_id" readonly="True"/>
+                    <field name="s_template_id" readonly="True"/>
+                    <field name="error"/>
+                    <field name="message"/>
+                    <field name="create_date" readonly="True"/>
+                    <field name="s_check_mapping_product" readonly="True" invisible="1"/>
+                    <field name="s_mapping_ecommerce"/>
+                    <field name="s_error_type"/>
+                </tree>
+            </field>
+        </record>
+        <record id="s_marketplace_mapping_product_act_window" model="ir.actions.act_window">
+            <field name="name">Sản phẩm đồng bộ bị lỗi</field>
+            <field name="res_model">s.marketplace.mapping.product</field>
+            <field name="context">{'search_default_group_marketplace': 1}</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Sản phẩm đồng bộ bị lỗi" id="s_marketplace_mapping_product" parent="sale.menu_sale_report"
+                  action="s_marketplace_mapping_product_act_window"/>
+    </data>
+</odoo>

@@ -1,0 +1,79 @@
+<odoo>
+
+    <record id="s_stock_ware_house_form" model="ir.ui.view">
+        <field name="name">s.stock.ware.house.form</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='code']" position="after">
+                 <field name="status_stock_warehouse" widget="boolean_toggle" />
+             </xpath>
+            <xpath expr="//field[@name='code']" position="attributes">
+                <attribute name="string">Mã kho</attribute>
+            </xpath>
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="source_code_name"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('is_warehouse','=',True)]</attribute>
+            </xpath>
+             <xpath expr="//field[@name='partner_id']" position="after">
+               <field name="users_receive_noti" widget="many2many_tags" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="s_stock_ware_house_tree" model="ir.ui.view">
+        <field name="name">s.stock.ware.house.tree</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="status_stock_warehouse" widget="boolean_toggle" />
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="code" string="Mã kho"/>
+            </xpath>
+        </field>
+    </record>
+<!--    <record id="stock_warehouse_view_search" model="ir.ui.view">-->
+<!--        <field name="name">stock.warehouse.search</field>-->
+<!--        <field name="model">stock.warehouse</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Warehouse">-->
+<!--                <field name="name"/>-->
+<!--                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="s_stock_warehouse_view_search" model="ir.ui.view">
+        <field name="name">stock.warehouse.search</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.stock_warehouse_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="code" string="Mã kho"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_select_add_warehouse_magento_2x" model="ir.actions.server">
+        <field name="name">Thêm vào danh sách đồng bộ kho Magento</field>
+        <field name="model_id" ref="model_stock_warehouse"/>
+        <field name="binding_model_id" ref="model_stock_warehouse"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.select_add_warehouse_magento_2x()</field>
+    </record>
+
+    <record id="action_select_cancel_warehouse_magento_2x" model="ir.actions.server">
+        <field name="name">Xóa khỏi danh sách đồng bộ kho Magento</field>
+        <field name="model_id" ref="model_stock_warehouse"/>
+        <field name="binding_model_id" ref="model_stock_warehouse"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.select_cancel_warehouse_magento_2x()</field>
+    </record>
+
+</odoo>

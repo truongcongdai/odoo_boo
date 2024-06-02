@@ -1,0 +1,15 @@
+.pos .order .summary .line {
+    width: 30%;
+}
+.total{
+    float: right;
+}
+.quantity-block{
+    float: left;
+}
+.quantity-block .badge{
+    font-size: 22px;
+}
+.quantity-block .value{
+    font-size: 22px;
+}

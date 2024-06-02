@@ -1,0 +1,56 @@
+<odoo>
+    <record id="s_res_config_setting_facebook_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='languages']" position="before">
+                <div id="facebook_integrate">
+                    <h2>Facebook</h2>
+                    <div class="row mt16 o_settings_container" name="facebook_integrate">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane mt8">
+                                <div>
+                                    <label for="s_client_id"/>
+                                    <div>
+                                        <field name="s_client_id" password="True"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="s_client_secret"/>
+                                    <div>
+                                        <field name="s_client_secret" password="True"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="s_facebook_page_id"/>
+                                    <div>
+                                        <field name="s_facebook_page_id"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="s_url_facebook"/>
+                                    <div>
+                                        <field name="s_url_facebook"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="o_settings_container mt8">
+                                    <field name="s_is_connect_facebook" invisible="1"/>
+                                    <button name="btn_connect_facebook" type="object" string="Connect Facebook"
+                                            attrs="{'invisible': [('s_is_connect_facebook', '=', True)]}"
+                                            class="btn btn-primary mx-2"/>
+                                    <button name="btn_disconnect_facebook" type="object" string="Disconnect Facebook"
+                                            attrs="{'invisible': [('s_is_connect_facebook', '=', False)]}"
+                                            class="btn btn-primary mx-2"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

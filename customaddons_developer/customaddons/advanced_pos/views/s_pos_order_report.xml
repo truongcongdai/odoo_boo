@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_report_pos_order_search_inherit" model="ir.ui.view">
+        <field name="name">report.pos.order.search.inherit</field>
+        <field name="model">report.pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='order_month']" position="after">
+                <filter string="Thương hiệu" name="thuong_hieu_name" context="{'group_by':'thuong_hieu_name'}"/>
+<!--                <filter string="CTKM" name="coupon_program_name" context="{'group_by':'coupon_program_name'}"/>-->
+                <filter string="Hạng khách hàng" name="customer_ranked" context="{'group_by': 'customer_ranked'}"/>
+            </xpath>
+            <xpath expr="//filter[@name='filter_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//filter[@name='filter_date']" position="after">
+                <filter string="Order Date" name="date_order_pos_filter" date="date_order_pos_filter"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_report_pos_order_pivot_inherit" model="ir.ui.view">
+        <field name="name">report.pos.order.pivot.inherit</field>
+        <field name="model">report.pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_pivot" />
+        <field name="arch" type="xml">
+            <xpath expr="//pivot/field[@name='product_qty']" position="after">
+                <field name="so_luong_san_pham" type="measure"/>
+                <field name="tong_chiet_khau" type="measure"/>
+<!--                <field name="doanh_thu" type="measure"/>-->
+                <field name="doanh_thu_chuan" type="measure"/>
+                <field name="gia_tong" type="measure"/>
+            </xpath>
+            <xpath expr="//pivot/field[@name='price_total']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//pivot/field[@name='product_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="point_of_sale.menu_report_order_details"
+              name="Sales Details"
+              action="point_of_sale.action_report_pos_details"
+              parent="point_of_sale.menu_point_rep"
+              groups="advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_thu_ngan,advanced_sale.s_boo_group_ecom,advanced_sale.s_boo_group_area_manager"
+              sequence="4"/>
+</odoo>

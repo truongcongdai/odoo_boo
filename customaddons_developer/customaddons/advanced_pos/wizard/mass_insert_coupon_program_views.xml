@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_mass_insert_coupon_program_form_view" model="ir.ui.view">
+            <field name="name">mass.insert.coupon.program.form</field>
+            <field name="model">mass.insert.coupon.program</field>
+            <field name="arch" type="xml">
+                <form string="Chương trình khuyến mãi" create="false" edit="false">
+                    <sheet>
+                        <group>
+                            <field name="coupon_program_ids" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="confirm_coupon_program" string="Xác nhận" class="btn btn-primary" type="object"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_action_insert_coupon_program" model="ir.actions.act_window">
+            <field name="name">Thêm CTKM</field>
+            <field name="res_model">mass.insert.coupon.program</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

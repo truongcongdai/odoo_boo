@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">view.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='street2']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='street2']" position="after">
+                <field name="ward_id" required="0" class="o_address_street" attrs="{'invisible': [('ward_id','=',False), ('district_id','=',False)]}"
+                       options="{'no_create': True}" placeholder="Phường" />
+                <field name="district_id" invisible="0" placeholder="Quận" />
+                <field name="city_id" invisible="1" />
+                <field name="ward_country_id" invisible="1" />
+                <field name="city_state_id" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='country_id']" position="attributes">
+                <attribute name="domain">[('id', '=?', ward_country_id)]</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state_id']" position="attributes">
+                <attribute name="domain">[('id', '=?', city_state_id)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_update_address" model="ir.actions.server">
+        <field name="name">Cập nhật địa chỉ khách hàng</field>
+        <field name="model_id" ref="advanced_address.model_res_partner"/>
+        <field name="binding_model_id" ref="advanced_address.model_res_partner"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.update_customer_adddress()</field>
+    </record>
+</odoo>

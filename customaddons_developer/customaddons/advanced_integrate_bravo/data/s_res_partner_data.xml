@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="s_res_partner_bravo" forcecreate="1" model="res.partner">
+            <field name="name">BRAVO</field>
+            <field name="phone">0909090909</field>
+        </record>
+    </data>
+</odoo>

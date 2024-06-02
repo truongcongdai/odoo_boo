@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_choice_stock_package_form_view" model="ir.ui.view">
+            <field name="name">s.choice.stock.package.form</field>
+            <field name="model">s.choice.stock.package</field>
+            <field name="arch" type="xml">
+                <form string="Thêm vào kiện">
+                    <sheet>
+                        <group>
+                            <field name="stock_picking_id" invisible="1"/>
+                            <field name="stock_picking_package" invisible="1"/>
+                            <field name="package_id" required="1" domain="[('id','in', stock_picking_package), ('state','=','nhap')]"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_add_to_stock_package" string="Thêm vào kiện" type="object"
+                                class="btn-primary"/>
+                        <button string="Hủy" type="object" name="cancel" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="s_choice_stock_package_act_window" model="ir.actions.act_window">
+            <field name="name">Thêm vào kiện</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.choice.stock.package</field>
+            <field name="view_mode">form</field>
+        </record>
+    </data>
+</odoo>

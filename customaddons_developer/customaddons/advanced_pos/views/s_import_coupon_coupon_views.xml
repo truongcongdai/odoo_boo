@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_import_coupon_coupon_tree_views" model="ir.ui.view">
+            <field name="name">s.import.coupon.coupon.tree</field>
+            <field name="model">s.import.coupon.coupon</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="boo_code" />
+<!--                    <field name="expiration_date" />-->
+                    <field name="program_id" />
+<!--                    <field name="state"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="s_import_coupon_coupon_action" model="ir.actions.act_window">
+            <field name="name">Import Coupon</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.import.coupon.coupon</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="s_import_coupon_coupon_menu" name="Import Coupon"
+                  parent="point_of_sale.pos_config_menu_catalog"
+                  action="advanced_pos.s_import_coupon_coupon_action" sequence="92"/>
+    </data>
+</odoo>

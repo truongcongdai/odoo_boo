@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_view_res_partner_filter" model="ir.ui.view">
+            <field name="name">s.view.res.partner.filter</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='inactive']" position="after">
+                    <separator />
+                    <filter name="old_customer" string="Valued Customer" domain="[('is_new_customer', '=', False)]" />
+                    <filter name="new_customer" string="New Customer" domain="[('is_new_customer', '=', True)]" />
+                    <separator />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">rse.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="is_new_customer" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="birthday"/>
+                    <field name="gender"/>
+                </xpath>
+
+                <xpath expr="//field[@name='city']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="attrs">{'invisible': [('state_id','!=',False)]}</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='contact_addresses']/field[@name='child_ids']/form//field[@name='comment']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='contact_addresses']/field[@name='child_ids']/form//field[@name='comment']" position="after">
+                    <field name="partner_note" placeholder="Internal note..."/>
+                </xpath>
+
+                <xpath expr="//page[@name='internal_notes']/field[@name='comment']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='internal_notes']/field[@name='comment']" position="after">
+                    <field name="partner_note" placeholder="Internal note..."/>
+                </xpath>
+
+<!--                <xpath expr="//field[@name='phone']" position="after">-->
+<!--                    <field name="phone_delivery" placeholder="Địa chỉ giao hàng..." attrs="{'invisible': [('type','=','delivery')]}"/>-->
+<!--                </xpath>-->
+
+                <xpath expr="//field[@name='city']" position="before">
+                    <field name="district" readonly="1" attrs="{'invisible': [('district_id','!=',False)]}"/>
+                    <span> - </span>
+                </xpath>
+
+                <xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="before">
+                    <field name="last_order" readonly="1" />
+                    <field name="pos_create_customer" readonly="1" />
+                </xpath>
+
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="customer_ranked" readonly="1"/>
+<!--                    <field name="related_customer_ranked"/>-->
+                </xpath>
+
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page string="Lịch sử tích điểm" name="history_points">
+                        <field name="history_points_ids" readonly="1">
+                            <tree editable="bottom">
+                                <field name="order_id"/>
+                                <field name="sale_order_id"/>
+                                <field name="diem_cong" sum="Total"/>
+                                <field name="ly_do"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page string="Lịch sử điểm Green" name="history_green_points" groups="base.group_system">
+                        <field name="history_green_points_ids">
+                            <tree editable="bottom">
+                                <field name="ngay_tich_diem"/>
+                                <field name="diem_cong" sum="Total"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page string="Lịch sử tích điểm đơn Online cũ" name="s_history_loyalty_point_so" groups="base.group_system">
+                        <field name="s_history_loyalty_point_so_ids" readonly="1">
+                            <tree editable="bottom">
+                                <field name="sale_order_id"/>
+                                <field name="diem_cong" sum="Total"/>
+                                <field name="ly_do"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='loyalty_points']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='contact_addresses']/field[@name='child_ids']/form//field[@name='street2']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='contact_addresses']/field[@name='child_ids']/form//field[@name='city']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='contact_addresses']/field[@name='child_ids']/form//field[@name='state_id']" position="before">
+                    <field name="ward_id" />
+                    <field name="district_id" />
+                </xpath>
+
+            </field>
+        </record>
+<!--        ###Chuyển code vào module advanced_loyalty_program-->
+<!--        <record id="action_select_update_customer_rank" model="ir.actions.server">-->
+<!--            <field name="name">Cập nhật hạng khách hàng</field>-->
+<!--            <field name="model_id" ref="model_res_partner"/>-->
+<!--            <field name="binding_model_id" ref="model_res_partner"/>-->
+<!--            <field name="binding_view_types">list</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">-->
+<!--                for rec in records:-->
+<!--                    rec._compute_customer_rank()-->
+<!--            </field>-->
+<!--        </record>-->
+
+    <record id="s_partner_default_filter" model='ir.ui.view'>
+        <field name="name">Type Search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='type_person']" position="after">
+                <filter name="filter_type" string="Loại địa chỉ: Liên hệ" domain="[('type','=','contact')]"/>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="s_res_partner_action_customer" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="context">{'search_default_filter_type': 1}</field>
+        </record>
+
+        <record id="contacts.action_contacts" model="ir.actions.act_window">
+            <field name="name">Contacts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form,activity</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="context">{'search_default_filter_type': True}</field>
+        </record>
+
+    </data>
+</odoo>

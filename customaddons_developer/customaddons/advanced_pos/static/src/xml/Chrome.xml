@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.Chrome" t-inherit-mode="extension" owl="1">
+<!--        <xpath expr="//div[hasclass('status-buttons-portal')]" position="before">-->
+<!--            <div t-attf-class="s_customer_list {{ (mainScreen.name === 'ProductScreen') ? 'product-screen' : 'other-screen' }}">-->
+<!--                <span class="s_icon_customer">-->
+<!--                    <i class="fa fa-user"/>-->
+<!--                </span>-->
+<!--                <input id="top-search" class="s_input_customer_list" placeholder="Search Customers" size="30" t-on-click="_searchCustomer"/>-->
+<!--            </div>-->
+<!--        </xpath>-->
+
+        <xpath expr="//div[hasclass('pos-topheader')]" position="attributes">
+            <attribute name="t-on-mousemove">_onMouseMoveHiddenProductList</attribute>
+        </xpath>
+        <xpath expr="//CashMoveButton" position="after">
+            <div class="s_boo_pricelist_coupon">
+
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-content')]" position="attributes">
+            <attribute name="t-on-mousemove">_onMouseMoveHiddenProductList</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('pos')]" position="inside">
+            <SOrderSelectorWidget/>
+        </xpath>
+    </t>
+</templates>

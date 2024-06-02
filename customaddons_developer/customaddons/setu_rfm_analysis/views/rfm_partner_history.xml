@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--        <record id="rfm_partner_history_form_view" model="ir.ui.view">-->
+        <!--            <field name="name">rfm.partner.history.form</field>-->
+        <!--            <field name="model">rfm.partner.history</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form string="RFM Segment History">-->
+        <!--                    <sheet>-->
+        <!--                        <div class="oe_title">-->
+        <!--                            <label for="example_title"/>-->
+        <!--                            <h1>-->
+        <!--                                <field name="example_title" placeholder="Title"/>-->
+        <!--                            </h1>-->
+        <!--                        </div>-->
+        <!--                        <group>-->
+        <!--                            <group>-->
+        <!--                                <field name="create_date"/>-->
+        <!--                            </group>-->
+        <!--                            <group>-->
+        <!--                                <field name="example_field"/>-->
+        <!--                            </group>-->
+        <!--                        </group>-->
+        <!--                    </sheet>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <record id="rfm_partner_history_tree_view" model="ir.ui.view">
+            <field name="name">rfm.partner.history.tree</field>
+            <field name="model">rfm.partner.history</field>
+            <field name="arch" type="xml">
+                <tree string="RFM Segment History" create="0" edit="0" delete="0">
+                    <field name="previous_segment" widget="many2one_clickable"/>
+                    <field name="current_segment" widget="many2one_clickable"/>
+                    <field name="partner_id" widget="many2one_clickable"/>
+                    <field name="company_id" widget="many2one_clickable"/>
+                    <field name="date_changed"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rfm_partner_history_search_view" model="ir.ui.view">
+            <field name="name">rfm.partner.history.search</field>
+            <field name="model">rfm.partner.history</field>
+            <field name="arch" type="xml">
+                <search string="RFM Segment History">
+                    <group expand="1" string="Group By">
+                        <filter string="Company" name="group_by_company_id" domain="[]"
+                                context="{'group_by':'company_id'}"/>
+                        <filter string="Partner" name="group_by_partner_id" domain="[]"
+                                context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="rfm_partner_history_company_wise_act_window" model="ir.actions.act_window">
+            <field name="name">RFM Segment History</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rfm.partner.history</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'search_default_group_by_company_id':1,'search_default_group_by_partner_id':1}</field>
+        </record>
+
+        <menuitem sequence="99" name="RFM Segment History" id="rfm_partner_history_company_wise_menu" parent="rfm_main_menu"
+                  action="rfm_partner_history_company_wise_act_window"/>
+
+        <record id="rfm_partner_team_history_tree_view" model="ir.ui.view">
+            <field name="name">rfm.partner.team.history.tree</field>
+            <field name="model">rfm.partner.team.history</field>
+            <field name="arch" type="xml">
+                <tree string="RFM Segment Team History" create="0" edit="0" delete="0">
+                    <field name="previous_segment" widget="many2one_clickable"/>
+                    <field name="current_segment" widget="many2one_clickable"/>
+                    <field name="partner_id" widget="many2one_clickable"/>
+                    <field name="team_id" widget="many2one_clickable"/>
+                    <field name="date_changed"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rfm_partner_team_history_search_view" model="ir.ui.view">
+            <field name="name">rfm.partner.team.history.search</field>
+            <field name="model">rfm.partner.team.history</field>
+            <field name="arch" type="xml">
+                <search string="RFM Segment History">
+                    <group expand="1" string="Group By">
+                        <filter string="Sales Team" name="group_by_team_id" domain="[]"
+                                context="{'group_by':'team_id'}"/>
+                        <filter string="Partner" name="group_by_partner_id" domain="[]"
+                                context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="rfm_partner_team_history_company_wise_act_window" model="ir.actions.act_window">
+            <field name="name">RFM Segment Sales Team History</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rfm.partner.team.history</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'search_default_group_by_team_id':1,'search_default_group_by_partner_id':1}</field>
+        </record>
+
+        <menuitem sequence="100"
+                  name="RFM Segment Sales Team History"
+                  id="rfm_partner_team_history_company_wise_menu"
+                  groups="setu_rfm_analysis.group_sales_team_rfm"
+                  parent="rfm_main_menu"
+                  action="rfm_partner_team_history_company_wise_act_window"/>
+    </data>
+</odoo>

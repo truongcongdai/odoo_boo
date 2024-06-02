@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="pos_sale.SaleOrderRow" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('date')]/div[2]" position="replace">
+            <t t-esc="date_custom"/>
+        </xpath>
+    </t>
+</templates>
