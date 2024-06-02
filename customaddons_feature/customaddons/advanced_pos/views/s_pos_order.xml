@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_pos_order_inherit" model="ir.ui.view">
+        <field name="name">pos.order.form.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='extra']/group/group[2]/field[@name='company_id']" position="after">
+                <field name="source_id" readonly="True"/>
+            </xpath>
+            <xpath expr="//field[@name='session_id']" position="after">
+                <field name="sale_person_id" readonly="True"/>
+            </xpath>
+            <xpath expr="//button[@name='refund']" position="attributes">
+                <attribute name="groups">advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_area_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='refund']" position="attributes">
+                <attribute name="attrs">{'invisible':['|', '|', '|', ('is_cancel_order','=',True), ('state','=','draft'), ('is_refund_order','=',True), ('has_refundable_lines', '=', False)]}</attribute>
+                <attribute name="string">HỦY ĐƠN HÀNG</attribute>
+            </xpath>
+            <xpath expr="//button[@name='refund']" position="after">
+                <button name="force_unlink_cancel_order" string="Xóa đơn hàng" type="object" class="oe_highlight"
+                        attrs="{'invisible':['|','|',('is_cancel_order','=',False),('state','!=','draft'),('refunded_orders_count','&lt;',1)]}"
+                        groups="advanced_sale.s_boo_group_administration"/>
+            </xpath>
+<!--            <xpath expr="//field[@name='config_id']" position="attributes">-->
+<!--                <attribute name="attrs">{'readonly':[('state', 'not in', ('draft'))]}</attribute>-->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', 'not in', ('draft'))]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="customer_ranked"/>
+                <field name="pos_order_status" readonly="True"/>
+                <field name="is_order_duplicate" attrs="{'invisible': [('is_order_duplicate','=',False)],'readonly': 1}"/>
+                <field name="order_duplicate_origin" attrs="{'invisible': [('order_duplicate_origin','=',False)],'readonly': 1}"/>
+                <field name="is_cancel_order" attrs="{'invisible': [('is_cancel_order','=',False)],'readonly': 1}"/>
+                <field name="is_refund_order" attrs="{'invisible': [('is_refund_order','=',False)],'readonly': 1}"/>
+                <field name="s_is_admin"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="pos_reference"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='price_subtotal_incl']" position="after">
+                <field name="coupon_id" string="Mã giảm giá"/>
+                <field name="program_id"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='products']/field[@name='lines']/tree/field[@name='price_unit']" position="after">
+                <field name="s_lst_price" widget="monetary"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='products']/field[@name='lines']/tree/field[@name='full_product_name']" position="after">
+                <field name="s_product_barcode"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='payments']/field[@name='payment_ids']/tree/field[@name='payment_method_id']" position="after">
+                <field name="payment_note"/>
+                <field name="s_completed_time"/>
+            </xpath>
+<!--            <xpath expr="//notebook/page[@name='products']/field[@name='lines']/tree/field[@name='qty']" position="attributes">-->
+<!--                <attribute name="sum">Tổng số lượng</attribute>-->
+<!--            </xpath>-->
+            <xpath expr="//group[@name='order_total']/field[@name='amount_tax']" position="before">
+                <field name="total_quantity_pos" string="Tổng số lượng sản phẩm" style="font-weight: bold;font-size:14px"/>
+            </xpath>
+            <xpath expr="//form/sheet" position="after">
+                <div class="oe_chatter">
+                    <field name="message_ids"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='loyalty_points']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="groups">advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                    advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi,
+                    advanced_sale.s_boo_group_ke_toan</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_pos_order_invoice']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|', ('invoice_group', '=', False), ('state','!=','paid'),('s_is_admin','=',False)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_view_invoice']" position="attributes">
+                <attribute name="attrs">{'invisible':['|',('state','!=','invoiced'),('s_is_admin','=',False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="s_pos_order_tree_inherit" model="ir.ui.view">
+        <field name="name">pos.order.tree.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="pos_order_status" readonly="True"/>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="replace">
+                <field name="create_date"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="total_quantity_pos" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="customer_ranked"/>
+            </xpath>
+            <xpath expr="//field[@name='customer_phone']" position="attributes">
+                <attribute name="groups">advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                    advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi,
+                    advanced_sale.s_boo_group_ke_toan</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="s_pos_order_filter_inherit" model="ir.ui.view">
+        <field name="name">pos.order.filter.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/filter[@name='status']" position="after">
+                <filter string="Phương thức thanh toán" name="payment_method" domain="[]" context="{'group_by': 'payment_method'}"/>
+                <filter string="Chương trình khuyến mãi" name="applied_promotion_program" domain="[]" context="{'group_by': 'applied_promotion_program'}"/>
+                <filter string="Điểm bán hàng" name="pos_name" context="{'group_by': 'pos_name'}"/>
+                <filter string="Hạng khách hàng" name="customer_ranked" context="{'group_by': 'customer_ranked'}"/>
+                <field name="pos_name"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_select_record_update_store_code_pos_order" model="ir.actions.server">
+        <field name="name">Cập nhật store code</field>
+        <field name="model_id" ref="model_pos_order"/>
+<!--        <field name="binding_model_id" ref="model_pos_order"/>-->
+        <field name="binding_model_id" eval="False" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records._compute_pos_order_config_id_code()</field>
+    </record>
+    <record id="action_select_record_update_ctkm" model="ir.actions.server">
+        <field name="name">Cập nhật CTKM trong Order</field>
+        <field name="model_id" ref="model_pos_order"/>
+<!--        <field name="binding_model_id" ref="model_pos_order"/>-->
+        <field name="binding_model_id" eval="False" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records._compute_apply_promotion_program()</field>
+    </record>
+</odoo>

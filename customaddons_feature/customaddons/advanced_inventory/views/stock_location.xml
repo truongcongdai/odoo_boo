@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_location_transit_form_view_inherit" model="ir.ui.view">
+            <field name="name">stock_location_transit_form_view_inherit</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="s_code" string="Mã địa điểm"/>
+                    <field name="s_is_transit_location"/>
+                    <field name="s_transit_location_id" attrs="{'invisible': [('s_is_transit_location','=',True)]}"
+                           domain="[('s_is_transit_location','=',True)]"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_view_location_tree2_inherit" model="ir.ui.view">
+            <field name="name">stock_view_location_tree2_inherit</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='complete_name']" position="replace">
+                    <field name="s_complete_name"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="s_view_location_search_inherit" model="ir.ui.view">
+            <field name="name">s.view.location.search.inherit</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='complete_name']" position="replace">
+                    <field name="s_complete_name" string="Địa điểm kho"
+                           filter_domain="['|','|','|',('location_id.s_complete_name', 'ilike', self),('location_id.s_code', 'ilike', self),('s_complete_name', 'ilike', self),('s_code', 'ilike', self)]"/>
+                </xpath>
+                <xpath expr="//field[@name='location_id']" position="attributes">
+                    <attribute name="filter_domain">['|','|','|',('location_id.s_complete_name', 'ilike', self),('location_id.s_code', 'ilike', self),('s_complete_name', 'ilike', self),('s_code', 'ilike', self)]
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

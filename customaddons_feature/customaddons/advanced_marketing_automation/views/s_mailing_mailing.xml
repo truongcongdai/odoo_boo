@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_mailing_mailing_inherit_view_form" model="ir.ui.view">
+        <field name="name">s.mailing.mailing.inherit.view.form</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@class='o_mails_canceled']" position="after">
+                <div class="o_mails_in_queue" attrs="{'invisible': [('s_is_check_quota_remaining', '=', False)]}">
+                    <strong>
+                        <span class="text-danger" name="next_departure_text">Số lượng tin nhắn Zalo ZNS Template đã hết.</span>
+                    </strong>
+                </div>
+            </xpath>
+            <xpath expr="//label[@for='mailing_model_id']" position="before">
+                <field name="s_is_zalo_sms_marketing" string="Zalo SMS Marketing" widget="boolean_toggle" attrs="{'invisible': [('mailing_type', '!=', 'sms')]}"/>
+                <div class="o_td_label">
+                    <label for="s_zalo_zns_template_id" string="ZNS Template"
+                           attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)]}"/>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <field name="s_zalo_zns_template_id"
+                               attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)],'required':[('s_is_zalo_sms_marketing', '=', True)]}"/>
+                        <field name="s_is_check_quota_remaining" invisible="1"/>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//page[@name='sms_body']/field[@name='body_plaintext']" position="attributes">
+                <attribute name="attrs">{'required': [('mailing_type', '=', 'sms'),('s_is_zalo_sms_marketing','=',
+                    False)], 'invisible': [('mailing_type', '!=', 'sms')]}
+                </attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='sms_body']" position="attributes">
+                <attribute name="attrs">{'invisible':['|', ('s_is_zalo_sms_marketing','=', True), ('mailing_type', '!=', 'sms')]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='sms_allow_unsubscribe']" position="after">
+                <div class="o_td_label">
+                    <label for="s_type" string="Kiểu gửi tin nhắn"
+                           attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)]}"/>
+                </div>
+                <div>
+                    <field name="s_type" attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)]}"/>
+                </div>
+
+                <field name="s_type_send_sms"
+                       attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)]}"/>
+
+
+                <div class="o_td_label">
+                    <label for="apply_order" string="Áp dụng cho"
+                           attrs="{'invisible':['|',('s_type_send_sms', '!=', 'completed_buy'),('s_is_zalo_sms_marketing', '=', False)]}"/>
+                </div>
+                <div>
+                    <field name="apply_order"
+                           attrs="{'invisible':['|',('s_type_send_sms', '!=', 'completed_buy'),('s_is_zalo_sms_marketing', '=', False)],
+                       'required':[('s_type_send_sms', '=', 'completed_buy')]}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="s_mailing_mailing_view_form_marketing_activity" model="ir.ui.view">
+        <field name="name">s.mailing.mailing.view.form.marketing.activity.inherit.sms</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="marketing_automation.mailing_mailing_view_form_marketing_activity"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='subject']" position="after">
+                <field name="s_is_zalo_sms_marketing" string="Zalo SMS Marketing" widget="boolean_toggle"/>
+                <div class="o_td_label">
+                    <label for="s_zalo_zns_template_id" string="ZNS Template"
+                           attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)]}"/>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <field name="s_zalo_zns_template_id"
+                               attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)],'required':[('s_is_zalo_sms_marketing', '=', True)]}"/>
+                    </div>
+                </div>
+<!--                <div class="o_td_label">-->
+<!--                    <label for="s_type" string="Kiểu gửi tin nhắn"-->
+<!--                           attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)],}"/>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-xs-12 col-md-3">-->
+<!--                        <field name="s_type" attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)]}"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="o_td_label">
+                    <label for="s_type_send_sms" string="Loại tin nhắn"
+                           attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)],}"/>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <field name="s_type_send_sms" attrs="{'invisible': [('s_is_zalo_sms_marketing', '=', False)]}"/>
+                    </div>
+                </div>
+
+                <div class="o_td_label">
+                    <label for="apply_order" string="Áp dụng cho"
+                           attrs="{'invisible':['|',('s_type_send_sms', '!=', 'completed_buy'),('s_is_zalo_sms_marketing', '=', False)]}"/>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <field name="apply_order"
+                               attrs="{'invisible':['|',('s_type_send_sms', '!=', 'completed_buy'),('s_is_zalo_sms_marketing', '=', False)],
+                       'required':[('s_type_send_sms', '=', 'completed_buy')]}"/>
+                    </div>
+                </div>
+
+            </xpath>
+            <xpath expr="//page[@name='sms_body']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('mailing_type', '!=', 'sms'),('s_is_zalo_sms_marketing','=',
+                    True)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//page[@name='sms_body']/field[@name='body_plaintext']" position="attributes">
+                <attribute name="attrs">{'required': [('mailing_type', '=', 'sms'),('s_is_zalo_sms_marketing','=',
+                    False)]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="marketing_automation_sms.mailing_mailing_view_form_marketing_automation" model="ir.ui.view">
+        <field name="name">mailing.mailing.view.form.marketing.activity.inherit.sms</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="marketing_automation.mailing_mailing_view_form_marketing_automation"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='row']" position="after">
+                <field name="mailing_model_id"/>
+                <field name="mailing_domain" widget="domain" options="{'model': 'mailing_model_real'}"/>
+            </xpath>
+            <xpath expr="//page[@name='mail_body']" position="attributes">
+                <attribute name="attrs">{'invisible': [('mailing_type', '!=', 'mail')]}</attribute>
+            </xpath>
+            <xpath expr="//page[@name='sms_body']" position="attributes">
+                <attribute name="attrs">{'invisible':[('s_is_zalo_sms_marketing','=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='subject']" position="attributes">
+                <attribute name="attrs">{'invisible': [('mailing_type', '=', 'zalo')], 'required': [('mailing_type',
+                    '=','mail')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='sms_subject']" position="attributes">
+                <attribute name="attrs">{'invisible': [('mailing_type', '=', 'mail')], 'required': [('mailing_type',
+                    '=', 'sms')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='body_plaintext']" position="attributes">
+                <attribute name="attrs">{'readonly': [('mailing_type', '=', 'mail')], 'required': [('mailing_type', '=',
+                    'sms'),('s_is_zalo_sms_marketing','=', False)]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mass_mailing_sms.mailing_mailing_action_sms_view_tree" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="mass_mailing_sms.mailing_mailing_view_tree_sms"/>
+        <field name="act_window_id" ref="mass_mailing_sms.mailing_mailing_action_sms"/>
+    </record>
+
+    <record id="mass_mailing_sms.mailing_mailing_action_sms_view_kanban" model="ir.actions.act_window.view">
+        <field name="sequence">2</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="mass_mailing_sms.mailing_mailing_view_kanban_sms"/>
+        <field name="act_window_id" ref="mass_mailing_sms.mailing_mailing_action_sms"/>
+    </record>
+
+</odoo>

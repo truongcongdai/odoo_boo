@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="s_product_gender_female" forcecreate="1" model="s.product.gender">
+        <field name="name">Female</field>
+        <field name="code">female</field>
+    </record>
+
+    <record id="s_product_gender_male" forcecreate="1" model="s.product.gender">
+        <field name="name">Male</field>
+        <field name="code">male</field>
+    </record>
+
+    <record id="s_product_gender_other" forcecreate="1" model="s.product.gender">
+        <field name="name">Other</field>
+        <field name="code">other</field>
+    </record>
+
+</odoo>

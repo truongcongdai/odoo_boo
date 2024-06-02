@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_phieu_xuat">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div style="border: double #CCCCCC !important; width:350px; margin:160px auto 0 auto">
+                                <div style="margin: 6px 18px;">
+                                    <div class="mt48 mb32">
+                                        <div>
+                                            <div name="div_phieu_dieu_chuyen"
+                                                 t-if="o.transfer_out_id.code">
+                                                <p style="margin-bottom: 6px">Phiếu điều chuyển:
+                                                    <span t-field="o.transfer_out_id.code"/>
+                                                </p>
+                                            </div>
+                                            <div name="div_phieu_xuat" t-if="o.name">
+                                                <p style="margin-bottom: 6px">Phiếu xuất:
+                                                    <span t-field="o.name"/>
+                                                </p>
+                                            </div>
+                                            <div name="div_ngay_xuat_hang" t-if="o.scheduled_date">
+                                                <p style="margin-bottom: 6px">Ngày xuất hàng:
+                                                    <span t-field="o.scheduled_date"/>
+                                                </p>
+                                            </div>
+                                            <div name="div_tong_so_luong" t-if="o.name">
+                                                <p style="margin-bottom: 6px">Tổng số lượng:
+                                                    <span t-field="o.total_quantity_done"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 12px">
+                                            <div name="div_tu_kho" t-if="o.location_id.s_complete_name">
+                                                <p style="margin-bottom: 6px">Từ kho:
+                                                    <span t-field="o.location_id.s_complete_name"/>
+                                                </p>
+                                            </div>
+                                            <div name="div_den_kho"
+                                                 t-if="o.location_dest_id.s_complete_name">
+                                                <p style="margin-bottom: 6px">Đến kho:
+                                                    <span t-field="o.transfer_out_id.location_in_id.s_complete_name"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="justify-content-end mb16">
+                                        <div name="right_box">
+                                            <div t-field="o.logistic_barcode"
+                                                 t-options="{'widget': 'barcode', 'width': 350, 'height': 100, 'img_style': 'width:300px;height:100px;'}"/>
+                                        </div>
+                                        <div style="margin-top:6px; width:350px; text-align:center">
+                                            <span t-field="o.logistic_barcode"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <report
+                string="Phiếu xuất"
+                id="action_report_print_phieu_xuat"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="advanced_logistic.report_phieu_xuat"
+                file="advanced_logistic.report_phieu_xuat"
+                menu="False"
+                print_report_name="('Phiếu Xuất - %s'% ( object.name))"
+        />
+
+        <record id="format_print_stock_picking" model="report.paperformat">
+            <field name="name">Picking A6</field>
+            <field name="default" eval="True"/>
+            <field name="format">A6</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">80</field>
+        </record>
+
+        <record id="advanced_logistic.action_report_print_phieu_xuat" model="ir.actions.report">
+            <field name="paperformat_id" ref="advanced_logistic.format_print_stock_picking"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="s_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">s.res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='product_general_settings']/preceding-sibling::h2" position="before">
+                <div id="bravo_integrate" groups="base.group_no_one">
+                    <h2>Bravo Integrating</h2>
+                    <div class="row mt16 o_settings_container" name="bravo_integrate">
+                        <div class="col-12 col-lg-6 o_setting_box" id="bravo_url">
+                            <div class="o_setting_right_pane">
+                                <div class="text-muted">
+                                    For Bravo Integration API Calling
+                                </div>
+                                <button name="action_view_bravo_product_cron" icon="fa-arrow-right" type="object"
+                                        class="btn-link" string="Synchronize Cron" />
+                            </div>
+                            <div class="o_setting_right_pane mt8">
+                                <div>
+                                    <label for="bravo_url"/>
+                                    <div class="content-group mt16">
+                                        <field name="bravo_url" />
+                                    </div>
+                                </div>
+                                <field name="bravo_is_connected" invisible="1"/>
+                                <button name="action_connect_bravo" type="object" class="mt16 oe_highlight"
+                                        confirm="This action will connect Bravo, please make sure you have them"
+                                        string="Kết nối Bravo" attrs="{'invisible': [('bravo_is_connected', '=', True)]}"/>
+                                <button name="action_disconnect_bravo" type="object" class="mt16 oe_highlight"
+                                        string="Ngắt kết nối Bravo"
+                                        attrs="{'invisible': [('bravo_is_connected', '=', False)]}"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="bravo_url">
+                            <div class="o_setting_right_pane">
+                                <div>
+                                    <label for="bravo_username"/>
+                                    <div class="content-group mt16">
+                                        <field name="bravo_username" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="bravo_password"/>
+                                    <div class="content-group mt16">
+                                        <field name="bravo_password" password="1" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="bravo_push_limit"/>
+                                    <div class="content-group mt16">
+                                        <field name="bravo_push_limit"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

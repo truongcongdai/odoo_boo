@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('customer-button')]" position="after">
+            <div class="sale-person-button">
+                <div class="button" t-on-click="onClickSalePerson">
+                    <i class="fa fa-user" role="img" aria-label="Nhân viên bán hàng"
+                       title="Nhân viên bán hàng"/>
+                    <div class="select_sale_person">
+                        <div>Nhân viên bán hàng</div>
+                        <div class="selected_sale_person" required="1"></div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('customer-button')]" position="before">
+            <t t-if="env.pos.config.s_set_bill">
+                <div class="is-bag">
+                    <label t-on-click="onChangeCheckBoxIsBill">
+                        <input type="checkbox" id="is_bill"/>
+                        <span>Không lấy bill</span>
+                    </label>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[hasclass('customer-button')]" position="before">
+            <div class="is-bag" style="display: none;">
+                <label t-on-click="onChangeCheckBoxIsBag">
+                    <input type="checkbox" id="is_bag"/>
+                    <span>Không lấy túi</span>
+                </label>
+            </div>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_mkp_view_order_form" model="ir.ui.view">
+        <field name="name">s.mkp.view.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_method']" position="attributes">
+                <attribute name="attrs">{'invisible': [('s_facebook_sender_id', '=', False),('s_zalo_sender_id',
+                        '=', False),('is_magento_order', '=', False)],
+                        'readonly': [('s_facebook_sender_id', '=', False),('s_zalo_sender_id', '=', False)], 'required':
+                        ['|','|',('is_magento_order', '=',
+                        True),('s_facebook_sender_id', '!=', False),('s_zalo_sender_id', '!=', False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,28 @@
+.zaui-list-item.SPointExchangeHistory
+  .zaui-list-item-right
+  .zaui-list-item-title-container {
+  white-space: break-spaces !important;
+}
+
+.zaui-list-item.SPointExchangeHistory .zaui-list-item-title {
+  font-size: 12px;
+}
+
+.zaui-list-item.SPointExchangeHistory {
+  padding: 6px;
+  font-size: 12px;
+}
+
+.title_history_point {
+  text-align: center;
+  font-size: 26px;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  background: white;
+  display: flex;
+}
+.zaui-list-item.SPointExchangeHistory .zaui-list-item-prefix {
+  align-items: center;
+  display: flex;
+}

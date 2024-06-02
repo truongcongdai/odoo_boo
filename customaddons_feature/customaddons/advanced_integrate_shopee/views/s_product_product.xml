@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="s_product_product_shopee_form_inherit" model="ir.ui.view">
+        <field name="name">product.product.shopee.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='chat_lieu']" position="after">
+                <field name="s_shopee_is_synced" readonly="True"
+                       attrs="{ 'invisible': [('s_shopee_is_synced', '!=', True)] }"/>
+            </xpath>
+            <xpath expr="//button[@name='action_open_label_layout']" position="after">
+                <button name="btn_sync_stock_realtime_shopee" type="object" string="Đồng bộ tồn kho Shopee"
+                        class="btn btn-primary mx-2"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_product_shopee_normal_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.product.int.shopee.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id"
+               ref="advanced_marketplace.product_product_normal_form_view_inherit_advance_marketplace"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']/group[@name='sale']/group[@name='marketplaces']" position="inside">
+                <field name="s_shopee_to_sync"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_product_view_form_easy_inherit_shopee" model="ir.ui.view">
+        <field name="name">produc.product.view.form.easy.inherit.shopee</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="s_shopee_to_sync"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="s_product_product_action_update_need_sync_shopee_stock">
+        <field name="name">###Shopee: _compute_need_sync_shopee_stock</field>
+        <field name="model_id" ref="model_product_product"/>
+        <field name="binding_model_id" ref="model_product_product"/>
+        <field name="groups_id" eval="[(4, ref('base.group_no_one'))]"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            records._compute_need_sync_shopee_stock()
+        </field>
+    </record>
+</odoo>

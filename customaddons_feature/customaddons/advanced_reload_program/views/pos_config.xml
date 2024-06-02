@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pos_config_reload_program_inherit" model="ir.ui.view">
+            <field name="name">pos.config.reload.program.inherit</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//sheet" position="before">-->
+<!--                    <header>-->
+<!--                        <button string="Đặt chương trình khuyến mãi" class="oe_highlight"-->
+<!--                                type="object" name="s_set_domain_program"/>-->
+<!--&lt;!&ndash;                        <button string="Tải chương trình khuyến mãi" class="oe_highlight"&ndash;&gt;-->
+<!--&lt;!&ndash;                                type="object" name="s_action_load_coupon_program"/>&ndash;&gt;-->
+<!--                    </header>-->
+<!--                </xpath>-->
+                <xpath expr="//div[@id='pos-coupon']" position="inside">
+                    <div class="col-12 col-lg-6 o_setting_box price_control">
+                        <div class="o_setting_left_pane">
+                            <field name="enable_program_cache" widget="boolean_toggle"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="enable_program_cache"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box price_control" attrs="{'invisible':[('enable_program_cache', '=', False)]}">
+                        <div class="o_setting_left_pane">
+                            <field name="is_active_program_cache" readonly="1"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="is_active_program_cache"/>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='module_pos_restaurant']" position="after">
+                    <field name="s_coupon_domain" groups="base.group_no_one"/>
+                    <field name="s_promo_domain" groups="base.group_no_one"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

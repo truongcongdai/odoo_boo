@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="mail.DiscussSidebar" t-inherit-mode="extension" owl="1">
+            <xpath expr="//div[hasclass('o_DiscussSidebar_categoryMailbox')]" position="after">
+                <div class="o_DiscussSidebarCategory_title o_DiscussSidebarCategory_headerItem"
+                     t-on-click="discuss.onClickFoldFilter">
+                    <i class="o_DiscussSidebarCategory_titleIcon is_fold_filter fa fa-chevron-right"/>
+                    <span class="o_DiscussSidebarCategory_titleText">Bộ lọc</span>
+                </div>
+                <div class="d-flex" style="flex-flow:column">
+                    <div t-on-click="discuss.booOnClickAll" t-on-change="discuss.booOnChangeSelected" class="o_DiscussSidebarMailbox s_filter_channel"
+                         style="padding-left: 20px;display:none">
+                        Tất cả
+                    </div>
+                    <div t-on-click="discuss.booOnClickUnread" class="o_DiscussSidebarMailbox s_filter_channel"
+                         style="padding-left: 20px;display:none">
+                        Tin nhắn chưa đọc
+                    </div>
+                    <div t-on-click="discuss.booOnClickRead" class="o_DiscussSidebarMailbox s_filter_channel"
+                         style="padding-left: 20px;display:none">
+                        Tin nhắn đã đọc
+                    </div>
+                </div>
+            </xpath>
+        </t>
+</templates>

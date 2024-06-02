@@ -1,0 +1,19 @@
+<odoo>
+    <data noupdate="1">
+        <record id="s_res_partner_tiktok" forcecreate="1" model="res.partner">
+            <field name="name">Tiktok</field>
+            <field name="phone">7676767676</field>
+        </record>
+        <record id="utm_source_tiktok" model="utm.source">
+            <field name="name">Tiktok</field>
+        </record>
+        <record id="s_line_discount_tiktok" forcecreate="1" model="product.product">
+            <field name="name">Promo Discount Tiktok</field>
+            <field name="list_price">0</field>
+            <field name="standard_price">0</field>
+            <field name="detailed_type">service</field>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="False"/>
+        </record>
+    </data>
+</odoo>

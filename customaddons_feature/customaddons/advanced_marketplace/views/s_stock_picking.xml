@@ -1,0 +1,48 @@
+<odoo>
+    <record id="action_print_shipping_label" model="ir.actions.server">
+        <field name="name">Print Shipping Label</field>
+        <field name="model_id" ref="model_stock_picking"/>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.btn_open_shipping_label()</field>
+    </record>
+
+    <record id="advanced_marketplace_stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">advanced.marketplace.stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//header/button[1]" position="after">
+                <button name="btn_increase_reserved_quantity_in_warehouse" type="object" string="Tăng số lượng giữ trước"
+                        class="btn-primary" attrs="{'invisible': [('s_mkp_validate_error_unreserved', '=', False)]}" groups="advanced_sale.s_boo_group_administration"/>/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="before">
+                <field name="sale_id" invisible="1"/>
+                <field name="s_mkp_validate_error_unreserved" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='note']" position="attributes">
+                <attribute name="attrs">{'required':
+                    ['&amp;','|','|','|',('s_location_usage', '!=', 'internal'), ('s_location_dest_usage', '!=', 'internal'),('s_location_kdd', '=', True), ('s_location_dest_kdd', '=', True),
+                    '&amp;', '&amp;', ('transfer_in_id', '=', False), ('transfer_out_id', '=', False), ('origin', '=', False)],
+                    'readonly': [('state', '=', 'done')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_id']" position="after">
+                <field name="s_location_kdd" invisible="1"/>
+                <field name="s_location_dest_kdd" invisible="1"/>
+<!--                <field name="s_do_marketplace" />-->
+                <field name="is_lazada_do" />
+                <field name="is_shopee_do" />
+                <field name="is_tiktok_do" />
+            </xpath>
+            <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|','|','|','|','|','|',('state', '!=', 'done'),
+                    ('transfer_out_id', '!=',False),('transfer_in_id', '!=', False), ('pos_order_id', '!=', False),
+                    ('is_return_magento', '=',True), ('is_lazada_do','=',True),
+                    ('is_shopee_do','=',True),('is_tiktok_do','=',True)]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

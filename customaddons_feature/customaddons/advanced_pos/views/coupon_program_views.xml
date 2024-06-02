@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_coupon_program_form_inherit" model="ir.ui.view">
+            <field name="name">s.coupon.program.form.inherit</field>
+            <field name="model">coupon.program</field>
+            <field name="inherit_id" ref="coupon.coupon_program_view_coupon_program_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='validity']" position="inside">
+                    <label for="expiration_date" string="Ngày Hết Hạn"/>
+                    <div>
+                        <field name="expiration_date" class="oe_inline"/>
+                    </div>
+                </xpath>
+                <xpath expr="//group[@name='validity']/label[@for='validity_duration']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='validity']/div[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <h3>
+                        <field name="description"/>
+                    </h3>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="is_expires_ctkm"/>
+                    <field name="s_is_program_discard" widget="boolean_toggle"/>
+                </xpath>
+                <xpath expr="//button[@name='%(coupon.coupon_generate_action)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[@name='button_box']/button[hasclass('oe_stat_button')]" position="before">
+                    <button class="oe_stat_button" type="object" icon="fa-shopping-bag"
+                            name="order_m2_used_coupon_program">
+                        <field name="count_order_m2_used_coupon_program" string="Đơn hàng M2" widget="statinfo"/>
+                    </button>
+                </xpath>
+
+                <xpath expr="//div[@name='rule_minimum_amount']" position="after">
+                    <label string="Maximum Purchase Of" for="s_rule_maximum_amount" attrs="{'invisible': [('s_apply_rule_maximum','=', False)]}"/>
+                    <div name="s_rule_maximum_amount" class="o_row" attrs="{'invisible': [('s_apply_rule_maximum','=', False)]}">
+                        <field name="currency_id" invisible="1"/>
+                        <field name="s_rule_maximum_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <field name="s_rule_maximum_amount_tax_inclusion" required="1"/>
+                    </div>
+                    <field name="s_apply_rule_maximum"/>
+                </xpath>
+
+                <xpath expr="//field[@name='reward_type']" position="after">
+                    <field name="s_type_discount" attrs="{'invisible': [('reward_type','!=','discount')]}" required="True"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="s_coupon_program_tree_inherit" model="ir.ui.view">
+            <field name="name">s.coupon.program.tree</field>
+            <field name="model">coupon.program</field>
+            <field name="inherit_id" ref="coupon.coupon_program_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="is_expires_ctkm" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="s_coupon_program_view_promo_program_form_inherit" model="ir.ui.view">
+            <field name="name">s.coupon.program.view.promo.program.form.inherit</field>
+            <field name="model">coupon.program</field>
+            <field name="inherit_id" ref="coupon.coupon_program_view_promo_program_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" type="object" icon="fa-shopping-bag" name="order_m2_used_coupon">
+                        <field name="count_order_m2_used_coupon" string="Đơn hàng M2" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <h3>
+                        <field name="description"/>
+                    </h3>
+                    <label for="ma_ctkm" string="Mã chương trình"/>
+                    <h3>
+                        <field name="ma_ctkm" readonly="1"/>
+                    </h3>
+                </xpath>
+
+                <xpath expr="//div[@name='rule_minimum_amount']" position="after">
+                    <label string="Maximum Purchase Of" for="s_rule_maximum_amount" attrs="{'invisible': [('s_apply_rule_maximum','=', False)]}"/>
+                    <div name="s_rule_maximum_amount" class="o_row" attrs="{'invisible': [('s_apply_rule_maximum','=', False)]}">
+                        <field name="currency_id" invisible="1"/>
+                        <field name="s_rule_maximum_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <field name="s_rule_maximum_amount_tax_inclusion" required="1"/>
+                    </div>
+                    <field name="s_apply_rule_maximum"/>
+                </xpath>
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="unremove_ctkm_expired"/>
+                    <field name="is_expires_ctkm"/>
+                    <field name="s_is_program_discard" widget="boolean_toggle" attrs="{'invisible': [('promo_code_usage','=', 'no_code_needed')]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='discount_apply_on']" position="after">
+                    <field name="free_discount_cheapest_products" attrs="{'invisible':[('discount_apply_on','!=','cheapest_product')]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='rule_date_to']" position="after">
+                    <field name="rule_date_from_onchange" class="oe_inline"/>
+                    <field name="rule_date_to_onchange" class="oe_inline"/>
+                </xpath>
+                <xpath expr="//field[@name='rule_date_to']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='rule_date_from']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+<!--                <xpath expr="//field[@name='discount_line_product_id']" position="before">-->
+<!--                    <field name="s_is_free_products" widget="boolean_toggle"-->
+<!--                           attrs="{'invisible':[('reward_type','!=','product')]}"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//group[@name='reward']" position="after">-->
+<!--                    <group>-->
+<!--                        <field name="s_free_products" widget="many2many_tags"-->
+<!--                               attrs="{'invisible':[('s_is_free_products','=',False)], 'required': [('s_is_free_products','=',True)]}"/>-->
+<!--                        <field name="s_discount_line_product_ids" widget="many2many_tags" attrs="{'invisible':[('s_is_free_products','=',False)]}" readonly="1"/>-->
+<!--                    </group>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='reward_product_id']" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible': ['|',('reward_type', 'in', ('discount',-->
+<!--                        'free_shipping')),('s_is_free_products','=',True)], 'required': [('reward_type', '=',-->
+<!--                        'product'),('s_is_free_products','=',False)]}-->
+<!--                    </attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='discount_line_product_id']" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible': ['|',('discount_line_product_id', '=', False),('s_is_free_products', '=', True)]}-->
+<!--                    </attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='discount_line_product_id']" position="before">
+                    <field name="s_is_free_products" widget="boolean_toggle"
+                           attrs="{'invisible':[('reward_type','!=','product')]}"/>
+                </xpath>
+                <xpath expr="//group[@name='reward']" position="after">
+                    <group>
+                        <field name="s_free_products" widget="many2many_tags"
+                               attrs="{'invisible':[('s_is_free_products','=',False)], 'required': [('s_is_free_products','=',True)]}"/>
+                        <field name="s_discount_line_product_ids" widget="many2many_tags" attrs="{'invisible':[('s_is_free_products','=',False)]}" readonly="1"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='reward_product_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('reward_type', 'in', ('discount',
+                        'free_shipping')),('s_is_free_products','=',True)], 'required': [('reward_type', '=',
+                        'product'),('s_is_free_products','=',False)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='discount_line_product_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('discount_line_product_id', '=', False),('s_is_free_products', '=', True)]}
+                    </attribute>
+                </xpath>
+                <!--                <xpath expr="//field[@name='rule_date_to']" position="after">-->
+                <!--                    <field name="rule_date_from_onchange" class="oe_inline"/>-->
+                <!--                    <field name="rule_date_to_onchange" class="oe_inline"/>-->
+                <!--                </xpath>-->
+                <!--                <xpath expr="//field[@name='rule_date_to']" position="attributes">-->
+                <!--                    <attribute name="invisible">1</attribute>-->
+                <!--                </xpath>-->
+                <!--                <xpath expr="//field[@name='rule_date_from']" position="attributes">-->
+                <!--                    <attribute name="invisible">1</attribute>-->
+                <!--                </xpath>-->
+
+                <xpath expr="//field[@name='reward_type']" position="after">
+                    <field name="s_type_discount" attrs="{'invisible': [('reward_type','!=','discount')]}" required="True"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="s_coupon_program_view_search_inherit" model="ir.ui.view">
+            <field name="name">s.coupon.program.search.inherit</field>
+            <field name="model">coupon.program</field>
+            <field name="inherit_id" ref="coupon.coupon_program_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='expired']" position="after">
+                    <filter string="Đã hết hạn" name="is_filter_expires_ctkm" domain="[('is_filter_expires_ctkm','=',True)]"/>
+                </xpath>
+                <xpath expr="//filter[@name='expired']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="seq_coupon_program_code" model="ir.sequence">
+            <field name="name">seq_coupon_program_code</field>
+            <field name="code">coupon.program</field>
+            <field name="prefix">CTKM-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

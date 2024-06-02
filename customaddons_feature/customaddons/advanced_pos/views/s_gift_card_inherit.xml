@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_gift_card_form_inherit" model="ir.ui.view">
+        <field name="name">s.gift.card.form.inherit</field>
+        <field name="model">gift.card</field>
+        <field name="inherit_id" ref="gift_card.gift_card_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="attributes">
+                <attribute name="readonly">0</attribute>
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_marketing_campaign_inherit_view_form" model="ir.ui.view">
+        <field name="name">s.marketing.campaign.inherit.view.form</field>
+        <field name="model">marketing.campaign</field>
+        <field name="inherit_id" ref="marketing_automation.marketing_campaign_view_form"/>
+        <field name="arch" type="xml">
+              <xpath expr="//field[@name='model_id']" position="after">
+                <field name="zalo_sms_marketing" string="Zalo SMS Marketing" />
+                <field name="template_id" attrs="{'invisible': [('zalo_sms_marketing', '=', False)]}"/>
+                    <field name="type_marketing" />
+                <field name="apply_order" attrs="{'invisible': [('type_marketing', '!=', 'hoan_thanh_mua_hang')]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

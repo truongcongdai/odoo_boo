@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">s_sale_order_form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_cancel']" position="before">
+                    <button name="send_order_information" type="object" string="Gửi thông tin đơn"
+                            class="btn btn-primary mx-2"
+                            attrs="{'invisible': ['|','|',('is_push_to_m2', '=', True),('m2_so_id','!=', False),'&amp;',('s_facebook_sender_id', '=', False),('s_zalo_sender_id', '=', False)]}"/>
+                    <button name="create_order_m2" type="object" string="Tạo đơn hàng M2" class="btn btn-primary mx-2"
+                            attrs="{'invisible': ['|','|',('is_push_to_m2', '=', True),('m2_so_id','!=', False),'&amp;',('s_facebook_sender_id', '=', False),('s_zalo_sender_id', '=', False)]}"/>
+
+                </xpath>
+                <xpath expr="//field[@name='source_id']" position="before">
+                    <field name="is_push_to_m2" invisible="1"/>
+                    <field name="s_thread_id" invisible="1"/>
+                    <field name="s_facebook_sender_id" invisible="1"/>
+                    <field name="s_zalo_sender_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_method']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('s_facebook_sender_id', '=', False),('s_zalo_sender_id',
+                        '=', False),('is_magento_order', '=', False)],
+                        'readonly': [('s_facebook_sender_id', '=', False),('s_zalo_sender_id', '=', False)], 'required':
+                        ['|','|',('is_magento_order', '=',
+                        True),('s_facebook_sender_id', '!=', False),('s_zalo_sender_id', '!=', False)]}
+                    </attribute>
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='source_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|',('s_facebook_sender_id', '!=', False),('s_zalo_sender_id',
+                        '!=', False)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|','|',('state', 'not in', ['draft']), ('s_facebook_sender_id', '!=', False), ('s_zalo_sender_id', '!=', False)]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='m2_is_global_discount']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': [('parent.is_magento_order', '=', True),'|',
+                    ('parent.s_facebook_sender_id', '!=', False),('parent.s_zalo_sender_id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='m2_total_line_discount']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': [('parent.is_magento_order', '=', True),'|',
+                    ('parent.s_facebook_sender_id', '!=', False),('parent.s_zalo_sender_id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='boo_total_discount']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': [('parent.is_magento_order', '=', True),'|',
+                    ('parent.s_facebook_sender_id', '!=', False),('parent.s_zalo_sender_id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='boo_total_discount_percentage']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': [('parent.is_magento_order', '=', True),'|',
+                    ('parent.s_facebook_sender_id', '!=', False),('parent.s_zalo_sender_id', '!=', False)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="s_sale_order_tree_inherit" model="ir.ui.view">
+            <field name="name">s_sale_order_tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='brand_list']" position="before">
+                    <field name="source_id" decoration-bf="1" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

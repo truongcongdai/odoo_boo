@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="BooOrderSelectorWidget" owl="1">
+        <div class="order-selector" t-on-mousemove="_onMouseMoveOrderSelect">
+            <span class="orders touch-scrollable">
+                <t t-if="env.pos">
+                    <t t-foreach="env.pos.get_order_list()" t-as="order">
+                        <t t-if="order === env.pos.get_order()">
+                            <span class="order-button select-order selected" t-att-data-uid="order.uid" t-on-click="order_click_handler(order)">
+                                <span class="order-sequence" t-att-data-uid="order.uid">
+                                    <t t-esc="order.sequence_number" t-att-data-uid="order.uid"/>
+                                </span>
+    <!--                            <t t-esc="moment(order.creation_date).format('hh:mm')"/>-->
+                            </span>
+                        </t>
+                        <t t-else="">
+                            <span class="order-button select-order" t-att-data-uid="order.uid" t-on-click="order_click_handler(order)">
+                                <span class="order-sequence">
+                                    <t t-esc="order.sequence_number" />
+                                </span>
+                            </span>
+                        </t>
+                    </t>
+                </t>
+
+            </span>
+            <span class="order-button square neworder-button" t-on-click="neworder_click_handler">
+                <i class='fa fa-plus' role="img" aria-label="New order" title="New order"/>
+            </span>
+
+            <t t-if="env.pos and env.pos.get_order_list().length == 1 and env.pos.get_order().orderlines.length == 0">
+                <span class="order-button square deleteorder-button">
+                    <i class='fa fa-minus' role="img" aria-label="Delete order2" title="Delete order"/>
+                </span>
+            </t>
+            <t t-else="">
+                <span class="order-button square deleteorder-button" t-on-click="_onDeleteOrder()">
+                    <i class='fa fa-minus' role="img" aria-label="Delete order1" title="Delete order"/>
+                </span>
+            </t>
+
+        </div>
+    </t>
+
+</templates>

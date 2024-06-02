@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_s_shipping_label_error,access_s_shipping_label_error,model_shipping_label_error,,1,1,1,1
+access_s_marketplace_mapping_product,access_s_marketplace_mapping_product,model_s_marketplace_mapping_product,,1,1,1,1
+access_shipping_label_tiktok,access_shipping_label_tiktok,model_shipping_label_tiktok,,1,1,1,1
+access_s_mkp_order_queue,access_s_mkp_order_queue,model_s_mkp_order_queue,,1,1,1,1
+access_s_mkp_resync_product,access_s_mkp_resync_product,model_s_mkp_resync_product,,1,1,1,1

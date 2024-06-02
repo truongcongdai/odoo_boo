@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="s_advanced_mailing_trace_view_form_sms" model="ir.ui.view">
+            <field name="name">s.advanced.mailing.trace.view.form</field>
+            <field name="model">mailing.trace</field>
+            <field name="inherit_id" ref="mass_mailing_sms.mailing_trace_view_form_sms"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='trace_status']" position="after">
+                    <field name="s_zalo_state_msg"/>
+                    <field name="s_zalo_msg_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

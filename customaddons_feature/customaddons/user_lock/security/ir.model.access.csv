@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_user_lock_user_lock,user_lock.user_lock,model_user_lock_user_lock,,1,0,0,0

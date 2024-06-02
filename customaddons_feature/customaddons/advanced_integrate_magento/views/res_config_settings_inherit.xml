@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="s_res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">s.res.config.settings.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="advanced_sale.s_res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='integration_magento']//div[hasclass('o_setting_right_pane')]" position="inside">
+                    <div class="content-group"
+                         attrs="{'invisible': [('module_advanced_integrate_magento','=',False)]}">
+
+                        <div class="mt8" groups="base.group_no_one">
+                            <button name="%(magento2x_odoo_bridge.action_attribute_sets)d" icon="fa-arrow-right"
+                                    type="action" string="Manage Magento 2 Attributes Set" class="btn-link"/>
+                        </div>
+                        <div class="mt8">
+                            <button name="action_view_m2_sale_channel" icon="fa-arrow-right"
+                                    type="object" string="Manage Odoo Bridge" class="btn-link"/>
+                        </div>
+                        <div class="mt16">
+                            <label for="url_integrate_magento" string="URL" class="col-3 col-lg-3 o_light_label"/>
+                            <field name="url_integrate_magento" class="oe_inline"/>
+                        </div>
+                        <div class="mt16">
+                            <label for="user_integrate_magento" string="Account" class="col-3 col-lg-3 o_light_label"/>
+                            <field name="user_integrate_magento" class="oe_inline"/>
+                        </div>
+                        <div class="mt16">
+                            <label for="password_integrate_magento" string="Password" class="col-3 col-lg-3 o_light_label"/>
+                            <field name="password_integrate_magento" password="1" class="oe_inline"/>
+                        </div>
+                        <field name="is_connected" invisible="1"/>
+                        <button name="connect_magento" type="object" class="mt16 oe_highlight"
+                                confirm="This action will synchronize products which marks as Sync M2 to Magento, please make sure you have them"
+                                string="Kết nối Magento" attrs="{'invisible': [('is_connected', '=', True)]}"/>
+                        <button name="disconnect_magento" type="object" class="mt16 oe_highlight"
+                                string="Ngắt kết nối Magento"
+                                attrs="{'invisible': [('is_connected', '=', False)]}"/>
+                    </div>
+                </xpath>
+                <xpath expr="//div[@id='integration_magento']/div[@id='magento_connector']" position="after">
+                    <div class="col-12 col-lg-6 o_setting_box" id="token_for_integrate"
+                        attrs="{'invisible': [('module_advanced_integrate_magento','=',False)]}">
+                        <div class="o_setting_left_pane" />
+                        <div class="o_setting_right_pane">
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <label for="magento_long_live_token"/>
+                                    <div class="text-muted">
+                                        For multiple times API calling, short-lives token is a waste of time and resource.
+                                    </div>
+                                    <div class="mt8">
+                                        <field name="magento_long_live_token" password="1" />
+                                    </div>
+                                </div>
+                                <div class="mt16">
+                                    <label for="token_for_integrate" string="Token" />
+                                    <div class="text-muted">
+                                        Other services can use this token to connect to Odoo via API. Token is using for
+                                        authentication, please be careful who you share it with
+                                    </div>
+                                    <div class="mt8">
+                                        <field name="token_for_integrate" password="1" widget="CopyClipboardChar"/>
+                                    </div>
+                                </div>
+                                <button name="clear_token_for_integrate" type="object" class="mt16 btn btn-secondary"
+                                        string="Xóa Token" attrs="{'invisible': [('token_for_integrate', '=', False)]}"/>
+                                <button name="generate_token_for_integrate" type="object" class="mt16 oe_highlight"
+                                        string="Tạo Token"
+                                        attrs="{'invisible': [('token_for_integrate', '!=', False)]}"/>
+
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

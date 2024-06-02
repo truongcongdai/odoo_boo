@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_product_view_form_easy_inherit_advance_marketplace" model="ir.ui.view">
+        <field name="name">produc.product.view.form.easy.inherit.advance.marketplace</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="is_merge_product"/>
+                <field name="marketplace_sku" attrs="{'invisible':[('is_merge_product','=',False)], 'required':  [('is_merge_product', '=', True)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+     <record id="product_product_normal_form_view_inherit_advance_marketplace" model="ir.ui.view">
+        <field name="name">produc.product.normal.form.view.inherit.advance.marketplace</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='purchase_ok']" position="after">
+                <span class="d-inline-block">
+                    <field name="is_merge_product"/>
+                    <label for="is_merge_product" string="Gộp sản phẩm trên Marketplace"/>
+                </span>
+            </xpath>
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="marketplace_sku" string="Marketplace SKU"
+                       attrs="{'invisible': [('is_merge_product', '=', False)], 'required':  [('is_merge_product', '=', True)]}" />
+
+            </xpath>
+            <xpath expr="//page[@name='sales']/group[@name='sale']" position="inside">
+                <group name="marketplaces" string="Marketplace">
+                    <field name="s_mkp_is_sku_ky_tu" string="Sửa đơn hàng Marketplace lỗi sku"/>
+                    <field name="s_mkp_sku_ky_tu" string="SKU Lỗi"
+                       attrs="{'invisible': [('s_mkp_is_sku_ky_tu', '=', False)], 'required':  [('s_mkp_is_sku_ky_tu', '=', True)]}" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+     <record id="s_product_product_search_inherit" model="ir.ui.view">
+        <field name="name">s.product.product.search.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="marketplace_sku" string="Marketplace Sku"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

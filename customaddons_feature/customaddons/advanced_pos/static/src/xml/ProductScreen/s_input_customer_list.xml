@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="advanced_pos.SInputCustomerList" owl="1">
+        <div class="s_customer_list">
+            <span class="s_icon_customer">
+                <i class="fa fa-user"/>
+            </span>
+            <input class="s_input_customer_list" placeholder="Search Customers..." size="30"
+                   t-on-change="_onChangeSearch"/>
+        </div>
+    </t>
+</templates>

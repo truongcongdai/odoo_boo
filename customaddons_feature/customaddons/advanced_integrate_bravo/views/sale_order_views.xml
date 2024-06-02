@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="s_bravo_sale_order_form" model="ir.ui.view">
+            <field name="name">s_bravo_sale_order_form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="mappings" string="Bravo Mappings" invisible="1">
+                        <field name="mapping_bravo_ids" readonly="1">
+                            <tree>
+                                <field name="sale_order_id"/>
+                                <field name="status"/>
+                                <field name="post_api"/>
+                                <field name="create_date"/>
+                                <field name="write_date"/>
+                                <field name="create_uid" widget="many2one_avatar_user"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='sale_order_status']" position="after">
+                    <field name="s_date_completed" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

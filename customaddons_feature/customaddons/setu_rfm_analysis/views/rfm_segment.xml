@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rfm_segment_form" model="ir.ui.view">
+            <field name="name">rfm.segment.form</field>
+            <field name="model">setu.rfm.segment</field>
+            <field name="arch" type="xml">
+                <form string="RFM Segment">
+                    <header>
+                        <button name="create_mailing" string="Create Mailing" type="object"
+                                class="oe_highlight"/>
+                        <button name="update_child_segments" string="Update Segments And Rules" type="object"
+                                 attrs="{'invisible': [('is_template','=',False)]}"
+                                class="oe_highlight" groups="base.group_no_one"/>
+                    </header>
+                    <sheet string="Segment">
+                        <div class="oe_button_box" name="button_box">
+                            <field name="is_template" invisible="1"/>
+                            <field name="total_mailing" invisible="1"/>
+                            <field name="total_customers" invisible="1"/>
+                            <field name="total_orders" invisible="1"/>
+                            <field name="total_revenue" invisible="1"/>
+                            <field name="open_lead_count" invisible="1"/>
+                            <field name="open_rfq_count" invisible="1"/>
+                            <button class="oe_stat_button" name="open_customer" type="object"
+                                    attrs="{'invisible': ['|',('is_template','=',False), ('total_customers', '=', 0)]}">
+                                <field name="total_customers_ratio" string="Customers" widget="percentpie"/>
+                            </button>
+                            <button class="oe_stat_button" name="open_customer" type="object" icon="fa-user"
+                                    attrs="{'invisible': ['|',('is_template','=',True), ('total_customers', '=', 0)]}">
+                                <field name="total_customers" string="Customers" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" name="open_orders" type="object"
+                                    attrs="{'invisible': [('total_orders', '=', 0)]}">
+                                <field name="total_orders_ratio" string="Orders" widget="percentpie"/>
+                            </button>
+                            <button class="oe_stat_button" name="open_orders" type="object"
+                                    attrs="{'invisible': [('total_revenue', '=', 0)]}">
+                                <field name="total_revenue_ratio" string="Revenue" widget="percentpie"/>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-envelope-o" name="open_mailing"
+                                    type="object" attrs="{'invisible': [('total_mailing', '=', 0)]}">
+                                <field string="Mailing" name="total_mailing" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" name="open_leads" type="object"
+                                    icon="fa-star" attrs="{'invisible': [('open_lead_count', '=', 0)]}">
+                                <field string="Leads" name="open_lead_count" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" name="open_rfqs" type="object"
+                                    icon="fa-money" attrs="{'invisible': [('open_rfq_count', '=', 0)]}">
+                                <field string="Quotations" name="open_rfq_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" required="True"/>
+                            </h1>
+                        </div>
+                        <group expand="0">
+                            <group expand="0" string="RFM Segment">
+                                <field name="segment_description" required="True"/>
+                                <field name="actionable_tips" required="True"/>
+                                <field name="use_dynamic_rules" invisible="1"/>
+                                <field name="segment_rank" attrs="{'invisible':[('use_dynamic_rules','=',True)]}"/>
+                                <field name="seq" required="1" string="Rank"
+                                       groups="setu_rfm_analysis.group_dynamic_rules"/>
+                            </group>
+                            <group expand="0" string="RFM Score" attrs="{'invisible':[('use_dynamic_rules','=',True)]}">
+                                <field name="rfm_score_syntax" readonly="True"/>
+                                <field name="rfm_score_condition" readonly="True"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="RFM Score" name="rfm_score_ids"
+                                  attrs="{'invisible':[('use_dynamic_rules','=',True)]}">
+                                <field name="rfm_score_ids" nolabel="1">
+                                    <kanban class="o_kanban_mobile" archivable="false">
+                                        <field name="name"/>
+                                        <field name="total_customers"/>
+                                        <field name="recency"/>
+                                        <field name="frequency"/>
+                                        <field name="monetization"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.recency.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
+                                                    <div>
+                                                        <h2>Customers #
+                                                            <field name="total_customers"/>
+                                                        </h2>
+                                                    </div>
+                                                    <div class="o_event_left">
+                                                        <t t-if="record.recency.raw_value === '1'">
+                                                            <img alt="Recency" src="/setu_rfm_analysis/static/src/1.png"
+                                                                 style="height:30px; width:30px"
+                                                                 class="o_kanban_image"/>
+                                                        </t>
+                                                        <t t-if="record.recency.raw_value === '2'">
+                                                            <img alt="Recency" src="/setu_rfm_analysis/static/src/2.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.recency.raw_value === '3'">
+                                                            <img alt="Recency" src="/setu_rfm_analysis/static/src/3.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.recency.raw_value === '4'">
+                                                            <img alt="Recency" src="/setu_rfm_analysis/static/src/4.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.frequency.raw_value === '1'">
+                                                            <img alt="Frequency"
+                                                                 src="/setu_rfm_analysis/static/src/1.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.frequency.raw_value === '2'">
+                                                            <img alt="Frequency"
+                                                                 src="/setu_rfm_analysis/static/src/2.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.frequency.raw_value === '3'">
+                                                            <img alt="Frequency"
+                                                                 src="/setu_rfm_analysis/static/src/3.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.frequency.raw_value === '4'">
+                                                            <img alt="Frequency"
+                                                                 src="/setu_rfm_analysis/static/src/4.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.monetization.raw_value === '1'">
+                                                            <img alt="Monetization"
+                                                                 src="/setu_rfm_analysis/static/src/1.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.monetization.raw_value === '2'">
+                                                            <img alt="Monetization"
+                                                                 src="/setu_rfm_analysis/static/src/2.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.monetization.raw_value === '3'">
+                                                            <img alt="Monetization"
+                                                                 src="/setu_rfm_analysis/static/src/3.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                        <t t-if="record.monetization.raw_value === '4'">
+                                                            <img alt="Monetization"
+                                                                 src="/setu_rfm_analysis/static/src/4.png"
+                                                                 class="o_kanban_image"
+                                                                 style="height:30px; width:30px"/>
+                                                        </t>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page string="Sales team" name="team_customer_segment_ids">
+                                <field name="team_customer_segment_ids">
+                                    <!--                                    <tree>-->
+                                    <!--                                        <field name="team_id"/>-->
+                                    <!--                                        <field name="total_orders"/>-->
+                                    <!--                                        <field name="total_revenue"/>-->
+                                    <!--                                    </tree>-->
+                                    <kanban class="o_event_kanban_view">
+                                        <field name="team_id"/>
+                                        <field name="rfm_segment_id"/>
+                                        <field name="total_orders"/>
+                                        <field name="total_revenue"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.team_id.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
+                                                    <div style="font-family:Courier; text-color:blue;">
+                                                        <h2>Team :
+                                                            <field name="team_id"/>
+                                                        </h2>
+                                                    </div>
+                                                    <div>
+                                                        <h3>Total orders #
+                                                            <field name="total_orders"/>
+                                                        </h3>
+                                                    </div>
+                                                    <div>
+                                                        <h3>Total revenue #
+                                                            <field name="total_revenue"/>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="rfm_segment_tree" model="ir.ui.view">
+            <field name="name">setu.rfm.tree</field>
+            <field name="model">setu.rfm.segment</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="segment_description"/>
+                    <field name="actionable_tips"/>
+                    <field name="segment_rank"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="setu_rfm_segment_kanban" model="ir.ui.view">
+            <field name="name">setu.rfm.segment.kanban</field>
+            <field name="model">setu.rfm.segment</field>
+            <field name="arch" type="xml">
+                <kanban class="o_event_kanban_view">
+                    <field name="name"/>
+                    <field name="segment_description"/>
+                    <field name="segment_rank"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban"
+                                 style="width:35%;"
+                                 onMouseOver="this.style.color='#00a09d'" onMouseOut="this.style.color='gray'">
+                                <div class="o_kanban_image_fill_center o_kanban_image_full"
+                                     style="width: 128px;margin: 20px;position: relative;">
+                                    <t t-if="record.segment_rank.raw_value == '1'">
+                                        <img src="/setu_rfm_analysis/static/src/champions.png"
+                                             alt="Champion"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '2'">
+                                        <img src="/setu_rfm_analysis/static/src/loyal.png"
+                                             alt="Loyal Customer"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '3'">
+                                        <img src="/setu_rfm_analysis/static/src/highest_paying.png"
+                                             alt="Highest Paying"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '4'">
+                                        <img src="/setu_rfm_analysis/static/src/promissing.png"
+                                             alt="Promising"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '5'">
+                                        <img src="/setu_rfm_analysis/static/src/need_attention.png"
+                                             alt="Need Attention"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '6'">
+                                        <img src="/setu_rfm_analysis/static/src/new_customer.png"
+                                             alt="New Customer"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '7'">
+                                        <img src="/setu_rfm_analysis/static/src/sleeping_customer.png"
+                                             alt="Sleeping Customer"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details" style="margin-top:15px;width:40%;">
+                                    <strong class="o_kanban_record_title oe_partner_heading">
+                                        <h3 onMouseOver="this.style.color='#00a09d'"
+                                            onMouseOut="this.style.color='black'">
+                                            <field name="name"/>
+                                        </h3>
+                                    </strong>
+                                    <field name="segment_description" class="text-muted"/>
+                                    <div name="stat_info_links">
+                                        <h3 style="margin-top:20px;">
+                                            <a name="open_leads" type="object" style="font-size:1.2rem;">
+                                                <field name="open_lead_count" widget="statinfo"/>
+                                            </a>
+                                        </h3>
+                                        <h3 style="margin-top:20px;">
+                                            <a name="open_rfqs" type="object" style="font-size:1.2rem;">
+                                                <field name="open_rfq_count" widget="statinfo"/>
+                                            </a>
+                                        </h3>
+                                        <h3 style="margin-top:20px;">
+                                            <a name="open_mailing" type="object" style="font-size:1.2rem;">
+                                                <field name="total_mailing" widget="statinfo"/>
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div class="oe_kanban_details">
+                                        <!--                                        <h5 style="font-family:Georgia, serif" class="text-muted">Past sales history has been taken from <field name="from_date" /> to <field name="to_date"/> to calculate RFM segment</h5>-->
+                                        <footer style="font-family: 'Roboto', sans-serif; margin-left: -150px; margin-top:25px;"
+                                                class="text-muted text-left">• RFM Segment
+                                            calculation was made last on
+                                            <field name="calculated_on" readonly="1"/>
+                                        </footer>
+                                    </div>
+                                </div>
+                                <div style="float:right;margin-top:15px;margin-left:calc(20% - 1px);" name="percentpie_links">
+                                    <h5>
+                                        <a name="open_customer" type="object" style="font-size:1.2rem;">
+                                            <field name="total_customers_ratio" widget="percentpie"/>
+                                        </a>
+                                    </h5>
+                                    <h5>
+                                        <a name="open_orders" type="object" style="font-size:1.2rem;">
+                                            <field name="total_orders_ratio" widget="percentpie"/>
+                                        </a>
+                                    </h5>
+                                    <h5>
+                                        <a name="open_orders" type="object" style="font-size:1.2rem;">
+                                            <field name="total_revenue_ratio" widget="percentpie"/>
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="setu_rfm_segment_kanban_team" model="ir.ui.view">
+            <field name="name">setu.rfm.segment.kanban.team</field>
+            <field name="model">setu.rfm.segment</field>
+            <field name="arch" type="xml">
+                <kanban class="o_event_kanban_view">
+                    <field name="name"/>
+                    <field name="crm_team_id" readonly="1"/>
+                    <field name="seq" readonly="1"/>
+                    <field name="from_date" readonly="1"/>
+                    <field name="to_date" readonly="1"/>
+                    <field name="calculated_on" readonly="1"/>
+                    <field name="segment_rank" readonly="1"/>
+                    <field name="segment_description" readonly="1"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban"
+                                 style="width: 48% !important;color: gray;padding:25px;"
+                                 onMouseOver="this.style.color='#00a09d'" onMouseOut="this.style.color='gray'">
+                                <div class="o_kanban_image_fill_center o_kanban_image_full"
+                                     style="width: 200px;position: relative;margin-top:-140px;">
+                                    <t t-if="record.segment_rank.raw_value == '1'">
+                                        <img src="/setu_rfm_analysis/static/src/champions.png"
+                                             alt="Champion"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '2'">
+                                        <img src="/setu_rfm_analysis/static/src/loyal.png"
+                                             alt="Loyal Customer"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '3'">
+                                        <img src="/setu_rfm_analysis/static/src/highest_paying.png"
+                                             alt="Highest Paying"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '4'">
+                                        <img src="/setu_rfm_analysis/static/src/promissing.png"
+                                             alt="Promising"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '5'">
+                                        <img src="/setu_rfm_analysis/static/src/need_attention.png"
+                                             alt="Need Attention"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '6'">
+                                        <img src="/setu_rfm_analysis/static/src/new_customer.png"
+                                             alt="New Customer"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                    <t t-if="record.segment_rank.raw_value == '7'">
+                                        <img src="/setu_rfm_analysis/static/src/sleeping_customer.png"
+                                             alt="Sleeping Customer"
+                                             style="max-height: 100%;max-width: 100%; position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details ml32 mt16">
+                                    <strong class="o_kanban_record_title oe_partner_heading">
+                                        <h2>
+                                            <a name="open_segment"
+                                               onMouseOver="this.style.color='#00a09d'"
+                                               onMouseOut="this.style.color='#875A7B'"
+                                               type="object"
+                                               style="margin-top:-25px;color:#875A7B;">
+                                                <field name="name" readonly="1"/>
+                                            </a>
+                                        </h2>
+                                        <span>
+                                            <field name="crm_team_id" readonly="1"/>
+                                        </span>
+                                    </strong>
+                                    <div class="oe_kanban_details"
+                                         style="margin-top:15px;width:100%;font-size:1.1rem;color:#00A09;">
+                                        <field name="segment_description"/>
+                                    </div>
+                                    <div>
+                                        <span>
+                                            <field name="parent_id" readonly="1" invisible="1"/>
+                                        </span>
+                                        <span>
+                                            <field name="create_date" readonly="1" invisible="1"/>
+                                        </span>
+                                        <span>
+                                            <field name="write_date" readonly="1" invisible="1"/>
+                                        </span>
+                                        <span>
+                                            <field name="is_template" readonly="1" invisible="1"/>
+                                        </span>
+                                        <span>
+                                            <field name="seq" readonly="1" invisible="1"/>
+                                        </span>
+                                    </div>
+                                    <div class="mt16">
+                                        <div class="d-flex" style="font-size: 14px;">
+                                            <a name="open_customer" type="object" class="mr-auto">
+                                                <field name="total_customers" string="Customers" widget="statinfo"/>
+                                            </a>
+                                        </div>
+                                        <div class="d-flex mt16" style="font-size: 14px;">
+                                            <a name="open_leads" type="object" class="mr-auto">
+                                                <field name="open_lead_count" widget="statinfo"/>
+                                            </a>
+                                        </div>
+                                        <div class="d-flex mt16" style="font-size: 14px;">
+                                            <a name="open_rfqs" type="object" class="mr-auto">
+                                                <field name="open_rfq_count" widget="statinfo"/>
+                                            </a>
+                                        </div>
+                                        <!--                                        <div class="d-flex mt16" style="font-size: 14px;">-->
+                                        <!--                                            <a name="open_pos_rfqs" type="object" class="mr-auto">-->
+                                        <!--                                                <field name="open_pos_rfq_count" widget="statinfo"/>-->
+                                        <!--                                            </a>-->
+                                        <!--                                        </div>-->
+                                        <div class="d-flex mt16" style="font-size: 14px;">
+                                            <a name="open_mailing" type="object" class="mr-auto">
+                                                <field name="total_mailing" widget="statinfo"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="oe_kanban_details">
+                                        <!--                                        <h5 style="font-family:Georgia, serif" class="text-muted">Past sales history has been taken from <field name="from_date" /> to <field name="to_date"/> to calculate RFM segment</h5>-->
+                                        <footer style="font-family: 'Roboto', sans-serif; margin-top:25px;"
+                                                class="text-muted text-left">
+                                            RFM Segment calculation was made last on
+                                            <field name="calculated_on" readonly="1"/>
+                                        </footer>
+                                    </div>
+                                </div>
+                                <div class="mt16 ml32" style="float:right;font-size:1.2rem;" name="percentpie_links">
+                                    <div class="col-4 mt16">
+                                        <a name="open_orders" type="object">
+                                            <span >
+                                                <field name="total_orders_ratio" widget="percentpie"/>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col-4 mt16">
+                                        <a name="open_orders" type="object" >
+                                            <span >
+                                                <field name="total_revenue_ratio" widget="percentpie"/>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <!--                                    <div class="col-4 mt16">-->
+                                    <!--                                        <a name="open_pos_orders" type="object">-->
+                                    <!--                                            <span class="font-weight-bold">-->
+                                    <!--                                                <field name="total_pos_orders_ratio" widget="percentpie" string="PosOrders"/>-->
+                                    <!--                                            </span>-->
+                                    <!--                                        </a>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="col-4 mt16">-->
+                                    <!--                                        <a name="open_pos_orders" type="object">-->
+                                    <!--                                            <span class="font-weight-bold">-->
+                                    <!--                                                <field name="total_pos_revenue_ratio" widget="percentpie" string="PoSRevenue"/>-->
+                                    <!--                                            </span>-->
+                                    <!--                                        </a>-->
+                                    <!--                                    </div>-->
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="rfm_quotation_segment_tree" model="ir.ui.view">
+            <field name="name">setu.rfm.segment.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="rfm_segment_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="rfm_segment_quotation_search" model="ir.ui.view">
+            <field name="name">sale.quotation.search.extended</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="rfm_segment_id"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="segment_id" string="RFM Segment" domain="[]"
+                                context="{'group_by' : 'rfm_segment_id'}"/>
+                    </group>
+                </field>
+            </field>
+        </record>
+
+        <record id="actions_rfm_segment" model="ir.actions.act_window">
+            <field name="name">RFM Segment</field>
+            <field name="res_model">setu.rfm.segment</field>
+            <field name="view_mode">kanban,form,tree</field>
+            <field name="domain">[('is_template','=',True)]</field>
+        </record>
+
+        <!--        <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">-->
+        <!--            <field name="context">{'search_default_segment_id':1}</field>-->
+        <!--        </record>-->
+
+        <!--        <record id="account.res_partner_action_customer" model="ir.actions.act_window">-->
+        <!--            <field name="context">{'search_default_rfm_segment_id':1}</field>-->
+        <!--        </record>-->
+
+        <record id="action_rfm_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">setu.rfm.segment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">kanban,list</field>
+            <field name="domain">[('is_template','=',True)]</field>
+            <field name="view_id" ref="setu_rfm_segment_kanban"/>
+        </record>
+
+        <record id="action_all_open_leads" model="ir.actions.server">
+            <field name="name">Open Leads</field>
+            <field name="model_id" ref="setu_rfm_analysis.model_setu_rfm_segment"/>
+            <field name="binding_model_id" ref="setu_rfm_analysis.model_setu_rfm_segment"/>
+            <field name="state">code</field>
+            <field name="code">action = model.all_open_leads()</field>
+        </record>
+
+        <record id="action_open_all_sale_orders" model="ir.actions.server">
+            <field name="name">Sale Orders</field>
+            <field name="model_id" ref="setu_rfm_analysis.model_setu_rfm_segment"/>
+            <field name="binding_model_id" ref="setu_rfm_analysis.model_setu_rfm_segment"/>
+            <field name="state">code</field>
+            <field name="code">action = model.all_sale_orders()</field>
+        </record>
+
+        <record id="action_open_all_mailings" model="ir.actions.server">
+            <field name="name">Mailings</field>
+            <field name="model_id" ref="setu_rfm_analysis.model_setu_rfm_segment"/>
+            <field name="binding_model_id" ref="setu_rfm_analysis.model_setu_rfm_segment"/>
+            <field name="state">code</field>
+            <field name="code">action = model.all_mailings()</field>
+        </record>
+
+        <record id="action_update_segment_and_rules" model="ir.actions.server">
+            <field name="name">Update Segments and Rules</field>
+            <field name="model_id" ref="setu_rfm_analysis.model_setu_rfm_segment"/>
+            <field name="binding_model_id" ref="setu_rfm_analysis.model_setu_rfm_segment"/>
+            <field name="state">code</field>
+            <field name="code">action = model.update_segment_and_rules()</field>
+        </record>
+
+        <menuitem id="root_rfm_menu"
+                  name="RFM"
+                  web_icon="setu_rfm_analysis,static/description/icon.png"/>
+        <menuitem id="rfm_dashboard_menu"
+                  name="Dashboard"
+                  parent="setu_rfm_analysis.root_rfm_menu"
+                  sequence="1"
+                  action="rfm_dashboard_client_action"/>
+        <menuitem id="rfm_main_menu"
+                  name="Segment"
+                  parent="setu_rfm_analysis.root_rfm_menu"
+                  sequence="2"/>
+        <menuitem id="rfm_documents_menu"
+                  name="Documents"
+                  parent="setu_rfm_analysis.root_rfm_menu"
+                  sequence="3"/>
+        <menuitem id="rfm_open_leads"
+                  name="Open Leads"
+                  parent="setu_rfm_analysis.rfm_documents_menu"
+                  sequence="1"
+                  action="action_all_open_leads"/>
+        <menuitem id="rfm_sale_orders"
+                  name="Sale Orders"
+                  parent="setu_rfm_analysis.rfm_documents_menu"
+                  sequence="2"
+                  action="action_open_all_sale_orders"/>
+        <menuitem id="rfm_all_mailings"
+                  name="Mailings"
+                  parent="setu_rfm_analysis.rfm_documents_menu"
+                  sequence="3"
+                  action="action_open_all_mailings"/>
+        <menuitem id="rfm_menu_segment"
+                  name="RFM Segment By Company"
+                  parent="rfm_main_menu"
+                  sequence="1"
+                  action="actions_rfm_segment"/>
+    </data>
+</odoo>

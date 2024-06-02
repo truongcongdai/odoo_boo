@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='personal_information']" position="after">
+                <page string="Các tài liệu đính kèm" name="attachment_file" groups="advanced_sale.s_boo_group_hr">
+                    <group>
+                        <field name="cv"/>
+                        <field name="so_yeu_li_lich"/>
+                        <field name="cccd"/>
+                        <field name="hop_dong"/>
+                        <field name="bao_hiem_xa_hoi"/>
+                        <field name="bang_cap"/>
+                        <field name="khac"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

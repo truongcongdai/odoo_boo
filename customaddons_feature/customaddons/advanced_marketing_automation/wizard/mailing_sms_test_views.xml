@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="s_advanced_mailing_sms_test_view_form" model="ir.ui.view">
+        <field name="name">s.advanced.mailing.sms.test.view.form</field>
+        <field name="model">mailing.sms.test</field>
+        <field name="inherit_id" ref="mass_mailing_sms.mailing_sms_test_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//p[@class='text-muted']" position="after">
+                <p class="text-muted">
+                   Sử dụng số điện thoại nhắn tin với đầu số là +84
+                </p>
+            </xpath>
+            <xpath expr="//field[@name='numbers']" position="before">
+                <field name="s_is_zalo_mailing_sms" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@special='cancel']" position="before">
+                <button string="Gửi 1" name="s_zalo_action_send_sms" type="object" class="btn-primary" data-hotkey="q"
+                        attrs="{'invisible': [('s_is_zalo_mailing_sms', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_send_sms']" position="attributes">
+                <attribute name="attrs">{'invisible': [('s_is_zalo_mailing_sms', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

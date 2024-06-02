@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_product_category_form_view_inherit" model="ir.ui.view">
+        <field name="name">s.product.category.form.inherit</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='first']" position="after">
+                <group name="time_quantity_warning" col="2">
+                    <field name="time_quantity_warning" class="oe_inline"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

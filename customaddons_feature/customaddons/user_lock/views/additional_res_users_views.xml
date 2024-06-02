@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <record id="additional_user_groups_view_administrator_lock" model="ir.ui.view">-->
+<!--            <field name="name">additional.res.users.groups.administrator_lock</field>-->
+<!--            <field name="model">res.users</field>-->
+<!--            <field name="inherit_id" ref="base.user_groups_view"/>-->
+<!--            <field eval="20" name="priority"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='sel_groups_3_4']" position="replace">-->
+<!--                    <field name="sel_groups_3_4" groups="base.group_system"/>-->
+<!--                </xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_31_33']" position="replace">-->
+                <!--<field name="sel_groups_31_33" groups="base.group_system"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_334_335']" position="replace">-->
+                <!--<field name="sel_groups_334_335" groups="base.group_system"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_403']" position="replace">-->
+                <!--<field name="sel_groups_403" groups="base.group_system"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_358_459']" position="replace">-->
+                <!--<field name="sel_groups_358_459" groups="base.group_system"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_398_396_397']" position="replace">-->
+                <!--<field name="sel_groups_398_396_397" groups="base.group_system"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_424_425']" position="replace">-->
+                <!--<field name="sel_groups_424_425" groups="base.group_system"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_360']" position="replace">-->
+                <!--<field name="sel_groups_360" groups="base.group_system"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_346_347']" position="replace">-->
+                <!--<field name="sel_groups_346_347" groups="base.group_system"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='sel_groups_26_37']" position="replace">-->
+                <!--<field name="sel_groups_26_37" groups="base.group_system"/>-->
+                <!--</xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

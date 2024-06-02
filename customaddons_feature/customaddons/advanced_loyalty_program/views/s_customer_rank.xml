@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_customer_rank_form_view" model="ir.ui.view">
+            <field name="name">s_customer_rank.form</field>
+            <field name="model">s.customer.rank</field>
+            <field name="arch" type="xml">
+                <form string="Phân hạng khách hàng">
+                    <sheet>
+                        <group>
+                            <group>
+                                <h1>
+                                    <field name="rank"/>
+                                </h1>
+                                <field name="total_amount" widget='monetary' string="Doanh thu tối thiểu (VNĐ)"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="s_customer_rank_tree_view" model="ir.ui.view">
+            <field name="name">s_customer_rank.tree</field>
+            <field name="model">s.customer.rank</field>
+            <field name="arch" type="xml">
+                <tree string="ModelTitle">
+                    <field name="rank" string="Hạng khách hàng"/>
+                    <field name="total_amount" string="Doanh thu tối thiểu (VNĐ)"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="s_customer_rank_act_window" model="ir.actions.act_window">
+            <field name="name">Phân hạng khách hàng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.customer.rank</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Phân hạng khách hàng" id="s_customer_rank_menu" parent="point_of_sale.menu_point_config_product" action="s_customer_rank_act_window"/>
+
+    </data>
+</odoo>
