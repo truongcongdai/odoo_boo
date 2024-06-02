@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="s_view_pos_pos_form" model="ir.ui.view">
+            <field name="name">s.view.pos.order.form</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="mappings" string="Mappings">
+                        <field name="pos_mapping_ids" />
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

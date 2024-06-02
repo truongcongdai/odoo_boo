@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <record id="bravo_product_product_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">bravo.product.product.form.inherit</field>-->
+<!--            <field name="model">product.product</field>-->
+<!--            <field name="inherit_id" ref="product.product_normal_form_view"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--&lt;!&ndash;                <xpath expr="//field[@name='ma_san_pham']" position="after">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="parent_code"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </xpath>&ndash;&gt;-->
+<!--                <xpath expr="//field[@name='season']" position="after">-->
+<!--                    <field name="chat_lieu"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

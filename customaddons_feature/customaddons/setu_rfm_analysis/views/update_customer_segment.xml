@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="update_customer_segment_wizard" model="ir.ui.view">
+            <field name="name">update.customer.segment.wizard</field>
+            <field name="model">update.customer.segment</field>
+            <field name="arch" type="xml">
+                <form string="Update Customer Segment">
+                    <sheet>
+                            Click on Update Customer Segment to re-evaluate segments.
+                        <footer>
+                            <button name="update_customer_segment" string="Update Customer Segment" type="object"
+                                    class="oe_highlight"/>
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="actions_update_customer_segment" model="ir.actions.act_window">
+            <field name="name">Update Customer Segment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">update.customer.segment</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="update_customer_segment" name="Update Customer Segment" parent="rfm_main_menu"
+                  action="actions_update_customer_segment"
+                  sequence="4"/>
+    </data>
+</odoo>

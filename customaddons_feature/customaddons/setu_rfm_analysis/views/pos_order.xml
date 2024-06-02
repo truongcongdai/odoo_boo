@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rfm_pos_quotation_segment_tree" model="ir.ui.view">
+            <field name="name">setu.rfm.segment.tree</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="rfm_segment_id" string="Sales Segment"/>
+                    <field name="segment_id" string="Company Segment"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

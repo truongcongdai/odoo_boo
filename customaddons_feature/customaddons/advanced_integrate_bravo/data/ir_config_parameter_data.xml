@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="maximum_api_record_fetching" model="ir.config_parameter" forcecreate="1">
+            <field name="key">integrate.maximum_api_record_fetching</field>
+            <field name="value">500</field>
+        </record>
+
+        <record id="post_retail_sale_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_post_retail_sale_bravo_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="post_return_retail_sale_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_post_return_retail_sale_bravo_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="post_sucess_order_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_post_online_success_order_bravo_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="post_return_order_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_online_sale_success_was_return_bravo_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="post_fail_order_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_online_sale_failed_was_return_bravo_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+         <record id="post_transfer_export_inv_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_post_internal_out_stock_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="post_transfer_import_inv_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_post_internal_in_stock_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="post_transfer_onl_inv_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_post_transfer_online_stock_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="post_export_inventory_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_post_export_inventory_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="post_diff_inv_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.ir_cron_post_adjustment_stock_details_ir_actions_server</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="stored_id_diff_transit_inv_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.stored_id_diff_transit_inv_bravo_config_parameter</field>
+            <field name="value">1</field>
+        </record>
+
+        <record id="send_mail_sync_error_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.send_mail_sync_error_bravo</field>
+            <field name="value">False</field>
+        </record>
+
+        <record id="post_sync_error_bravo_config_parameter" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.error_bravo_config_parameter</field>
+            <field name="value">False</field>
+        </record>
+
+        <record id="record_time_limit_create_product" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.record_time_create_product</field>
+            <field name="value">0</field>
+        </record>
+
+        <record id="record_time_limit_update_product" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.record_time_update_product</field>
+            <field name="value">0</field>
+        </record>
+
+        <record id="parameter_limit_create_update_product" model="ir.config_parameter" forcecreate="1">
+            <field name="key">advanced_integrate_bravo.parameter_limit_create_update_product</field>
+            <field name="value">0</field>
+        </record>
+
+    </data>
+
+</odoo>

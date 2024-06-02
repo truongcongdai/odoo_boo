@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rfm_score_configuration_search_view" model="ir.ui.view">
+            <field name="name">rfm.segment.configuration.search</field>
+            <field name="model">rfm.segment.configuration</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_company_id" string="Company" domain="[]"
+                                context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="setu_rfm_segment_res_company_kanban" model="ir.ui.view">
+            <field name="name">setu.rfm.segment.res.company.kanban</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <kanban create="0" edit="0" delete="0">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban" style="width:max-content;">
+                                <div class="oe_kanban_details">
+                                    <div t-attf-class="oe_kanban_global_click">
+                                        <div class="text-center">
+                                            <h6>
+                                                <i class="fa fa-building" role="img" aria-label="Enterprise"
+                                                   title="Enterprise"/>
+                                                <field name="name"/>
+                                            </h6>
+                                            <br/>
+                                            <button class="btn btn-primary" style="font-size:0.8rem;"
+                                                    name="open_rfm_segment_rules" type="object">
+                                                Open Rules
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="rfm_score_configuration_tree_view" model="ir.ui.view">
+            <field name="name">rfm.segment.configuration.tree</field>
+            <field name="model">rfm.segment.configuration</field>
+            <field name="arch" type="xml">
+                <tree string="RFM Score Configuration" editable="bottom" create="0" delete="0">
+                    <field name="segment_id" options="{'no_create': True}" readonly="1"/>
+                    <field name="company_id" options="{'no_create': True}" readonly="1" invisible="1"/>
+                    <field name="from_days" string="Recency From (In Days)"/>
+                    <field name="to_days" string="Recency To (In Days)"/>
+                    <field name="from_frequency"/>
+                    <field name="to_frequency"/>
+                    <field name="from_amount"/>
+                    <field name="to_amount"/>
+                    <field name="from_atv" string="From ATV"/>
+                    <field name="to_atv" string="To ATV"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rfm_score_configuration_act_window" model="ir.actions.act_window">
+            <field name="name">RFM Score Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rfm.segment.configuration</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    No Rules. Click here to add new RFM Score Configuration Rule.
+                </p>
+            </field>
+        </record>
+
+        <record id="res_company_segment_kanban_act_window" model="ir.actions.act_window">
+            <field name="name">RFM Score Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.company</field>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="setu_rfm_segment_res_company_kanban"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    No Rules. Click here to add new RFM Score Configuration Rule.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="RFM Score Configuration By Company"
+                  groups="setu_rfm_analysis.group_dynamic_rules"
+                  id="rfm_score_configuration_menu"
+                  parent="setu_rfm_analysis_configuration_menu"
+                  action="res_company_segment_kanban_act_window"/>
+    </data>
+</odoo>

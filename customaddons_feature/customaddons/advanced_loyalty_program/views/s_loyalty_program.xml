@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_pos_loyalty_views" model="ir.ui.view">
+        <field name="name">s.loyalty.form.views.inherit</field>
+        <field name="model">loyalty.program</field>
+        <field name="inherit_id" ref="pos_loyalty.view_loyalty_program_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='points']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='points']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='points']" position="after">
+                <group>
+                    <div>
+                        <label for="is_apply_so" string="Áp dụng cho Sale Order: " style="font-weight: 500"/>
+                        <field name="is_apply_so" widget="boolean_toggle"/>
+                    </div>
+                </group>
+                <group>
+                    <field name="is_refund_loyalty_points" string="Áp dụng đơn đổi trả"/>
+                </group>
+                <group>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="zns_template_id" string="ZNS Template: " style="font-weight: 500"/>
+                            <field name="zns_template_id"/>
+                        </div>
+                    </div>
+                </group>
+                <group>
+                    <div class="exchange_money_loyalty" style="display: flex;justify-content: space-between;">
+                        <div>
+                            <span style="color: #091124;
+                                        font-size: 1.08333333rem;
+                                        line-height: 1.5;
+                                        font-weight: 500;">
+                                Quy đổi tiền :
+                            </span>
+                        </div>
+                        <div style="display: flex;justify-content: space-between;width: 90%;" >
+                            <div style="width: 90px;">
+                                <field name="s_point_exchange"/>
+                            </div>
+                            <div style="display: flex;justify-content: space-between;width: 90%;">
+                                <div>
+                                    <div style="display: flex;justify-content: space-between;width: 60px;">
+                                        <div>
+                                            <span style="color: #091124;
+                                                        font-size: 1.08333333rem;
+                                                        line-height: 1.5;
+                                                        font-weight: 500;">
+                                                Điểm
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span style="color: #091124;
+                                                        font-size: 1.08333333rem;
+                                                        line-height: 1.5;
+                                                        font-weight: 500;">
+                                                =
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex;width: 90%;">
+                                    <div style="width: 90px;">
+                                        <field name="s_monetary_exchange"/>
+                                    </div>
+                                    <div>
+                                        <span style="color: #091124;
+                                                    font-size: 1.08333333rem;
+                                                    line-height: 1.5;
+                                                    font-weight: 500;">
+                                            VNĐ
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="s_pos_loyalty_rule_views" model="ir.ui.view">
+        <field name="name">s.loyalty.rule.form.views.inherit</field>
+        <field name="model">loyalty.rule</field>
+        <field name="inherit_id" ref="pos_loyalty.view_loyalty_rule_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/div[hasclass('oe_title')]" position="inside">
+                <group>
+                    <field name="s_rule_type" widget="radio"  />
+                </group>
+            </xpath>
+            <xpath expr="//form/div[hasclass('oe_title')]" position="after">
+                <div class="s_rule_point_id" style="margin: 0 50px;">
+                    <field name="s_rule_point_id" nolabel="1" attrs="{'invisible': [('s_rule_type','!=','rule_point')]}">
+                        <tree editable="bottom">
+                                <field name="s_customer_ranked_id" required="1" />
+                                <field name="s_proportion_point" required="1" />
+                        </tree>
+                    </field>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='rule_domain']" position="attributes">
+                <attribute name="attrs">{'invisible': [('s_rule_type','!=','special')]}</attribute>
+            </xpath>
+            <xpath expr="//form/group/group[2]" position="after">
+                <group name="s_oe_group_datetime">
+                    <div class="s_oe_title" style="display: flex;" attrs="{'invisible':[('s_rule_type','!=','special')]}">
+                        <div class="s_oe_label">
+                            <group>
+                                <label for="s_rule_date_to" string="Thời gian"/>
+                            </group>
+                        </div>
+                        <div class="s_oe_datetime">
+                            <div style="display: flex; align-items: center;">
+                                <div style="margin-right: 10%; width: 20%;">
+                                    <label for="s_rule_date_from" string="Từ:"/>
+                                </div>
+                                <div>
+                                    <field name="s_rule_date_from" widget="date"/>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <div style="margin-right: 10%; width: 20%;">
+                                    <label for="s_rule_date_to" string="Đến:"/>
+                                </div>
+                                <div>
+                                    <field name="s_rule_date_to" widget="date"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='s_oe_group_datetime']" position="after">
+                <group>
+                    <div class="s_multiplication_point">
+                        <div style="display: flex; align-items: center;width: 100%">
+                            <div style="width: 70%">
+                                <group>
+                                    <field name="s_multiplication_point"
+                                           attrs="{'invisible':[('s_rule_type','!=','special')], 'required': [('s_rule_type', '=', 'special')]}"/>
+                                </group>
+                            </div>
+                            <div attrs="{'invisible':[('s_rule_type','!=','special')]}">
+                                <p>Điểm trên đơn hàng</p>
+                            </div>
+                        </div>
+                        <group>
+                            <field name="s_rule_apply_for" widget="many2many_tags" attrs="{'invisible':[('s_rule_type','!=','special')]}"/>
+                        </group>
+                    </div>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='points_quantity']" position="attributes">
+                <attribute name="attrs">{'invisible': [('s_rule_type','!=','special')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='points_currency']" position="attributes">
+                <attribute name="attrs">{'invisible': [('s_rule_type','!=','special')]}</attribute>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

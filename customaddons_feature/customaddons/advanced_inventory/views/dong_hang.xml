@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dong_hang_tree_view" model="ir.ui.view">
+        <field name="name">dong.hang.tree</field>
+        <field name="model">dong.hang</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+    <record id="dong_hang_act_window" model="ir.actions.act_window">
+        <field name="name">Dòng hàng</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dong.hang</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem name="#Dòng hàng" id="dong_hang_menu" parent="advanced_inventory.s_product_information_menu" action="dong_hang_act_window" sequence="5"/>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_stock_picking_views_form" model="ir.ui.view">
+        <field name="name">s.view.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('is_invisible_btn_cancel', '=', True),('state', 'not in', ('assigned', 'confirmed', 'draft', 'waiting'))]}
+                </attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <field name="is_invisible_btn_cancel" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

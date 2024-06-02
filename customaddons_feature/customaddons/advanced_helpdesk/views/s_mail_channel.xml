@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mail_channel_form_inherit" model="ir.ui.view">
+            <field name="name">mail_channel.form</field>
+            <field name="model">mail.channel</field>
+            <field name="inherit_id" ref="mail.mail_channel_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='group_ids']" position="before">
+                    <field name="s_assign_to"/>
+                    <field name="s_source_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="s_mail_channel_kanban_inherit" model="ir.ui.view">
+            <field name="name">s.mail.channel.kanban</field>
+            <field name="model">mail.channel</field>
+            <field name="inherit_id" ref="mail.mail_channel_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//t[@t-name='kanban-box']/div/div/button[@name='channel_join']" position="after">
+                    <button type="object" style="margin:0px 6px 0px 6px" class="btn btn-primary float-right" name="btn_show_channel_chat_helpdesk">Chat</button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="pos_gift_card.GiftCardPopup" t-inherit-mode="extension" owl="1">
+        <xpath expr="//main[hasclass('giftCardPopupMain')]/div[3]/div" position="after">
+            <div style="margin:15px 50px;width: 100%;">
+                <t t-if="state.is_not_calculate_amount === false">
+                    <div t-if="state.checkDiscountGiftCard">Phần trăm: <span t-esc="state.valueGiftCard"/></div>
+                    <div t-if="state.checkAmountGiftCard">Số tiền: <span t-esc="state.valueGiftCard"/></div>
+                </t>
+                <t t-else="">
+                    <div>GiftCard Cash</div>
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//main[hasclass('giftCardPopupMain')]/div[3]/div[3]" position="replace">
+            <div>
+                <span class="button confirm" t-on-click="payWithGiftCard">
+                    Confirm
+                </span>
+                <span class="button cancel" t-on-click="switchSelectTypeView">
+                    Discard
+                </span>
+            </div>
+        </xpath>
+        <xpath expr="//main[hasclass('giftCardPopupMain')]/div[3]" position="attributes">
+            <attribute name="t-if">state.showBarcodeGeneration &amp;&amp; state.showUseGiftCardMenu &amp;&amp; (state.checkDiscountGiftCard || state.checkAmountGiftCard)</attribute>
+        </xpath>
+        <xpath expr="//main[hasclass('giftCardPopupMain')]/div[3]/div/input" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </xpath>
+        <xpath expr="//main[hasclass('giftCardPopupMain')]/div[3]" position="before">
+            <div class="giftCardPopupContainer" t-if="state.showBarcodeGeneration &amp;&amp; state.showUseGiftCardMenu">
+                <div t-if="!state.checkDiscountGiftCard &amp;&amp; !state.checkAmountGiftCard">
+                    Mã vạch thẻ quà tặng:
+                    <input t-model="state.giftCardBarcode" class="giftCardPopupInput" type="text"/>
+                </div>
+                <div t-if="!state.checkDiscountGiftCard &amp;&amp; !state.checkAmountGiftCard">
+                    <span class="button confirm" t-on-click="UseWithGiftCard">
+                        Áp dụng
+                    </span>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

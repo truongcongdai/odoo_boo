@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_base_partner_merge_automatic_wizard_form" model="ir.ui.view">
+        <field name="name">base.partner.merge.automatic.wizard.form.inherit</field>
+        <field name="model">base.partner.merge.automatic.wizard</field>
+        <field name="inherit_id" ref="base.base_partner_merge_automatic_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <div>
+                    <label class="" string="Xác nhận gộp khách hàng" for="is_merge_partner"/>
+                    <field name='is_merge_partner'/>
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

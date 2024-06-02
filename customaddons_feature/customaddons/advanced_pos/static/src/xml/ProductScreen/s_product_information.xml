@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ProductInfoPopup" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('section-product-info-title')]//div[hasclass('flex-start')]" position="attributes">
+            <attribute name="class">column flex-start s_product_information</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('section-product-info-title')]//div[hasclass('flex-start')]" position="inside">
+            <span>Mã sản phẩm: <span> <t t-if="props.product.ma_san_pham" t-esc="props.product.ma_san_pham"/></span></span>
+        </xpath>
+    </t>
+</templates>

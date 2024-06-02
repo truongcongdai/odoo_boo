@@ -1,0 +1,17 @@
+<odoo>
+    <record id="s_shipping_method_form_view" model="ir.ui.view">
+        <field name="name">s_shipping_method_form_view</field>
+        <field name="model">shipping.method</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="select_shipping_method" widget="radio"/>
+                </group>
+                <footer>
+                    <button name="btn_submit" string="Submit" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ClientListScreen" t-inherit-mode="extension" owl="1">
+<!--        <xpath expr="//div[hasclass('clientlist-screen')]" position="inside">-->
+<!--            <div>-->
+<!--                <t t-esc="client.birthday" />-->
+<!--                <t t-esc="client.is_new_customer"/>-->
+<!--                <t t-esc="client.customer_ranked"/>-->
+<!--            </div>-->
+<!--        </xpath>-->
+        <xpath expr="//div[hasclass('clientlist-screen')]" position="attributes">
+            <attribute name="class">s_clientlist_screen_content clientlist-screen screen</attribute>
+        </xpath>
+        <xpath expr="//th[hasclass('client-line-email')]" position="replace">
+        </xpath>
+        <xpath expr="//th[@t-if='env.pos.config.module_pos_loyalty']" position="replace">
+        </xpath>
+        <xpath expr="//div[hasclass('top-content')]//div[hasclass('back')]" position="attributes">
+            <attribute name="class">s_button_back button back</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('new-customer')]" position="attributes">
+            <attribute name="t-if">createCustomerControl</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('new-customer')]" position="before">
+            <div class="button back" t-on-click="back" t-if="state.detailIsShown">
+                <i class="fa fa-angle-double-left"/>
+                <t t-if="!env.isMobile"> Discard</t>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('top-content')]/div[hasclass('searchbox-client')]" position="attributes">
+            <attribute name="t-on-mouseover">_onMouseOverSearchCustomer</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('searchbox-client')]" position="inside">
+            <span class="s_icon_customer">
+                <i class="fa fa-user"/>
+            </span>
+        </xpath>
+    </t>
+</templates>

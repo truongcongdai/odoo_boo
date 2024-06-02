@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--        <record id="action_report_phieu_xuat" model="ir.actions.report">-->
+        <!--            <field name="name">#Phiếu xuất</field>-->
+        <!--            <field name="model">stock.picking</field>-->
+        <!--            <field name="report_type">qweb-pdf</field>-->
+        <!--            <field name="report_name">advanced_logistic.report_phieu_xuat</field>-->
+        <!--            <field name="report_file">advanced_logistic.report_phieu_xuat</field>-->
+        <!--            <field name="print_report_name">'Phiếu Xuất - %s - %s' % (object.partner_id.name or '', object.name)</field>-->
+        <!--            <field name="binding_model_id" ref="model_stock_picking"/>-->
+        <!--            <field name="binding_type">report</field>-->
+        <!--        </record>-->
+        <!--        <report-->
+        <!--            string="Picking test"-->
+        <!--            id="advanced_logistic.action_report_phieu_xuat"-->
+        <!--            model="stock.picking"-->
+        <!--            report_type="qweb-pdf"-->
+        <!--            name="advanced_logistic.report_phieu_xuat"-->
+        <!--            file="advanced_logistic.report_phieu_xuat"-->
+        <!--            menu="{'False':['|',('state', '==', 'assigned')]}"-->
+        <!--        />-->
+        <record id="action_server_print_stock_picking" model="ir.actions.server">
+            <field name="name">#Phiếu xuất</field>
+            <field name="model_id" ref="advanced_logistic.model_stock_picking"/>
+            <field name="binding_model_id" ref="advanced_logistic.model_stock_picking"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.logistic_print_picking()
+            </field>
+        </record>
+    </data>
+</odoo>

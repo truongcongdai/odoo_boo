@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('client-details-left')]/div[hasclass('client-detail')][1]" positon="after">
+             <div class="client-detail-detail client-district">
+                <span class="label">Quận</span>
+                 <input class="detail client-address-district" name="district"
+                        t-on-change="captureChange" t-att-value="props.partner.district || ''"
+                        placeholder="Quận"/>
+             </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('client-details-left')]/div[hasclass('client-detail')][2]" positon="replace">
+             <div class="client-detail-detail">
+                <span class="label">City</span>
+                 <select class="detail client-address-states s-client-address-city needsclick" name="state_id"
+                        t-on-change="captureChange">
+                    <option value="">Thành phố</option>
+                    <t t-foreach="env.pos.states" t-as="state" t-key="state.id">
+                        <option t-if="props.partner.country_id[0] == state.country_id[0]"
+                                t-att-value="state.id"
+                                t-att-selected="props.partner.state_id ? ((state.id === props.partner.state_id[0]) ? true : undefined) : undefined">
+                            <t t-esc="state.name" />
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('client-details-right')]/div[hasclass('client-detail')][3]" positon="after">
+            <div class="client-detail-detail client-birthday">
+                <span class="label">Ngày sinh</span>
+                <div class="birthday_date_input">
+                    <t t-if="props.partner.birthday">
+                        <div class="row" style="display: flex;background: #FFF;border: solid 1px #cecbcb;margin-bottom: 4px;">
+                            <span>
+                                <input class="input_birthday_date client-birthday-day" style="text-align: center;border: none;margin-bottom: 0;height:33px;"
+                                       t-att-value="props.partner.birthday.slice(-2)" placeholder="dd" data-date="day"
+                                       type="number" t-on-keyup="_formatDateBirthDay"/>
+                            </span>
+                            <span style="margin-top: 6px; font-size: 20px;margin-bottom: 0;">/</span>
+                            <span>
+                                <input class="input_birthday_date client-birthday-month" style="text-align: center;border: none;margin-bottom: 0;height:33px;"
+                                       t-att-value="props.partner.birthday.slice(5,7)" placeholder="mm"
+                                       data-date="month" type="number" t-on-keyup="_formatDateBirthDay"/>
+                            </span>
+                            <span style="margin-top: 6px; font-size: 20px;margin-bottom: 0;">/</span>
+                            <span>
+                                <input class="input_birthday_date client-birthday-year" style="text-align: center;border: none;margin-bottom: 0;height:33px;"
+                                       t-att-value="props.partner.birthday.slice(0,4)" placeholder="yyyy"
+                                       data-date="year" type="number" t-on-keyup="_formatDateBirthDay"/>
+                            </span>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="row" style="display: flex;background: #FFF;border: solid 1px #cecbcb;margin-bottom: 4px;">
+                            <span>
+                                <input class="input_birthday_date client-birthday-day" style="text-align: center;border: none;margin-bottom: 0;height:33px;"
+                                       placeholder="dd" data-date="day" type="number" t-on-keyup="_formatDateBirthDay"/>
+                            </span>
+                            <span style="margin-top: 6px; font-size: 20px;margin-bottom: 0;">/</span>
+                            <span>
+                                <input class="input_birthday_date client-birthday-month" style="text-align: center;border: none;margin-bottom: 0;height:33px;"
+                                       placeholder="mm" data-date="month" type="number"
+                                       t-on-keyup="_formatDateBirthDay"/>
+                            </span>
+                            <span style="margin-top: 6px; font-size: 20px;margin-bottom: 0;">/</span>
+                            <span>
+                                <input class="input_birthday_date client-birthday-year" style="text-align: center;border: none;margin-bottom: 0;height:33px;"
+                                       placeholder="yyyy" data-date="year" type="number"
+                                       t-on-keyup="_formatDateBirthDay"/>
+                            </span>
+                        </div>
+                    </t>
+                </div>
+                <div style="clear:both"></div>
+<!--                       onclick="this.showPicker()"/>-->
+<!--                    <input class="detail format_birthday"-->
+<!--                       type="text"-->
+<!--                       name="birthday"-->
+<!--                       t-on-change="captureChange"-->
+<!--                       placeholder="dd-mm-yyyy"-->
+<!--                       t-att-value="props.partner.birthday"/>-->
+<!--                    <input class="detail format_birthday_2"-->
+<!--                       type="text"-->
+<!--                       name="format_birthday"-->
+<!--                       t-on-change="captureChange"-->
+<!--                       placeholder="dd-mm-yyyy"-->
+<!--                       t-att-value="getDateBirthday.format_date"/>-->
+            </div>
+            <div class="client-detail-detail client-gender">
+                <span class="label">Gender</span>
+                <select class="form-control" name="gender" t-on-change="captureChange">
+                    <option t-attf-value="">Giới tính</option>
+                    <option t-attf-value="male"
+                            t-att-selected="props.partner.gender ? (('male' === props.partner.gender) ? true : undefined) : undefined">Male</option>
+                    <option t-attf-value="female"
+                            t-att-selected="props.partner.gender ? (('female' === props.partner.gender) ? true : undefined) : undefined">Female</option>
+                    <option t-attf-value="other"
+                            t-att-selected="props.partner.gender ? (('other' === props.partner.gender) ? true : undefined) : undefined">Other</option>
+                </select>
+            </div>
+        </xpath>
+
+        <xpath expr="//section[hasclass('client-details')]" positon="inside">
+            <div class="note-partner">
+                <span class="label label-note">Ghi chú</span>
+                <input class="note_partner_pos" name="partner_note"
+                    t-on-change="captureChange" t-att-value="props.partner.partner_note || ''"
+                    placeholder="Ghi chú cho nhân viên"/>
+                <i class="fa fa-pencil"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//section[hasclass('client-details')]" positon="inside">
+            <div class="block-customer-detail">
+                <div class="head-block-detail">
+                    <div class="head-block-label">
+                        <span class="label-pos-info">Hóa đơn gần nhất</span>
+                    </div>
+<!--                <Dropdown togglerClass="'btn btn-primary'">-->
+<!--                    <t t-set-slot="toggler">-->
+<!--                        <i class="fa fa-caret-down"/>-->
+<!--                    </t>-->
+                    <div class="head-block-button">
+                        <button class="btn button-show-info button-show-info-down " t-on-click="_buttonShowinfoDownRecentlyBill" id="show-info-down-recently-bill">
+                            <i class="fa fa-caret-down"/>
+                        </button>
+                        <button class="btn button-show-info button-show-info-up " t-on-click="_buttonShowinfoUpRecentlyBill" id="show-info-up-recently-bill">
+                            <i class="fa fa-caret-up"/>
+                        </button>
+                    </div>
+                </div>
+                    <div class="client-detail-detail client-bills block-client-bills-hide block-client-none" id="show-info-recently-bill">
+                        <t t-if="props.partner.recently_bill">
+                            <table class="table-client-pos-order-infor" >
+                                <t t-foreach="props.partner.recently_bill" t-as="item">
+                                    <thead class="head_recently_bill">
+                                        <tr>
+                                          <th colspan="4">
+                                              <span class="label">
+                                                  <span class="label_span label_pos_reference" style="padding-right: 10px;">
+                                                    <t t-esc="item.pos_reference"/>
+                                                  </span>
+                                                  <i class="fa fa-circle"/>
+                                                  <span class="label_span label_date_order" style="padding-left: 10px;color: #5656568a; font-weight: 500;">
+                                                    <t t-esc="item.date_order"/>
+                                                  </span>
+                                              </span>
+                                          </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="recently_order">
+                                        <tr>
+                                            <div>
+                                            <td class="data_quantity_recently_bill">
+                                                <div class="table_data_pos_order_info">
+                                                    <span class="pos_order_data_order_info">
+                                                        <span class="label_span">
+                                                            Số lượng:
+                                                        </span>
+                                                        <t t-esc="item.total_quantity_pos + ' sản phẩm'"/>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            </div>
+                                            <div>
+                                            <td>
+                                                <div class="table_data_pos_order_info">
+                                                    <span class="pos_order_data_order_info">
+                                                        <span class="label_span">
+                                                            Địa điểm:
+                                                        </span>
+                                                        <t t-esc="item.pos_name"/>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            </div>
+                                            <div>
+                                            <td class="data_amount_paid_recently_bill">
+                                                <div class="table_data_pos_order_info">
+                                                    <span class="pos_order_data_order_info">
+                                                        <span class="label_span">
+                                                            Thanh toán:
+                                                        </span>
+                                                        <t t-esc="item.amount_paid"/>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            </div>
+                                            <div>
+                                            <td>
+                                                <div class="table_data_pos_order_info">
+                                                    <span class="pos_order_data_order_info">
+                                                        <span class="label_span">
+                                                            Nhân viên bán hàng:
+                                                        </span>
+                                                        <t t-if="item.sale_person">
+                                                            <t t-esc="item.sale_person"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="''"/>
+                                                        </t>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            </div>
+                                        </tr>
+                                    </tbody>
+                                </t>
+
+                            </table>
+                            <a class="show-more-info" t-on-click="_buttonMoreRecentlyBill" id="more-recently-bill">
+                                <span>Xem thêm <i class="fa fa-caret-down"/></span>
+                            </a>
+                        </t>
+                    </div>
+<!--                </Dropdown>-->
+            </div>
+        </xpath>
+        <xpath expr="//section[hasclass('client-details')]" positon="inside">
+            <div class="block-customer-detail">
+                <div class="head-block-detail">
+                    <div class="head-block-label">
+                        <span class="label-pos-info">Sản phẩm mua gần nhất</span>
+                    </div>
+<!--                <Dropdown togglerClass="'btn btn-primary'">-->
+<!--                    <t t-set-slot="toggler">-->
+<!--                        <i class="fa fa-caret-down"/>-->
+<!--                    </t>-->
+                    <div class="head-block-button">
+                        <button class="btn button-show-info button-show-info-down " t-on-click="_buttonShowinfoDownRecentlyProduct" id="show-info-down-recently-Product">
+                            <i class="fa fa-caret-down"/>
+                        </button>
+                        <button class="btn button-show-info button-show-info-up " t-on-click="_buttonShowinfoUpRecentlyProduct" id="show-info-up-recently-Product">
+                            <i class="fa fa-caret-up"/>
+                        </button>
+                    </div>
+                </div>
+                    <div class="client-detail-detail client-bills block-client-bills-hide block-client-none" id="show-info-recently-product">
+                        <t t-if="props.partner.recently_purchase_product">
+                            <table class="table-client-pos-order-infor">
+                                <t t-foreach="props.partner.recently_purchase_product" t-as="item">
+                                    <thead class="head_recently_product">
+                                        <tr>
+                                          <th colspan="4">
+                                              <span class="label">
+                                                  <span class="label_span label_product_name" style="padding-right: 10px;">
+                                                    <t t-esc="item.name"/>
+                                                  </span>
+                                                  <i class="fa fa-circle"/>
+                                                  <span class="label_span label_product_sku" style="padding-left: 10px;color: #5656568a;font-weight: 500;">
+                                                      <span>
+                                                          SKU#
+                                                      </span>
+                                                      <t t-esc="item.sku"/>
+                                                  </span>
+                                              </span>
+                                          </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="recently_product">
+                                        <tr>
+                                            <div class="inline-recently_product-class">
+                                            <td class="data_color_recently_product">
+                                                <div class="table_data_pos_order_info_product">
+                                                    <span class="pos_order_data_order_info">
+                                                        <span class="label_span">
+                                                            Màu sắc:
+                                                        </span>
+                                                        <t t-if="item.color">
+                                                            <span>
+                                                                <t t-esc="item.color"/>
+                                                            </span>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span>
+                                                                <t t-esc="''"/>
+                                                            </span>
+                                                        </t>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            </div>
+                                            <div class="inline-recently_product-class">
+                                            <td>
+                                                <div class="table_data_pos_order_info_product">
+                                                    <span class="pos_order_data_order_info">
+                                                        <span class="label_span">
+                                                            Size:
+                                                        </span>
+                                                        <t t-if="item.size">
+                                                            <span>
+                                                                <t t-esc="item.size"/>
+                                                            </span>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span>
+                                                                <t t-esc="''"/>
+                                                            </span>
+                                                        </t>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            </div>
+                                            <div class="inline-recently_product-class">
+                                            <td>
+                                                <div class="table_data_pos_order_info_product">
+                                                    <span class="pos_order_data_order_info">
+                                                        <span class="label_span">
+                                                            Đơn giá:
+                                                        </span>
+                                                        <t t-if="item.lst_price">
+                                                            <span>
+                                                                <t t-esc="item.lst_price"/>
+                                                            </span>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span>
+                                                                <t t-esc="'0'"/>
+                                                            </span>
+                                                        </t>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            </div>
+                                        </tr>
+                                    </tbody>
+                                </t>
+                                <a class="show-more-info" t-on-click="_buttonMoreRecentlyProduct" id="more-recently-product">
+                                    <span>Xem thêm <i class="fa fa-caret-down"/></span>
+                                </a>
+                            </table>
+                        </t>
+                    </div>
+<!--                </Dropdown>-->
+            </div>
+        </xpath>
+
+        <xpath expr="//section[hasclass('client-details')]" positon="inside">
+            <div class="block-customer-detail">
+                <div class="head-block-detail">
+                    <div class="head-block-label">
+                        <span class="label-pos-info">Sản phẩm đã mua</span>
+                    </div>
+<!--                <Dropdown togglerClass="'btn btn-primary'">-->
+<!--                    <t t-set-slot="toggler">-->
+<!--                        <i class="fa fa-caret-down"/>-->
+<!--                    </t>-->
+                    <div class="head-block-button">
+                        <button class="btn button-show-info button-show-info-down " t-on-click="_buttonShowinfoDownBrandCategory" id="show-info-down-brand-category">
+                            <i class="fa fa-caret-down"/>
+                        </button>
+                        <button class="btn button-show-info button-show-info-up " t-on-click="_buttonShowinfoUpRecentlyBrandCategory" id="show-info-up-brand-category">
+                            <i class="fa fa-caret-up"/>
+                        </button>
+                    </div>
+                </div>
+                    <div class="client-detail-detail client-bills block-client-none" id="show-info-recently-brand-category">
+                        <t t-if="props.partner.brand_category">
+                            <table class="table-client-pos-order-infor">
+                                <t t-foreach="props.partner.brand_category" t-as="item">
+                                    <thead class="head_brand_category">
+                                        <tr>
+                                            <th colspan="4">
+                                                <span class="label">
+                                                    <span class="label_span label_brand_name" style="padding-right: 1px;">
+                                                        <t t-esc="item.brand_name"/>
+                                                    </span>
+                                                    <span class="label_span label_total_brand_name" style="font-weight: 400;color: #005dd3;">
+                                                        <span>
+                                                            (<t t-esc="item.total"/> sản phẩm)
+                                                        </span>
+                                                  </span>
+                                                </span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="recently_brand_category">
+                                        <t t-foreach="item.categ_list" t-as="value">
+                                            <div class="inline-categ_list-class">
+                                            <tr>
+                                                <td>
+                                                    <div class="table_data_pos_order_info">
+                                                        <span class="pos_order_data_order_info">
+                                                            <span class="label_span">
+                                                                <t t-esc="value.categ_name"/>:
+                                                            </span>
+                                                            <span>
+                                                                <t t-esc="value.count"/> sản phẩm
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </div>
+                                        </t>
+                                    </tbody>
+                                </t>
+                            </table>
+                        </t>
+                    </div>
+<!--                </Dropdown>-->
+            </div>
+        </xpath>
+
+
+<!--        <xpath expr="//section[hasclass('client-details')]" positon="inside">
+            <div class="block-customer-detail">
+                <span class="label-pos-info">test</span>
+                <button class="btn btn-primary" t-on-click="_buttonMore">>
+                    Xem thêm <i class="fa fa-caret-down ml-1"/>
+                </button>
+            </div>
+        </xpath>-->
+
+        <xpath expr="//div[hasclass('client-details-left')]/div[hasclass('client-detail')][5]" positon="replace">
+            <div class="client-detail-detail">
+                <span class="label">Country</span>
+                <input class="detail client-address-country s-client-address-country" name="country_id"
+                       t-on-change="captureChange" t-att-value="props.partner.country_id[1]" readonly="1"/>
+            </div>
+        </xpath>
+    </t>
+</templates>

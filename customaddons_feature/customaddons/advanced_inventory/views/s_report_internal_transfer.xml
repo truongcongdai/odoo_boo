@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_report_internal_transfer_tree_view" model="ir.ui.view">
+            <field name="name"># Báo cáo chênh lệch điều chuyển</field>
+            <field name="model">s.internal.transfer.line</field>
+            <field name="arch" type="xml">
+                <tree string="Điều chuyển">
+                    <field name="transfer_create_date" string="Ngày tạo phiếu"/>
+                    <field name="transfer_code" string="Số lệnh"/>
+                    <field name="transfer_location_out_id" string="Kho xuất"/>
+                    <field name="transfer_location_in_id" string="Kho nhập"/>
+                    <field name="product_barcode" string="Barcode"/>
+                    <field name="product_ma_cu" string="Mã cũ"/>
+                    <field name="product_ma_san_pham" string="Mã hàng"/>
+                    <field name="product_id" string="Tên hàng" required="1"/>
+                    <field name="size" string="Size"/>
+                    <field name="qty_expect" string="Số lượng đề nghị" sum="Tổng số lượng đề nghị"/>
+                    <field name="qty_out_real" string="Số lượng thực xuất" sum="Tổng số lượng thực xuất"/>
+                    <field name="chenh_lech_dieu_chuyen" string="Chênh lệch điều chuyển" sum="Tổng chênh lệch điều chuyển"/>
+                    <field name="qty_in_real" string="Số lượng thực nhận" sum="Tổng số lượng thực nhận"/>
+                    <field name="chech_lech_xuat" string="Chênh lệch xuất" sum="Tổng chênh lệch xuất"/>
+                    <field name="transfer_note" string="Nội dung" />
+                    <field name="ton_kho_xuat" string="Tồn kho xuất" />
+                    <field name="ton_kho_nhap" string="Tồn kho nhập" />
+
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,86 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="s_gift_card_view_form" model="ir.ui.view">
+            <field name="name">s.gift.card.view.form</field>
+            <field name="model">gift.card</field>
+            <field name="inherit_id" ref="gift_card.gift_card_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='initial_amount']" position="after">
+                    <label string="Giảm giá theo" for="discount_type"/>
+                    <div>
+                        <field name="discount_type" class="oe_inline"/>
+                        <field name="discount_percentage" attrs="{'invisible': [('discount_type', '!=', 'percentage')],'required': [('discount_type', '=', 'percentage')]}" class="oe_inline"/>
+                        <span attrs="{'invisible': [('discount_type', '!=', 'percentage')],'required': [('discount_type', '=', 'percentage')]}" class="oe_inline">%</span>
+                    </div>
+                    <label string="Số tiền" for="discount_amount" attrs="{'invisible': [('discount_type', '!=', 'discount_amount')]}" />
+                    <div attrs="{'invisible': [('discount_type', '!=', 'discount_amount')]}">
+                        <field name="discount_amount" class="oe_inline" attrs="{'required':[('discount_type', '=', 'discount_amount')]}" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='id']" position="after">
+                    <field name="order_id" optional="hide"/>
+                    <field name="s_pos_reference" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='buy_pos_order_line_id']" position="after">
+                    <field name="is_not_calculate_amount"/>
+                    <field name="is_gift_card_discard"/>
+                </xpath>
+                <xpath expr="//group[@name='gift_card']" position="after">
+                    <group>
+                        <field name="pos_payment_ids" options="{'no_create': True}" readonly="1">
+                            <tree>
+                                <field name="id"/>
+                                <field name="s_pos_reference"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='discount_type']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_not_calculate_amount', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='discount_percentage']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_not_calculate_amount', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='discount_amount']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_not_calculate_amount', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="s_type_discount" attrs="{'invisible': [('is_not_calculate_amount','=', True)]}" required="True"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="s_gift_card_view_tree" model="ir.ui.view">
+            <field name="name">s.gift.card.view.tree</field>
+            <field name="model">gift.card</field>
+            <field name="inherit_id" ref="gift_card.gift_card_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="active"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="s_gift_card_view_search" model="ir.ui.view">
+            <field name="name">s.gift.card.view.search</field>
+            <field name="model">gift.card</field>
+            <field name="inherit_id" ref="gift_card.gift_card_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter name="active" string="Gift Card lưu trữ" domain="[('active', '=', False)]" />
+                </xpath>
+            </field>
+        </record>
+        <record id="action_update_status_gift_card" model="ir.actions.server">
+            <field name="name">Cập nhật trạng thái Gift card</field>
+            <field name="model_id" ref="model_gift_card"/>
+<!--            <field name="binding_model_id" ref="model_product_product"/>-->
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                for rec in records:
+                    rec.update_status()
+            </field>
+        </record>
+    </data>
+</odoo>

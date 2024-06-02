@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
+<!--        <xpath expr="//t[@t-esc='client.loyalty_points']" position="after">-->
+<!--            <div class="s_customer_information_pos">-->
+<!--                <p>Chi tiêu trong năm: <t t-esc="client.s_separate_total_period_revenue"/></p>-->
+<!--            </div>-->
+<!--        </xpath>-->
+
+        <xpath expr="//t[@t-if='client.loyalty_points']" position="replace">
+            <t t-if="client.loyalty_points">
+                <p>Điểm: <t t-esc="client.s_separate_loyalty_points"/></p>
+            </t>
+            <div class="s_customer_information_pos">
+                <t t-if="client.s_separate_total_period_revenue">
+                    <p>Chi tiêu trong năm: <t t-esc="client.s_separate_total_period_revenue"/></p>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>

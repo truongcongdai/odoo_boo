@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ProductsWidget" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('products-widget')]" position="inside">
+            <SProductItemList products="productsToDisplay" searchWord="searchWord"/>
+        </xpath>
+        <xpath expr="//ProductList" position="replace">
+        </xpath>
+    </t>
+</templates>

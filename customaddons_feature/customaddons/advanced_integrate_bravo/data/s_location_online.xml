@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="s_location_online_data" forcecreate="1" model="stock.warehouse">
+            <field name="name">Kho đi đường online</field>
+            <field name="code">01.07.040</field>
+            <field name="status_stock_warehouse">False</field>
+        </record>
+    </data>
+</odoo>

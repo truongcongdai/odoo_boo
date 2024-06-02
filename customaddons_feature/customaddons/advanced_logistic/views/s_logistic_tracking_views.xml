@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_logistic_tracking_tree_view" model="ir.ui.view">
+        <field name="name">Logistic Tracking Tree View</field>
+        <field name="model">s.logistic.tracking</field>
+        <field name="arch" type="xml">
+            <tree string="S Logistic Tree View">
+                <field name="s_internal_transfer_id" readonly="1"/>
+                <field name="s_transfer_out_id" readonly="1"/>
+                <field name="s_location_out_id" readonly="1"/>
+                <field name="s_transfer_quantity" readonly="1"/>
+                <field name="s_date_out"/>
+                <field name="s_date_in"/>
+                <field name="s_complete_date"/>
+                <field name="s_receiver" widget="many2one" attrs="{'readonly': [('s_state', '=', 'delivered')]}"/>
+                <field name="s_sla"/>
+                <field name="s_state" widget="badge" decoration-primary="s_state == 'received'"
+                       decoration-warning="s_state == 'delivered'"/>
+                <button name="action_apply_s_logistic_tracking" type="object" string="Xác nhận" class="btn btn-primary"
+                        attrs="{'invisible': ['|',('s_state','=','delivered'),'&amp;',('s_state', '=', 'received'),('s_complete_date', '=', False)]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="s_logistic_tracking_form_view" model="ir.ui.view">
+        <field name="name">Logistic Tracking Form View</field>
+        <field name="model">s.logistic.tracking</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="s_internal_transfer_id"/>
+                            <field name="s_transfer_out_id"/>
+                            <field name="s_location_out_id"/>
+                            <field name="s_location_in_id"/>
+                            <field name="s_transfer_quantity"/>
+                            <field name="s_date_out"/>
+                        </group>
+                        <group>
+                            <field name="s_date_in"/>
+                            <field name="s_complete_date"/>
+                            <field name="s_receiver"/>
+                            <field name="s_state"/>
+                            <field name="s_sla" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="s_logistic_tracking_kanban_view" model="ir.ui.view">
+        <field name="name">Logistic Tracking Kanban View</field>
+        <field name="model">s.logistic.tracking</field>
+        <field name="arch" type="xml">
+            <kanban create="0" edit="0" delete="0">
+                <field name="s_internal_transfer_id"/>
+                <field name="s_transfer_out_id"/>
+                <field name="s_location_out_id"/>
+                <field name="s_transfer_quantity"/>
+                <field name="s_date_out"/>
+                <field name="s_date_in"/>
+                <field name="s_complete_date"/>
+                <field name="s_receiver"/>
+                <field name="s_sla"/>
+                <field name="s_state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <div t-attf-class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div style="margin-bottom: 6px" t-if="record.s_internal_transfer_id" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold">Điều chuyển:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_internal_transfer_id"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_transfer_out_id" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold">Mã phiếu xuất:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_transfer_out_id"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_location_out_id" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">Kho xuất hàng:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_location_out_id"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_location_transfer_in_id" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">Kho nhập hàng:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_location_transfer_in_id"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_transfer_quantity" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">Số lượng:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_transfer_quantity"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_date_out" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">Ngày xuất:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_date_out"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_date_in" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">Ngày nhận hàng:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_date_in"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_complete_date" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">Ngày hoàn thành:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_complete_date"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_receiver" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">Người nhận:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_receiver"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 6px" t-if="record.s_sla" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">SLA(hh:mm):</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_sla"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div t-if="record.s_state" style="margin-bottom: 6px" class="row">
+                                        <div class="col-5">
+                                            <span style="font-weight: bold;">Trạng thái:</span>
+                                        </div>
+                                        <div class="col-7">
+                                            <span>
+                                                <field name="s_state"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary"
+                                            name="action_apply_s_logistic_tracking"
+                                            attrs="{'invisible': ['|',('s_state','=','delivered'),'&amp;',('s_state', '=', 'received'),('s_complete_date', '=', False)]}"
+                                            type="object">Xác nhận
+                                    </button>
+                                </div>
+                                <!--                                            <div class="o_primary" t-if="selection_mode">-->
+                                <!--                                                <field name="name"/>-->
+                                <!--                                            </div>-->
+                                <!--                                            <div class="o_secondary"><field class="o_secondary"  name="warehouse_id" readonly="1" groups="stock.group_stock_multi_warehouses"/></div>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div class="o_kanban_manage_button_section" t-if="!selection_mode">-->
+                                <!--                                            <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>-->
+                                <!--                                        </div>-->
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="s_logistic_tracking_tree_view" model="ir.ui.view">
+        <field name="name">Logistic Tracking Tree View</field>
+        <field name="model">s.logistic.tracking</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0" string="Logistic Tracking">
+                <field name="s_internal_transfer_id"/>
+                <field name="s_transfer_out_id"/>
+                <field name="s_location_out_id"/>
+                <field name="s_location_transfer_in_id"/>
+                <field name="s_transfer_quantity"/>
+                <field name="s_date_out"/>
+                <field name="s_date_in"/>
+                <field name="s_complete_date"/>
+                <field name="s_receiver"/>
+                <field name="s_sla"/>
+                <field name="s_state"/>
+                <button name="action_apply_s_logistic_tracking" type="object" string="Xác nhận" class="btn btn-primary"
+                        attrs="{'invisible': ['|',('s_state','=','delivered'),'&amp;',('s_state', '=', 'received'),('s_complete_date', '=', False)]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="s_logistic_tracking_action" model="ir.actions.act_window">
+        <field name="name">Logistic Tracking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">s.logistic.tracking</field>
+        <field name="view_mode">kanban,tree</field>
+        <!--        <field name="view_id" ref="advanced_logistic.s_logistic_tracking_kanban_view"/>-->
+    </record>
+
+    <menuitem id="s_logistic_tracking_menu" name="Logistic Tracking" parent="advanced_logistic_report_menu_root"
+              groups="base.group_user" action="s_logistic_tracking_action" sequence="150"/>
+</odoo>

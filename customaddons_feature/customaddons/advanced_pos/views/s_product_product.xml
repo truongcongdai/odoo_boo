@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_product_form_inherit" model="ir.ui.view">
+            <field name="name">product.product.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='detailed_type']" position="after">
+                    <field name="ma_san_pham" readonly="1"/>
+                    <field name="thuong_hieu" readonly="1"/>
+                    <field name="dong_hang" readonly="1"/>
+                    <field name="season" readonly="1"/>
+                    <field name="chat_lieu" readonly="1"/>
+                    <field name="item_code" invisible="1" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='default_code']" position="attributes">
+                    <attribute name="string">SKU</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="chung_loai" readonly="1"/>
+                    <field name="ma_cu" readonly="1"/>
+                    <field name="ma_vat_tu" required="0"/>
+                    <field name="sku" invisible="1"/>
+                    <field name="bo_suu_tap" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="mau_sac" readonly="1"/>
+                    <field name="kich_thuoc" readonly="1"/>
+                    <field name="gioi_tinh" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='gioi_tinh']" position="after">
+                    <field name="is_product_green" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page name="coupon_program" string="Khuyến mãi">
+                        <field name="coupon_ids" readonly="1">
+                            <tree domain="[('is_expires_ctkm','=',False)]">
+                                <field name="coupon_id" />
+                                <field name="pos_config_ids" widget="many2many_tags" />
+                                <field name="description" optional="show" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='product_template_variant_value_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                    <field name="product_template_attribute_value_ids" widget="many2many_tags" readonly="1" groups="product.group_product_variant"/>
+                </xpath>
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="s_note"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="product_product_tree_inherit" model="ir.ui.view">
+            <field name="name">product.product.tree.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="attributes">
+                    <attribute name="string">SKU</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="product_tmpl_id" string="Sản phẩm cha" optional="hide"/>
+                    <field name="gioi_tinh" optional="hide"/>
+                    <field name="season" optional="hide"/>
+                    <field name="dong_hang" optional="hide"/>
+                    <field name="thuong_hieu" optional="hide"/>
+                    <field name="chat_lieu" optional="hide"/>
+                    <field name="ma_cu" optional="hide"/>
+                    <field name="ma_vat_tu" optional="hide"/>
+                    <field name="chung_loai" optional="hide"/>
+                    <field name="ma_san_pham" optional="hide"/>
+                    <field name="bo_suu_tap" optional="hide"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='name']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='product_template_variant_value_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_template_variant_value_ids']" position="after">
+                    <field name="product_template_attribute_value_ids" widget="many2many_tags" groups="product.group_product_variant" readonly="1"/>
+                </xpath>
+
+<!--                <xpath expr="//field[@name='default_code']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                    <attribute name="string">SKU</attribute>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//field[@name='standard_price']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//field[@name='qty_available']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//field[@name='virtual_available']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//field[@name='uom_id']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//field[@name='product_template_variant_value_ids']" position="after">-->
+<!--                    <field name="detailed_type"/>-->
+<!--                    <field name="default_code" invisible="0" string="SKU"/>-->
+<!--                    <field name="ma_san_pham"/>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//field[@name='product_template_variant_value_ids']" position="before">-->
+<!--                    <field name="product_tmpl_id" string="Sản phẩm cha"/>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//field[@name='lst_price']" position="after">-->
+<!--                    <field name="bo_suu_tap"/>-->
+<!--                    <field name="categ_id"/>-->
+<!--                    <field name="gioi_tinh"/>-->
+<!--                    <field name="barcode"/>-->
+<!--                    <field name="season"/>-->
+<!--                    <field name="dong_hang"/>-->
+<!--                    <field name="thuong_hieu"/>-->
+<!--                    <field name="chat_lieu"/>-->
+<!--                    <field name="ma_cu"/>-->
+<!--                    <field name="ma_vat_tu"/>-->
+<!--                    <field name="chung_loai"/>-->
+<!--                </xpath>-->
+
+            </field>
+        </record>
+
+        <record id="product_product_search_inherit" model="ir.ui.view">
+            <field name="name">product.product.search.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="ma_san_pham" string="Mã sản phẩm"/>
+                    <field name="ma_cu" string="Mã cũ"/>
+                    <field name="ma_vat_tu" string="Mã vật tư"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="default_code" string="SKU"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="s_product_product_view_search" model="ir.ui.view">
+            <field name="name">product.product.view.search</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <search string="Search Product">
+                    <field name="name" filter_domain="[('name','ilike',self)]"/>
+                    <field name="default_code" filter_domain="[('default_code','ilike', self)]"/>
+                    <field name="barcode" filter_domain="[('barcode','ilike',self)]"/>
+                    <field name="mau_sac" filter_domain="[('mau_sac','ilike',self)]"/>
+                    <field name="kich_thuoc" filter_domain="[('kich_thuoc','ilike',self)]"/>
+                    <field name="gioi_tinh" filter_domain="[('gioi_tinh','ilike',self)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_update_product_size_color" model="ir.actions.server">
+            <field name="name">Cập nhật kích thước, màu sắc sản phẩm</field>
+            <field name="model_id" ref="model_product_product"/>
+<!--            <field name="binding_model_id" ref="model_product_product"/>-->
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                for rec in records:
+                    rec._compute_variants_attribute()
+            </field>
+        </record>
+
+    </data>
+</odoo>

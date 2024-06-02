@@ -1,0 +1,33 @@
+<data>
+    <record id="bravo_stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">bravo.stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_boo_do_return']" position="after">
+                <field name="is_inventory_receiving" readonly="1" attrs="{'invisible':[('is_inventory_receiving','=',False)]}"/>
+                <field name="returned_picking_id" readonly="1" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="mappings" string="Bravo Mappings" invisible="1">
+                    <field name="mapping_bravo_ids" readonly="1">
+                        <tree>
+                            <field name="picking_id"/>
+                            <field name="status"/>
+                            <field name="post_api"/>
+                            <field name="create_date"/>
+                            <field name="write_date"/>
+                            <field name="create_uid" widget="many2one_avatar_user"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                <h3 attrs="{'invisible': [('bravo_name', '=', False)]}">
+                    <label for="bravo_name" />
+                    <field name="bravo_name" />
+                </h3>
+            </xpath>
+        </field>
+    </record>
+</data>

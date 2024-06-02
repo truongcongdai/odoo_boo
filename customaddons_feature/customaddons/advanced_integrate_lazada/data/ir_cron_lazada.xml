@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ir_cron_data_refresh_access_token" model="ir.cron">
+            <field name="name">### Lazada Cron Refresh access token </field>
+            <field name="model_id" ref="base.model_res_config_settings"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.cronjob_refresh_token()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="numbercall">-1</field>
+            <field name="doall">1</field>
+            <field name="nextcall" eval="datetime.now() + timedelta(days=1)"/>
+        </record>
+
+<!--        <record id="ir_cron_sync_stock_test" model="ir.cron" forcecreate='True'>-->
+<!--            <field name="name">### Lazada Cron Sync Stock test</field>-->
+<!--            <field name="model_id" ref="model_stock_quant"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.cronjob_sync_stock_lazada()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">minutes</field>-->
+<!--            <field name="user_id" ref="base.user_root"/>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--            <field name="doall">1</field>-->
+<!--        </record>-->
+
+        <record id="ir_cron_sync_stock" model="ir.cron">
+            <field name="name">### Lazada Compute completed date</field>
+            <field name="active">False</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.compute_completed_date()</field>
+        </record>
+
+        <record id="cronjob_lazada_push_transfer_qty" forcecreate='True' model="ir.cron">
+            <field name="name">###lazada Integrate - Push Transfer Quantity</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_stock_quant"/>
+            <field name="state">code</field>
+            <field name="code">model.lazada_push_transfer_qty()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+        <record id="cronjob_sync_stock_according_time_setting_tiktok" forcecreate='True' model="ir.cron">
+            <field name="name">###Lazada Integrate - Synchronizing Stock According Time Setting</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_stock_quant"/>
+            <field name="state">code</field>
+            <field name="code">model.cronjob_sync_stock_according_time_setting_lazada()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+        <record id="cronjob_lazada_push_transfer_qty" forcecreate='True' model="ir.cron">
+            <field name="name">###lazada Integrate - Push Transfer Quantity</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_stock_quant"/>
+            <field name="state">code</field>
+            <field name="code">model.lazada_push_transfer_qty()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+        <record id="cronjob_sync_stock_according_time_setting_tiktok" forcecreate='True' model="ir.cron">
+            <field name="name">###Lazada Integrate - Synchronizing Stock According Time Setting</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_stock_quant"/>
+            <field name="state">code</field>
+            <field name="code">model.cronjob_sync_stock_according_time_setting_lazada()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+    </data>
+</odoo>

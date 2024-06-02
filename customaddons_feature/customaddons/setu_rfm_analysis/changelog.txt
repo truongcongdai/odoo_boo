@@ -1,0 +1,8 @@
+Date : 18th May 2023
+Version : '15.1' (in __manifest__.py)
+Odoo Version : 15
+Done by : Devangi Pabari
+Changes :
+(select value from ir_config_parameter where key = 'setu_rfm_analysis.module_setu_rfm_analysis_extended') = 'True'
+replaced with
+(select state from ir_module_module where name = 'setu_rfm_analysis_extended') = 'installed'

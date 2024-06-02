@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="s_m2_view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">s_m2_view_partner_form_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='property_stock_customer']" position="before">
+                    <field name="is_warehouse"/>
+                    <!-- Add your fields or attributes here -->
+                </xpath>
+                <xpath expr="//field[@name='customer_ranked']" position="after">
+                    <field name="fail_sync_cusomter_rank" readonly="True"/>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='function']" position="after">
+                    <field name="phone_delivery" attrs="{ 'invisible': [('type', '=', 'contact')] }"/>
+                </xpath>
+
+                <xpath expr="//page[@name='contact_addresses']/field[@name='child_ids']/form//field[@name='phone']" position="after">
+                    <field name="phone_delivery" placeholder="Địa chỉ giao hàng..."/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_resync_customer_ranked" model="ir.actions.server">
+            <field name="name">Đồng bộ lại hạng khách hàng</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="binding_model_id" ref="model_res_partner"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">
+                for record in records:
+                    record.cron_post_customer_rank_m2()
+            </field>
+        </record>
+
+        <record id="s_m2_view_partner_tree_inherit" model="ir.ui.view">
+            <field name="name">s_m2_view_partner_tree_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email']" position="before">
+                    <field name="phone_delivery"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

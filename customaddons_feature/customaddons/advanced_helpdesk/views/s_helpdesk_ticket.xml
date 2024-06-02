@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_helpdesk_ticket_form_inherit" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.form</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_open_helpdesk_ticket']" position="before">
+                    <button class="oe_stat_button" type="object" name="action_open_helpdesk_channel" icon="fa-life-ring"
+                            attrs="{'invisible': [('s_partner_channel_count', '=', 0)]}">
+                        <field name="s_partner_channel_count" widget="statinfo" string="Channel"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="helpdesk.helpdesk_ticket_action_team" model="ir.actions.act_window">
+            <field name="view_mode">list,form,activity</field>
+        </record>
+        <record id="helpdesk.helpdesk_ticket_action_main_my" model="ir.actions.act_window">
+            <field name="view_mode">list,form,activity</field>
+        </record>
+        <record id="helpdesk.helpdesk_ticket_action_main_tree" model="ir.actions.act_window">
+            <field name="view_mode">list,form,activity</field>
+        </record>
+
+    </data>
+</odoo>

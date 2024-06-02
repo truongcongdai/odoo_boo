@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_move_tree_inherit" model="ir.ui.view">
+        <field name="name">stock_move_tree_inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="s_date_done"/>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="s_transfer_note"/>
+            </xpath>
+            <xpath expr="//field[@name='date']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_move_search_inherit" model="ir.ui.view">
+        <field name="name">view_move_search_inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/group" position="inside">
+                <filter string="Ghi chú của phiếu điều chuyển" name="by_s_transfer_note" domain="[]"  context="{'group_by': 's_transfer_note'}"/>
+                <filter string="Ngày hoàn thành" name="by_s_date_done" domain="[]"  context="{'group_by': 's_date_done'}"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.menu" id="stock.stock_move_menu">
+        <field name="action" eval="False"/>
+    </record>
+    <record id="stock_move_action_server" model="ir.actions.server">
+        <field name="name">advanced_inventory.stock_move_action_server</field>
+        <field name="model_id" ref="advanced_inventory.model_stock_move"/>
+        <field name="binding_model_id" ref="advanced_inventory.model_stock_move"/>
+        <field name="state">code</field>
+        <field name="code">action = model.view_stock_move_by_group()</field>
+    </record>
+<!--    <menuitem action="stock.stock_move_action" id="s_stock_move_menu" parent="stock.menu_warehouse_report" name="Dịch chuyển kho" sequence="140" groups="base.group_user"/>-->
+    <menuitem action="advanced_inventory.stock_move_action_server" id="s_stock_move_menu1" parent="stock.menu_warehouse_report" name="Dịch chuyển kho" sequence="140" groups="base.group_user"/>
+</odoo>

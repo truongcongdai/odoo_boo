@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.NumpadWidget" t-inherit-mode="extension" owl="1">
+        <xpath expr="//button[hasclass('numpad-minus')]" position="replace">
+            <button class="input-button number-char" t-on-click="sendInput('*1000')">000</button>
+        </xpath>
+    </t>
+</templates>

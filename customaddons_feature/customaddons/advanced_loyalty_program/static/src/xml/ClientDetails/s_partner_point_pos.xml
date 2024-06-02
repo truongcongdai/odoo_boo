@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//section[hasclass('client-details')]/div[hasclass('note-partner')]" positon="after">
+            <div>
+                <div class="head-block-loyalty-point">
+                    <span class="label label-note">Điểm thành viên</span>
+                </div>
+                <div class="client-detail-detail client-bills block-client-bills-hide s-client-loyalty-point">
+                    <table class="table-client-pos-order-infor" >
+                        <thead class="head_recently_bill">
+                                  <div class="s-loyalty-member">
+                                      <div class="s-label-loyalty">
+                                          <span class="s-label-span-loyalty" >
+                                              Tổng doanh thu
+                                          </span>
+                                      </div>
+                                      <div class="s-content-loyalty" >
+                                          <t t-esc="_fomatTotalInvoiced or 0.00" t-esc-options='{"widget": "monetary", "display_currency": "currency"}' />
+                                      </div>
+                                  </div>
+                                  <div class="s-loyalty-member" >
+                                      <div class="s-label-loyalty">
+                                          <span class="s-label-span-loyalty" >
+                                              Chi tiêu trong năm
+                                          </span>
+                                      </div>
+                                      <div class="s-content-loyalty" >
+                                          <t t-esc="_fomatPeriodRevenue"/>
+                                      </div>
+                                  </div>
+                                  <div class="s-loyalty-member">
+                                      <div class="s-label-loyalty">
+                                          <span class="s-label-span-loyalty" >
+                                              Điểm hiện tại
+                                          </span>
+                                      </div>
+                                      <div class="s-content-loyalty">
+                                          <t t-esc="_fomatLoyaltyPoints"/>
+                                      </div>
+                                  </div>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

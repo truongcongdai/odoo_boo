@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_report_pos_order_program_pivot" model="ir.ui.view">
+        <field name="name">report.pos.order.program.pivot</field>
+        <field name="model">report.pos.order.program</field>
+        <field name="arch" type="xml">
+            <pivot string="Point of Sale Analysis" sample="1">
+                <field name="product_categ_id" type="row"/>
+                <field name="date" interval="month" type="col"/>
+                <field name="quantity_order" type="measure"/>
+                <field name="product_qty" type="measure" invisible="1"/>
+                <field name="price_total" type="measure" invisible="1"/>
+                <field name="price_sub_total" type="measure" invisible="1"/>
+                <field name="average_price" type="measure" invisible="1"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_report_pos_order_program_graph" model="ir.ui.view">
+        <field name="name">report.pos.order.program.graph</field>
+        <field name="model">report.pos.order.program</field>
+        <field name="arch" type="xml">
+            <graph string="Point of Sale Analysis" sample="1">
+                <field name="product_categ_id"/>
+                <field name="price_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_report_pos_order_program_search" model="ir.ui.view">
+        <field name="name">report.pos.order.program.search</field>
+        <field name="model">report.pos.order.program</field>
+        <field name="arch" type="xml">
+            <search string="Point of Sale Analysis">
+                <field name="date"/>
+                <separator/>
+                <filter string="Đã xuất hóa đơn" name="invoiced" domain="[('state','=',('invoiced'))]"/>
+                <filter string="Chưa xuất hóa đơn" name="not_invoiced" domain="[('state','=',('paid'))]"/>
+                <separator/>
+                <filter name="filter_date" date="date"/>
+                <field name="config_id"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="so_luong_san_pham" type="measure"/>
+                <field name="tong_chiet_khau" type="measure"/>
+                <field name="doanh_thu_chuan" type="measure"/>
+                <field name="gia_tong" type="measure"/>
+                <field name="product_categ_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="CTKM" name="coupon_program_name" context="{'group_by':'coupon_program_name'}"/>
+                    <filter string="Loại Discount" name="s_type_discount" context="{'group_by':'s_type_discount'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_pos_order_program" model="ir.actions.act_window">
+        <field name="name">Báo cáo đơn hàng theo CTKM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">report.pos.order.program</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="search_view_id" ref="view_report_pos_order_program_search"/>
+        <field name="context">{'group_by_no_leaf':1,'group_by':[], 'search_default_coupon_program_name': 1}</field>
+    </record>
+
+    <menuitem name="Báo cáo đơn hàng theo CTKM" id="menu_report_pos_order_program" parent="point_of_sale.menu_point_rep" action="action_report_pos_order_program" sequence="3"
+            groups="advanced_sale.s_boo_group_ke_toan,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_marketing"/>
+</odoo>
