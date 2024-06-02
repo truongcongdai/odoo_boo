@@ -1,0 +1,64 @@
+CAI GIT
+- sudo apt update
+- sudo apt upgrade -y
+- sudo apt install git
+- git --version
+
+THIET LAP CHUNG THUC CA NHAN
+- git config --global user.name 'username@gmail.com'
+- git config --global user.email 'username@gmail.com'
+Mail phải được add trên gitlab
+
+Tao SSH Key, copy SSH Key vao Git
+
+CLONE MA NGUON TREN SERVER VE
+- git clone duong_dan_ssh ( hoac https )
+
+KIEM TRA NHANH HIEN TAI ( cd vao thu muc clone ve )
+- git branch
+
+LAY CODE MOI VE LOCAL
+- git checkout developer
+- git pull origin developer
+- git checkout -b ten_nhanh_moi ( Hoac git branch ten_nhanh_moi, sau do git checkout ten_nhanh_moi )
+
+XEM THAY DOI CODE ( FILE CHANGE TREN LOCAL )
+- git diff
+
+XEM CO NHUNG FILE NAO THAY DOI
+- git status
+
+CAP NHAT THAY DOI CAC FILE CODE
+- git add .
+- git commit -m 'Message'
+
+DAY CODE LEN SERVER
+- git push origin ten_nhanh
+
+GOP COMMIT
+- git rebase -i HEAD~
+
+XEM LICH SU COMMIT
+- git log
+
+
+Neu nhanh duoc merge roi, thi
+- git stash
+- git checkout developer
+- git pull origin developer
+- git checkout -b ten_nhanh_moi
+- git stash pop
+
+THAY DOI TEN COMMIT KHI PUSH ROI
+- git commit --amend
+- Sua doi ten commit
+- git log ( de kiem tra xem sua duoc chua )
+- git push -f origin ten_nhanh_da_tao
+
+Xem thu tu commit
+- git log --online
+
+Xoa commit thua
+- git rebase -i HEAD~2 ( 2 la thu tu cua commit )
+
+

@@ -1,0 +1,22 @@
+git rebase --abort: khi 0 rebase duoc
+git reset --hard HEAD^ : revert lại commit trước đó
+git branch -d BOO-ODOO-623: xóa nhánh
+
+#không push được: 
+--lỗi:  
+	! [rejected]          BOO-ODOO-640 -> BOO-ODOO-640 (non-fast-forward)
+	error: failed to push some refs to 'gitlab.magenest.com:ODOO/odoo_boo.git'
+	hint: Updates were rejected because the tip of your current branch is behind
+	hint: its remote counterpart. Integrate the remote changes (e.g.
+	hint: 'git pull ...') before pushing again.
+	hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+-- fix
+	git reset --hard origin/nhánh 
+	git pull
+	git pull origin nhánh
+	git push origin nhánh
+	
+	
+note:
+	developer -> hotfix
