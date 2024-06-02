@@ -1,0 +1,175 @@
+/*!* Format date dd/mm/yyy *!*/
+/*.birthday {*/
+/*    z-index: 999 !important;*/
+/*    position: absolute;*/
+/*    right: 0;*/
+/*    width: 49.5% !important;*/
+/*    margin-top: 24px;*/
+/*    opacity: 0;*/
+/*}*/
+/*.client-district .label {*/
+/*    font-weight: bold;*/
+/*}*/
+/*.client-birthday .label {*/
+/*    font-weight: bold;*/
+/*}*/
+/*.client-gender .label {*/
+/*    font-weight: bold;*/
+/*}*/
+/*.pos .clientlist-screen .client-detail .label {*/
+/*    font-weight: bold;*/
+/*}*/
+.label-note{
+    font-weight: 700;
+    font-size: 16px;
+}
+.note-partner i{
+    float: right;
+    right: 25px;
+    position: absolute;
+    margin-top: 12px;
+    color: #408b0a;
+}
+.block-customer-detail{
+    margin-top: 20px;
+}
+.client-bills{
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 15px;
+    font-family: Arial !important;
+    cursor: text;
+    user-select: text;
+}
+.table-client-pos-order-infor{
+    width: 100%;
+    margin-bottom: 30px;
+}
+.table-client-pos-order-infor:last-child{
+    margin-bottom: 0;
+}
+.client-bills tbody.recently_order{
+    height: 80px
+}
+.client-bills tbody.recently_product{
+    height: 82px;
+}
+.client-bills tbody.recently_order tr > div:nth-child(1){
+    width: 20%;
+}
+.client-bills tbody.recently_order tr > div:nth-child(2){
+    width: 30%;
+}
+.client-bills tbody.recently_order tr > div:nth-child(3){
+    width: 20%;
+}
+.client-bills tbody.recently_order tr > div:nth-child(4){
+    width: 30%;
+}
+.client-bills tbody.recently_product tr .inline-recently_product-class{
+    width: 30%;
+}
+.client-bills td{
+    padding: 15px 0 25px 0;
+}
+.client-bills tr {
+    display: flex;
+    justify-content: space-between;
+}
+.client-bills tbody tr .pos_order_data_order_info{
+    font-size: 12px;
+}
+.client-bills tbody tr .pos_order_data_order_info .label_span{
+    font-weight: 600;
+}
+/*.recently_brand_category tr{*/
+/*    display: inline-block;*/
+/*    width: 20%;*/
+/*}*/
+.label-pos-info{
+    font-size: 16px;
+    font-weight: 700;
+    color: #555555;
+}
+.block-client-bills-hide{
+    max-height: 285px;
+    position: relative;
+    overflow: hidden;
+}
+.block-client-bills-show{
+    position: relative;
+}
+.show-more-info{
+    position: absolute;
+    bottom: 5px;
+    /*color: #333;*/
+    /*background: #ccc;*/
+    padding: 0px 10px;
+    /*border-radius: 3px;*/
+    left: 5px;
+}
+.show-more-info span {
+    text-decoration: underline;
+    color: #408b0a;
+}
+
+/*.s_clientlist_screen_content .screen-content .full-content .recently_brand_category tr {*/
+/*    width: 33.333%;*/
+/*}*/
+/*.s_clientlist_screen_content .screen-content .full-content .recently_product tr td {*/
+/*    width: 25%;*/
+/*}*/
+.data_color_recently_product {
+    width: 50%;
+}
+
+.block-customer-detail .o-dropdown .dropdown-toggle {
+    background: rgb(242 239 239);
+    border: none;
+    float: right;
+    margin-top: -20px;
+    padding: 0 10px;
+
+}
+.block-customer-detail .o-dropdown .dropdown-toggle .fa-caret-down {
+    font-size: 20px;
+}
+
+.block-customer-detail .client-bills .label {
+    font-size: 15px;
+}
+.block-customer-detail .client-bills thead tr th i{
+    color: #5656568a;
+    font-weight: 500;
+    font-size: 8px;
+}
+.pos-content .rightpane .s_clientlist_screen_content .screen-content .full-content .client-window .client-details .block-customer-detail {
+    display: none;
+}
+.inline-categ_list-class {
+    width: 33.3333%;
+    display: inline-grid;
+}
+
+.head-block-detail{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.block-client-none {
+    display: none;
+}
+button.info-caret-none {
+    display: none;
+}
+button.button-show-info-up {
+    display: none;
+}
+button.button-show-info {
+    border: none;
+    background: rgb(242 239 239);
+    font-size: 20px;
+}
+.block-more-button{
+    display: none;
+}

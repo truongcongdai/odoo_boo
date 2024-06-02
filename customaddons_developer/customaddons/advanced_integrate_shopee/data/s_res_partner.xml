@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="s_res_partner_shopee" forcecreate="1" model="res.partner">
+            <field name="name">Shopee</field>
+            <field name="phone">8686868686</field>
+        </record>
+        <record id="utm_source_shopee" model="utm.source">
+            <field name="name">Shopee</field>
+        </record>
+    </data>
+</odoo>

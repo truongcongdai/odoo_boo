@@ -1,0 +1,81 @@
+.line-infomation{
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.pos-receipt-amount {
+    font-size: 100% !important;
+    font-weight: bold;
+    padding-left: 0em !important;
+}
+
+.s_hide_receipt {
+    display: none;
+}
+
+.orderlines > span{
+    display: block;
+}
+.orderlines .responsive-price, .orderlines > span{
+    padding-bottom: 8px;
+}
+.receipt-screen .default-view .pos-receipt-container {
+    flex: 0 1 45%;
+    overflow: auto;
+}
+.pos .pos-receipt-container > div {
+    width: auto;
+    font-family: Arial;
+}
+.pos .pos-receipt-container > div > img, .pos .pos-receipt-container > div > br, .pos .pos-receipt-container > div > .pos-receipt-contact{
+    display: none
+}
+.block-bill-money{
+    display: flex;
+}
+.block-bill-money-left, .block-bill-money-right{
+    width: 50%;
+}
+.label-700{
+    font-weight: 700;
+    color: #000;
+}
+.pos-receipt-order-data{
+    font-size: 13px;
+}
+h2.block-title{
+    color: #000;
+    font-size: 18px;
+}
+h3.block-title{
+    color: #000;
+    font-size: 15px;
+}
+.pos-receipt hr{
+    margin: 10px 0;
+}
+.block-orderlines{
+    font-size: 13px;
+}
+.block-orderlines td {
+    padding: 5px 0;
+}
+.pos-receipt-right-align{
+    display: none;
+}
+/*.block-orderlines tbody{*/
+/*    margin: 15px 0;*/
+/*}*/
+.border-top{
+    border-top: 1px solid gray;
+}
+.product-name{
+    color: #000;
+    font-style: italic;
+}
+/*Ảnh footer*/
+.s-image-footer {
+    width: 15em;
+    margin: auto;
+    display: block;
+}

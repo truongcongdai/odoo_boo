@@ -1,0 +1,92 @@
+.s_customer_list {
+    position: relative;
+    border-right: 1px solid #875A7B;
+    flex-direction: row-reverse
+}
+
+.other-screen {
+    display: none;
+}
+
+.product-screen {
+    display: flex !important;
+}
+
+/*.s_icon_customer {*/
+/*    position: absolute;*/
+/*    left: 28px;*/
+/*    z-index: 1;*/
+/*    font-size: 20px;*/
+/*    top: 50%;*/
+/*    transform: translateY(-50%);*/
+/*    margin: 0;*/
+/*}*/
+
+.s_icon_customer {
+    font-size: 20px;
+}
+
+.s_input_customer_list {
+    font-size: medium;
+    position: relative;
+    align-items: center;
+    margin: 7px 15px;
+    border-radius: 5px;
+    border: 1px solid #875A7B;
+    padding-left: 40px;
+}
+
+.pos .status-buttons-portal {
+    flex: none;
+}
+
+.s_clientlist_screen {
+    height: inherit;
+}
+
+.s_clientlist_screen_content {
+    position: relative !important;
+}
+
+/*.pos .searchbox-client {*/
+/*    display: none;*/
+/*}*/
+
+.screen .top-content .button {
+    font-size: 16px;
+}
+
+.pos .search-box {
+    max-width: 500px;
+}
+
+.pos .actionpad .button.set-customer {
+    height: calc(var(--btn-height-size) * 3);
+}
+
+.rightpane .s_clientlist_screen .s_clientlist_screen_content .screen-content .top-content .s_button_back {
+    display: none !important;
+}
+
+.rightpane .s_clientlist_screen .s_clientlist_screen_content .screen-content .top-content .back:nth-child(2) {
+    display: block !important;
+}
+
+.subwindow-container .subwindow-container-fix .s_clientlist_screen_content .screen-content .top-content .back:nth-child(2) {
+    display: none;
+}
+
+.pos .actionpad .button.set-customer .s_customer_information_pos p {
+    font-size: 10px;
+}
+.pos .clientlist-screen .client-list {
+    font-size: 15px !important;
+}
+.pos .login-title{
+    line-height: inherit !important;
+    margin-top: 30px !important;
+    display: grid;
+}
+.client-detail-detail > span.label{
+    font-weight: 700;
+}

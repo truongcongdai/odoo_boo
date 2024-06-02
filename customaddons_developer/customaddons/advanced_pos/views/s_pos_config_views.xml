@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_config_search_inherit" model="ir.ui.view">
+        <field name="name">pos.config.search.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_config_form_inherit" model="ir.ui.view">
+        <field name="name">pos.config.form.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='title']" position="after">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="code"/>
+                        <field name="code" required="1"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="s_pos_adress"/>
+                        <field name="s_pos_adress"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="s_pos_phone_number"/>
+                        <field name="s_pos_phone_number"/>
+                    </div>
+                </div>
+            </xpath>
+            <!--            <xpath expr="//div[@id='pos-coupon']" position="inside">-->
+            <!--                <div class="col-12 col-lg-6 o_setting_box price_control">-->
+            <!--                    <div class="o_setting_left_pane">-->
+            <!--                        <field name="coupon_program_load_background"/>-->
+            <!--                    </div>-->
+            <!--                    <div class="o_setting_right_pane">-->
+            <!--                        <label for="coupon_program_load_background"-->
+            <!--                               string="Tải Phiếu giảm giá &amp; Khuyến mãi trong nền PoS"/>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//div[@id='default_pricelist_setting']" position="inside">-->
+            <!--                <div class="col-12 col-lg-6 o_setting_box price_control">-->
+            <!--                    <div class="o_setting_left_pane">-->
+            <!--                        <field name="coupon_pricelist_item_load_background"/>-->
+            <!--                    </div>-->
+            <!--                    <div class="o_setting_right_pane">-->
+            <!--                        <label for="coupon_pricelist_item_load_background"-->
+            <!--                               string="Tải Bảng giá trong nền PoS"/>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </xpath>-->
+            <xpath expr="//div[@id='order_reference']" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_config_tree_inherit" model="ir.ui.view">
+        <field name="name">pos.config.tree.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="pos_config_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">pos_config_view_kanban_inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_kanban_primary_right')]/div[2]" position="after">
+                <div t-if="record.s_pos_adress.value" class="row">
+                    <div class="col-6">
+                        <span>Địa Chỉ</span>
+                    </div>
+                    <div class="col-6">
+                        <span>
+                            <field name="s_pos_adress"/>
+                        </span>
+                    </div>
+                </div>
+                <div t-if="record.s_pos_phone_number.value" class="row">
+                    <div class="col-6">
+                        <span>Số điện thoại</span>
+                    </div>
+                    <div class="col-6">
+                        <span>
+                            <field name="s_pos_phone_number"/>
+                        </span>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('o_kanban_card_manage_section')]" position="attributes">
+                <attribute name="groups">point_of_sale.group_pos_manager</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('o_kanban_card_manage_section')][2]" position="attributes">
+                <attribute name="groups">point_of_sale.group_pos_manager</attribute>
+            </xpath>
+<!--            <xpath expr="//div[hasclass('o_kanban_card_manage_section')]//div[3]" position="attributes">-->
+<!--                <attribute name="groups">point_of_sale.group_pos_manager</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//div[hasclass('o_kanban_card_manage_section')]//div[2]" position="after">-->
+<!--                <div role="menuitem">-->
+<!--                    <a name="%(s_pos_order_access_right_act_view)d" type="action">Orders (Thu ngân)</a>-->
+<!--                </div>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+</odoo>

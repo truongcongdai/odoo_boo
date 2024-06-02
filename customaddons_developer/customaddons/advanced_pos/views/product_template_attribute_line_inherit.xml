@@ -1,0 +1,19 @@
+<odoo>
+    <record id="add_variant_product_template_view_form" model="ir.ui.view">
+        <field name="name">add.variant.product.template.view.form</field>
+        <field name="model">product.template.attribute.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="product_tmpl_id" readonly="1"/>
+                    <field name="attribute_id" readonly="1"/>
+                    <field name="value_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="action_submit_add_variant" string="Lưu" type="object" class="btn-primary"/>
+                    <button string="Hủy bỏ" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

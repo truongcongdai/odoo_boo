@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.module.category" id="s_boo_group_catg">
+            <field name="name">Nhóm Boo</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="s_boo_group_administration" model="res.groups">
+            <field name="name"># Admin</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids"
+                   eval="[(4,ref('base.group_allow_export'))]"/>
+
+        </record>
+
+        <record id="s_boo_group_thu_ngan" model="res.groups">
+            <field name="name"># Thu Ngân</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids"
+                   eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_ecom" model="res.groups">
+            <field name="name"># Ecom</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids"
+                   eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_area_manager" model="res.groups">
+            <field name="name"># Area Manager</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids"
+                   eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_hang_hoa" model="res.groups">
+            <field name="name"># Hàng Hóa</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids"
+                   eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+
+        <record id="s_boo_group_dieu_phoi" model="res.groups">
+            <field name="name"># Điều Phối</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_kiem_ke" model="res.groups">
+            <field name="name"># Kiểm Kê</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids"
+                   eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_marketing" model="res.groups">
+            <field name="name"># Marketing</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_ke_toan" model="res.groups">
+            <field name="name"># Kế Toán</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_hr" model="res.groups">
+            <field name="name"># Nhân sự</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_send_mail" model="res.groups">
+            <field name="name"># Send mail</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+        <record id="s_boo_group_cs" model="res.groups">
+            <field name="name"># CS</field>
+            <field name="category_id" ref="advanced_sale.s_boo_group_catg"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_allow_export'))]"/>
+        </record>
+
+</odoo>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+      <xpath expr="//t[@t-if='receipt.cashier']" position="replace">
+          <p></p>
+      </xpath>
+
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
+            <t t-if="!receipt.header_html and receipt.header">
+                <div style="white-space:pre-line" class="pos-receipt-center-align"><t t-esc="receipt.header" /></div>
+            </t>
+            <hr/>
+            <center><h3 class="block-title">PHIẾU TÍNH TIỀN</h3></center>
+            <div class="block-bill-money">
+                <div class="block-bill-money-left">
+                    <div class="line-infomation">Liên 1: <span class="label-700">Giao cho khách hàng</span></div>
+                    <div class="line-infomation"><span>Quầy</span>: <span class="label-700"><t t-esc="receipt.pos_name"/></span></div>
+                    <div class="line-infomation"><span>NV Thu Ngân</span>: <span class="label-700"><t t-esc="receipt.cashier"/></span></div>
+                    <div class="line-infomation">Tên khách hàng: <span class="label-700" id="customer-name"><t t-esc="receipt.customer_name"/></span></div>
+                    <div class="line-infomation">Điện thoại: <span class="label-700" id="customer-phone"><t t-esc="receipt.customer_phone"/></span></div>
+                    <div class="line-infomation">NV Bán hàng: <span class="label-700" id="sale-person"><t t-esc="s_sale_person"/></span></div>
+                </div>
+                <div class="block-bill-money-right">
+                    <div class="line-infomation">Số: <span class="label-700"><t t-esc="receipt.name"/></span></div>
+                    <t t-if="receipt.date.localestring">
+                        <div class="line-infomation">Ngày: <span class="label-700"><t t-esc="receipt.date.localestring"/></span></div>
+                    </t>
+                    <t t-else="">
+                        <div class="line-infomation">Ngày: <span class="label-700" id="date-order"><t t-esc="s_date_order"/></span></div>
+                    </t>
+
+                </div>
+            </div>
+            <hr/>
+        </xpath>
+
+        <xpath expr="//div[hasclass('pos-receipt')]/div[hasclass('orderlines')]" position="replace">
+             <div class="block-orderlines">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col" width="50%"><span class="label-700">Sản phẩm</span></th>
+                            <th scope="col" width="10%"><span class="label-700">SL</span></th>
+                            <th scope="col" width="20%"><span class="label-700">Đơn giá</span></th>
+                            <th scope="col" width="20%"><span class="label-700">Thành tiền</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="receipt.orderlines" t-as="line">
+                            <tr>
+                                <td class="product-name"><t t-esc="line.product_name"/></td>
+                                <td><t t-esc="line.quantity"/></td>
+                                <td><t t-esc="env.pos.format_currency_no_symbol(line.price_lst)"/> ₫</td>
+                                <td><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/> ₫</td>
+                            </tr>
+                        </t>
+                        <tr class="border-top border-bottom">
+                            <td><span>Tổng tiền:</span></td>
+                            <td class="label-700"><t t-esc="s_receipt_qty"/></td>
+                            <td></td>
+                            <td class="label-700"><t t-esc="env.pos.format_currency(s_subtotal)"/></td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td><span>Tổng thuế:</span></td>-->
+<!--                            <td></td>-->
+<!--                            <td></td>-->
+<!--                            <td class="label-700">-->
+<!--                                <t t-if="s_receipt_tax_details">-->
+<!--                                    <t t-esc="env.pos.format_currency(s_receipt_tax_details)"/>-->
+<!--                                </t>-->
+<!--                                <t t-else="">-->
+<!--                                    0 ₫-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+                        <tr>
+                            <td><span>Chiết khấu:</span></td>
+                            <td></td>
+                            <td></td>
+                            <td class="label-700">
+                                <t t-if="s_receipt_discount !=0">
+                                    <t t-esc="env.pos.format_currency(s_receipt_discount)"/>
+                                </t>
+<!--                                <t t-elif="s_receipt_discount_percent !=0">-->
+<!--                                    <t t-esc="env.pos.format_currency(s_receipt_discount_percent)"/>-->
+<!--                                </t>-->
+<!--                                <t t-elif="s_receipt_discount_amount !=0">-->
+<!--                                    <t t-esc="env.pos.format_currency(s_receipt_discount_amount)"/>-->
+<!--                                </t>-->
+                                <t t-else="">
+                                    0 ₫
+                                </t>
+                            </td>
+                        </tr>
+                        <tr class="border-top">
+                            <td><span class="label-700">Thanh toán:</span></td>
+                            <td></td>
+                            <td></td>
+                            <td class="label-700">
+                                <td>
+                                    <t t-esc="env.pos.format_currency(receipt.total_with_tax)"/>
+                                </td>
+<!--                                <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid">-->
+<!--                                    <t t-esc="env.pos.format_currency(line.amount)"/>-->
+<!--                                </t>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span >Khách đưa:</span></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+<!--                                <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid">-->
+<!--                                    <t t-esc="env.pos.format_currency(line.amount)"/>-->
+<!--                                </t>-->
+<!--                                <t t-esc="env.pos.format_currency(receipt.change)"/>-->
+                            </td>
+                        </tr>
+                        <t t-foreach="receipt.paymentlines" t-as="line">
+                            <tr>
+                                <td><t t-esc="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td><t t-esc="env.pos.format_currency(line.amount)"/></td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td><span >Tiền trả lại:</span></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <t t-esc="env.pos.format_currency(receipt.change)"/>
+                            </td>
+                        </tr>
+
+                        <t t-set="num_lines" t-value="0" />
+                        <t t-if="s_is_free_product">
+                            <t t-foreach="s_is_free_product" t-as="line">
+                                <t t-set="num_lines" t-value="num_lines + 1" />
+                                <tr>
+                                    <td width="100%"><span class="label-700"><t t-if="num_lines == 1"><i class="fa fa-gift" style="padding-right: 5px;"></i>Danh sách quà tặng:</t></span></td>
+                                </tr>
+                                <tr>
+                                    <td width="100%"><t t-esc="line.product_name" /> * <t t-esc="line.quantity"/></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+
+<!--        <xpath expr="//div[hasclass('pos-receipt')]/div[hasclass('pos-receipt-amount')]" position="before">-->
+<!--             <div class="pos-receipt-quantity" style="font-weight: bold;">-->
+<!--                 Tổng số lượng <span t-esc="s_receipt_qty" class="pos-receipt-right-align"/>-->
+<!--             </div>-->
+<!--            <br/>-->
+<!--        </xpath>-->
+        <xpath expr="//t[@t-if='receipt.total_discount']/div" position="attributes">
+            <attribute name="t-attf-class">s_hide_receipt</attribute>
+        </xpath>
+        <xpath expr="//t[@t-if='isTaxIncluded']/div" position="attributes">
+            <attribute name="t-attf-class">s_hide_receipt</attribute>
+        </xpath>
+        <xpath expr="//t[@t-if='!isTaxIncluded']" position="attributes">
+            <attribute name="t-attf-class">s_hide_receipt</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('pos-receipt-amount')]" position="attributes">
+            <attribute name="t-attf-class">s_hide_receipt</attribute>
+        </xpath>
+
+<!--        <xpath expr="//div[hasclass('pos-receipt-amount')]" position="after">-->
+<!--            <div class="pos-receipt-amount s_total_payment">-->
+<!--                Thành tiền <span t-esc="env.pos.format_currency(receipt.subtotal)" class="pos-receipt-right-align"/>-->
+<!--            </div>-->
+<!--            <br/>-->
+<!--        </xpath>-->
+
+<!--        <xpath expr="//div[hasclass('s_total_payment')]" position="after">-->
+<!--            <br/>-->
+<!--            <div class="pos-receipt-discount" style="font-weight: bold;">-->
+<!--                <t t-if="s_receipt_discount_percent or s_receipt_discount_amount">-->
+<!--                    Chiết khấu <span class="pos-receipt-right-align" style="white-space: pre-line">-->
+<!--                                    <t t-esc="s_receipt_discount_percent"/>-->
+<!--                    <t t-esc="s_receipt_discount_amount"/>-->
+<!--                                </span>-->
+<!--                </t>-->
+<!--                <t t-else="">-->
+<!--                    Chiết khấu <span class="pos-receipt-right-align" style="white-space: pre-line">0</span>-->
+<!--                </t>-->
+<!--            </div>-->
+<!--            <div style="clear:both"></div>-->
+<!--        </xpath>-->
+
+        <xpath expr="//t[@t-foreach='receipt.paymentlines']/div" position="attributes">
+            <attribute name="t-attf-class">s_hide_receipt</attribute>
+        </xpath>
+
+<!--        <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="after">-->
+<!--            <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid">-->
+<!--                <div class="s_payment" style="font-weight: bold;">-->
+<!--                    Thanh toán <span t-esc="env.pos.format_currency(line.amount)" class="pos-receipt-right-align"/>-->
+<!--                </div>-->
+<!--            </t>-->
+<!--        </xpath>-->
+
+        <xpath expr="//div[hasclass('receipt-change')]" position="attributes">
+            <attribute name="t-attf-class">s_hide_receipt</attribute>
+        </xpath>
+
+<!--        <xpath expr="//div[hasclass('receipt-change')]" position="after">-->
+<!--             <div class="pos-receipt-amount receipt-change receipt-return">-->
+<!--                Tiền trả lại <span t-esc="env.pos.format_currency(receipt.change)" class="pos-receipt-right-align"/>-->
+<!--            </div>-->
+<!--        </xpath>-->
+
+        <xpath expr="//t[@t-foreach='receipt.tax_details']/div[hasclass('responsive-price')]" position="attributes">
+            <attribute name="t-attf-class">s_hide_receipt</attribute>
+        </xpath>
+
+<!--        <xpath expr="//div[hasclass('pos-receipt-discount')]" position="before">-->
+<!--            <div class="s_total_tax_details" style="font-weight: bold;">-->
+<!--                <t t-if="s_receipt_tax_details">-->
+<!--                    Tổng thuế <span class="pos-receipt-right-align" style="font-weight: bold;">-->
+<!--                                    <t t-esc="env.pos.format_currency(s_receipt_tax_details)"/>-->
+<!--                              </span>-->
+<!--                </t>-->
+<!--                <t t-else="">-->
+<!--                    Tổng thuế <span class="pos-receipt-right-align">0</span>-->
+<!--                </t>-->
+<!--            </div>-->
+<!--            <br/>-->
+<!--        </xpath>-->
+
+        <xpath expr="//t[@t-if='receipt.loyalty']" position="replace">
+            <hr/>
+            <center><h3 class="block-title">KHÁCH HÀNG THÂN THIẾT</h3></center>
+            <center>
+                <div class="line-infomation">Hạng khách hàng:
+                    <t t-if="receipt.customer_ranked">
+                        <span t-esc="receipt.customer_ranked"/>
+                    </t>
+                    <t t-else="">
+                        <center><span> Chưa có hạng </span></center>
+                    </t>
+                </div>
+            </center>
+            <center><div class="line-infomation">Điểm thân thiết: <span t-esc="receipt.customer_loyalty"/> </div></center>
+        </xpath>
+
+        <xpath expr="//div[hasclass('pos-receipt-order-data')]" position="replace">
+            <p></p>
+        </xpath>
+        <xpath expr="//div[hasclass('after-footer')]" position="after">
+            <t t-if="receipt.s_image_footer">
+                <div>
+                    <img t-attf-src="/web/image/pos.config/{{ receipt.s_image_footer }}/s_image_footer" class="s-image-footer"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="mail.ThreadViewTopbar" t-inherit-mode="extension" owl="1">
+            <xpath expr="//div[hasclass('o_ThreadViewTopbar_actions')]/t[1]" position="before">
+                <t t-if="threadViewTopbar.thread.s_facebook_sender_id or threadViewTopbar.thread.s_zalo_sender_id">
+                    <button class="o_ThreadViewTopbar_callButton o_ThreadViewTopbar_button o-active">
+                        <OrderThreadViewTopbar threadLocalId="threadViewTopbar.thread.localId"/>
+                    </button>
+                </t>
+            </xpath>
+        </t>
+    <t t-inherit="mail.ChatWindowHeader" t-inherit-mode="extension" owl="1">
+            <xpath expr="//div[hasclass('o_ChatWindowHeader')]/t/div[hasclass('o_ChatWindowHeader_rightArea')]"
+                   position="before">
+                <t t-if="chatWindow.thread.s_facebook_sender_id or chatWindow.thread.s_zalo_sender_id">
+                    <div class="o_ChatWindowHeader_command o_ChatWindowHeader_commandShowMemberList"
+                         t-att-class="{ 'o-mobile': messaging.device.isMobile }">
+                        <OrderThreadViewTopbar threadLocalId="chatWindow.thread.localId"/>
+                    </div>
+                </t>
+            </xpath>
+        </t>
+
+    <t t-inherit="mail.ThreadViewTopbar" t-inherit-mode="extension" owl="1">
+            <xpath expr="//div[hasclass('o_ThreadViewTopbar_threadAddDescriptionEmptyLabel')]" position="after">
+                <t t-if="threadViewTopbar.thread.s_facebook_sender_id or threadViewTopbar.thread.s_zalo_sender_id">
+                    <button class="o_ThreadViewTopbar_callButton o_ThreadViewTopbar_button o-active">
+                        <TicketThreadViewTopbar threadLocalId="threadViewTopbar.thread.localId"/>
+                    </button>
+                </t>
+            </xpath>
+        </t>
+</templates>

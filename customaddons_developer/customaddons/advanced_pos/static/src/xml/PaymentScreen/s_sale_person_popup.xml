@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="SalePersonPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup popup-selection">
+                    <header class="drag-handle">
+                        <p>Nhân viên bán hàng</p>
+                    </header>
+                    <div class="selection scrollable-y">
+                            <t t-foreach="env.pos.employees" t-as="employee" t-key="employee.id">
+                                <t t-if="employee">
+                                    <div class="selection-sale-person" t-on-click="selectSalePerson(employee)"><t t-esc="employee.name"/></div>
+                                </t>
+                            </t>
+                    </div>
+                    <footer class="footer salePersonPopupFooter">
+                        <div class="button cancel" t-on-click="cancel">
+                            Cancel
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+</templates>

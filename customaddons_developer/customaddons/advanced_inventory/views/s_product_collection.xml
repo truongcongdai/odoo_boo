@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_product_collection_tree_view" model="ir.ui.view">
+        <field name="name">s.product.collection.tree</field>
+        <field name="model">s.product.collection</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+    <record id="s_product_collection_act_window" model="ir.actions.act_window">
+        <field name="name">Bộ sưu tập</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">s.product.collection</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem name="#Bộ sưu tập" id="s_product_collection_menu" parent="advanced_inventory.s_product_information_menu" action="s_product_collection_act_window" sequence="7"/>
+</odoo>

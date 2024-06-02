@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="rfm_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.rfm</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="RFM Analysis Configuration"
+                     string="RFM Analysis Configuration"
+                     data-key="setu_rfm_analysis">
+                    <h2>RFM Analysis</h2>
+                    <!--                        <div class="row mt16 o_settings_container">-->
+                    <!--                            <div class="col-12 col-lg-6 o_setting_box" id="rfm_segmentation_sales_history">-->
+                    <!--                                <div class="o_setting_left_pane">-->
+                    <!--                                    <field name="past_x_days_sales"/>-->
+                    <!--                                </div>-->
+                    <!--                                <div class="o_setting_right_pane">-->
+                    <!--                                    <label for="past_x_days_sales"/>-->
+                    <!--                                    <div class="text-muted">-->
+                    <!--                                        RFM analysis will be calculated based on sales history of last X days-->
+                    <!--                                        here; X will be replaced by field value-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="rfm_use_dynamic_rules">
+                            <div class="o_setting_left_pane">
+                                <field name="group_dynamic_rules"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="group_dynamic_rules"/>
+                                <div class="text-muted">
+                                    RFM analysis will be calculated based upon the dynamic configurable rules.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="rfm_sales_team_segments">
+                            <div class="o_setting_left_pane">
+                                <field name="group_sales_team_rfm"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="group_sales_team_rfm"/>
+                                <div class="text-muted">
+                                    Sales Team Segments will be enabled.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="rfm_enable_pos_sales">
+                            <div class="o_setting_left_pane">
+                                <field name="module_setu_rfm_analysis_extended"
+                                       attrs="{'invisible': [('extended_module_in_registry','=',False)]}"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_setu_rfm_analysis_extended"/>
+                                <div class="text-muted">
+                                    PoS sales will be considered in customer segment evaluation.
+                                </div>
+                                <div class="mt16" groups="base.group_erp_manager">
+                                    <button name="open_actions_setu_rfm_configuration" type="object"
+                                            string="Extract POS"
+                                            class="btn-primary"
+                                            attrs="{'invisible': [('extended_module_in_registry','=',True)]}"/>
+                                </div>
+                                <field name="extended_module_in_registry" invisible="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="setu_rfm_analysis_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="rfm_res_config_settings_view_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'setu_rfm_analysis'}</field>
+    </record>
+
+
+    <menuitem sequence="5"
+              name="Configuration"
+              id="setu_rfm_analysis_configuration_menu"
+              parent="setu_rfm_analysis.root_rfm_menu"
+    />
+
+    <menuitem sequence="1"
+              name="Settings"
+              id="setu_rfm_analysis_settings_menu"
+              parent="setu_rfm_analysis.setu_rfm_analysis_configuration_menu"
+              action="setu_rfm_analysis_config_settings"/>
+</odoo>

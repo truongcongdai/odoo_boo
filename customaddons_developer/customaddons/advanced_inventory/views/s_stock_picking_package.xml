@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_stock_picking_package_form_view" model="ir.ui.view">
+            <field name="name">s.stock.picking.package.form</field>
+            <field name="model">s.stock.picking.package</field>
+            <field name="arch" type="xml">
+                <form string="Kiện hàng">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <div>
+                                <h1>
+                                    <field name="name" required="1" attrs="{'readonly': [('state', '!=','nhap')]}"/>
+                                </h1>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="shipper_id" style="width:30%" attrs="{'readonly': [('state', '!=','nhap')]}"/>
+                            <field name="recipient_id" style="width:30%"
+                                   attrs="{'readonly': [('state', '!=','nhap')]}"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Sản phẩm" name="product_info">
+                                <field name="product_lines_ids" attrs="{'readonly': [('state', '!=','nhap')]}">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="qty" readonly="0"/>
+                                        <field name="qty_missing" readonly="1" invisible="1"/>
+                                        <field name="is_done" readonly="1" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="s_stock_picking_package_tree_view" model="ir.ui.view">
+            <field name="name">s.stock.picking.package.tree</field>
+            <field name="model">s.stock.picking.package</field>
+            <field name="arch" type="xml">
+                <tree string="Kiện hàng" default_order="id asc">
+                    <field name="name"/>
+                    <field name="shipper_id"/>
+                    <field name="recipient_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="s_stock_picking_package_act_window" model="ir.actions.act_window">
+            <field name="name">Kiện hàng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.stock.picking.package</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="###Kiện hàng" id="s_stock_picking_package_menu" parent="stock.menu_warehouse_config"
+                  sequence="998" action="s_stock_picking_package_act_window" groups="base.group_no_one" />
+
+    </data>
+</odoo>

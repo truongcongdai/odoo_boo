@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="order_data_report_tree_view" model="ir.ui.view">
+            <field name="name">Dữ liệu bán hàng</field>
+            <field name="model">order.line.data.report</field>
+            <field name="arch" type="xml">
+                <tree string="Dữ liệu bán hàng" create="0" edit="0" delete="0">
+                    <field name="order_type" optional="show"/>
+                    <field name="order_code" optional="show"/>
+                    <field name="pos_ref" optional="show"/>
+                    <field name="order_line_create_date" string="Ngày tạo đơn" optional="show"/>
+                    <field name="completed_date" optional="show"/>
+                    <field name="shipping_code" optional="hide"/>
+                    <field name="partner_order_id" optional="show"/>
+                    <field name="phone" optional="show" groups="advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                        advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi,
+                        advanced_sale.s_boo_group_ke_toan"/>
+                    <field name="pos_name" optional="hide"/>
+                    <field name="sku" optional="show"/>
+                    <field name="product_id" optional="show"/>
+                    <field name="list_price" optional="show"/>
+                    <field name="special_price" optional="show"/>
+                    <field name="thuong_hieu" optional="show"/>
+                    <field name="mau_sac"  optional="hide"/>
+                    <field name="kich_thuoc"  optional="hide"/>
+                    <field name="category_id"  optional="hide"/>
+                    <field name="barcode"  optional="hide"/>
+                    <field name="parent_code" optional="show"/>
+                    <field name="ma_cu" optional="hide"/>
+                    <field name="ma_vat_tu" optional="show"/>
+                    <field name="is_product_green"  optional="hide"/>
+                    <field name="sale_person"  optional="show"/>
+                    <field name="product_qty"  optional="show"/>
+                    <field name="qty_delivered"  optional="show"/>
+                    <field name="price_total"  optional="hide"/>
+                    <field name="boo_total_discount"  optional="show"/>
+                    <field name="boo_total_discount_percentage"  optional="show"/>
+                    <field name="product_uom"  optional="hide"/>
+<!--                    <field name="boo_phan_bo_price_total"  optional="show"/>-->
+                </tree>
+            </field>
+        </record>
+        <record id="order_data_report_action" model="ir.actions.act_window">
+            <field name="name">Dữ liệu bán hàng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">order.line.data.report</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="order_data_report_search" model="ir.ui.view">
+            <field name="name">Tìm kiếm dữ liệu bán hàng</field>
+            <field name="model">order.line.data.report</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="order_code"/>
+                    <field name="phone"/>
+                    <field name="sku"/>
+                    <field name="parent_code"/>
+                    <field name="pos_name"/>
+                    <filter string="Điểm bán hàng" name="pos_name" context="{'group_by': 'pos_name'}"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_select_record_update_dlbh" model="ir.actions.server">
+            <field name="name">Cập nhật DLBH</field>
+            <field name="model_id" ref="model_order_line_data_report"/>
+            <field name="binding_model_id" ref="model_order_line_data_report"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">records._compute_price_total()</field>
+        </record>
+    </data>
+</odoo>

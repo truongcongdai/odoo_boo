@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="s_report_picking" inherit_id="stock.report_picking">
+        <xpath expr="//div/div[@name='div_origin']" position="after">
+            <div t-if="o.s_origin" class="col-auto" name="div_s_origin">
+                <strong>Mã biên lai:</strong>
+                <p t-field="o.s_origin"/>
+            </div>
+        </xpath>
+        <xpath expr="//th[@name='th_barcode']" position="before">
+            <th name="th_ma_san_pham" class="text-center">
+                <strong>Mã sản phẩm</strong>
+            </th>
+            <th name="th_ma_cu" class="text-center">
+                <strong>Mã cũ</strong>
+            </th>
+        </xpath>
+        <xpath expr="//tbody/t[@t-foreach='o.move_line_ids_without_package']//td[@t-if='has_barcode']" position="before">
+            <td>
+                <span t-field="ml.product_id.ma_san_pham"/><br/>
+            </td>
+            <td>
+                <span t-field="ml.product_id.ma_cu"/><br/>
+            </td>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_internal_transfer_tree_view" model="ir.ui.view">
+            <field name="name">Điều chuyển</field>
+            <field name="model">s.internal.transfer</field>
+            <field name="arch" type="xml">
+                <tree string="Điều chuyển" default_order="id desc" decoration-danger="state == 'cancel'" delete="true">
+                    <field name="create_date" string="Ngày"/>
+                    <field name="code" string="Lệnh"/>
+                    <field name="note" string="Ghi chú"/>
+                    <field name="location_out_code" string="Mã kho xuất"/>
+                    <field name="location_out_id" string="Tên kho xuất"/>
+                    <field name="location_in_code" string="Mã kho nhận"/>
+                    <field name="location_in_id" string="Tên kho nhận"/>
+                    <field name="compute_qty_expect" string="Số lượng"/>
+                    <field name="create_uid" string="Người lập"/>
+                    <field name="state" string="Trạng thái"/>
+                    <field name="confirm_user_id" string="Người duyệt"/>
+                </tree>
+            </field>
+        </record>
+        <record id="s_internal_transfer_form_view" model="ir.ui.view">
+            <field name="name">Điều chuyển</field>
+            <field name="model">s.internal.transfer</field>
+            <field name="arch" type="xml">
+                <form string="Điều chuyển">
+                    <header>
+                        <button name="action_confirm" string="Duyệt" states="draft" type="object" class="oe_highlight"
+                                groups="advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi"/>
+                        <button name="merge_s_internal_transfer_line" string="Ghép dòng" type="object" class="oe_highlight"/>
+                        <button name="action_cancel" string="Hủy"
+                                groups="advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi"
+                                attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}"
+                                type="object" />
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_open_stock_picking_out"
+                                    type="object" icon="fa-truck" attrs="{'invisible': [('picking_out_ids_count', '=', 0)]}">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="picking_out_ids_count"/>
+                                    </span>
+                                    <span class="o_stat_text">
+                                        Phiếu xuất
+                                    </span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" name="action_open_stock_picking_in"
+                                    type="object" icon="fa-truck" attrs="{'invisible': [('picking_in_ids_count', '=', 0)]}">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="picking_in_ids_count"/>
+                                    </span>
+                                    <span class="o_stat_text">
+                                        Phiếu nhập
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="code" readonly="1"/>
+                            <field name="note" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="location_out_id" attrs="{'readonly': [('state', '=', 'done')]}"
+                                       domain="[('usage','=','internal'),('s_transit_location_id','!=', None)]"
+                                       required="1"/>
+                                <field name="location_in_id" attrs="{'readonly': [('state', '=', 'done')]}"
+                                       domain="[('usage','=','internal'),('s_transit_location_id','!=', None)]"
+                                       required="1"/>
+                                <field name="delivery_priority_type_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            </group>
+                            <group>
+                                <field name="confirm_user_id" readonly="1"/>
+                                <field name="confirm_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <h3>Chi tiết sản phẩm</h3>
+                        <field name="transfer_line" attrs="{'readonly': [('state', '=', 'done')]}">
+                            <tree editable="bottom">
+                                <field name="product_default_code"/>
+                                <field name="product_ma_san_pham"/>
+                                <field name="product_ma_vat_tu"/>
+                                <field name="product_id" domain="[('type','=','product')]" required="1"/>
+                                <field name="gia_tri_bien_the" widget="many2many_tags"/>
+                                <field name="qty_expect" required="1" sum="Số lượng đề xuất"/>
+                                <field name="qty_out_real" sum="Số lượng thực xuất"/>
+                                <field name="qty_in_real" sum="Số lượng thực nhâp"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="s_internal_transfer_search" model="ir.ui.view">
+            <field name="name">s_internal_transfer_search</field>
+            <field name="model">s.internal.transfer</field>
+            <field name="arch" type="xml">
+                <search string="Internal transfer search">
+                    <group string="Nhóm theo tên kho">
+                        <filter name="group_by_location_out_id" string="Kho xuất" context="{'group_by':'location_out_id'}"/>
+                        <filter name="group_by_location_in_id" string="Kho nhận" context="{'group_by':'location_in_id'}"/>
+                    </group>
+                    <field name="location_out_id" string="Kho xuất hàng"/>
+                    <field name="location_in_id" string="Kho nhận hàng"/>
+                    <field name="code" string="Lệnh điều chuyển"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="s_internal_transfer_action" model="ir.actions.act_window">
+            <field name="name">Điều chuyển</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.internal.transfer</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_select_state_done" model="ir.actions.server">
+            <field name="name">Duyệt hàng loạt</field>
+            <field name="model_id" ref="model_s_internal_transfer"/>
+            <field name="binding_model_id" ref="model_s_internal_transfer"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="groups_id" eval="[Command.set([ ref('advanced_sale.s_boo_group_administration'),
+                        ref('advanced_sale.s_boo_group_ecom'), ref('advanced_sale.s_boo_group_hang_hoa'),
+                        ref('advanced_sale.s_boo_group_dieu_phoi') ])]"/>
+            <field name="code">
+                for rec in records:
+                    rec.action_confirm()
+            </field>
+        </record>
+
+        <record id="action_select_state_cancel" model="ir.actions.server">
+            <field name="name">Hủy hàng loạt</field>
+            <field name="model_id" ref="model_s_internal_transfer"/>
+            <field name="binding_model_id" ref="model_s_internal_transfer"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="groups_id" eval="[Command.set([ ref('advanced_sale.s_boo_group_administration'),
+                        ref('advanced_sale.s_boo_group_ecom'), ref('advanced_sale.s_boo_group_hang_hoa'),
+                        ref('advanced_sale.s_boo_group_dieu_phoi') ])]"/>
+            <field name="code">records.action_cancel()</field>
+        </record>
+
+        <menuitem id="s_internal_transfer" name="###Điều chuyển" parent="stock.menu_stock_warehouse_mgmt" sequence="150"
+                  action="s_internal_transfer_action"/>
+
+    </data>
+</odoo>

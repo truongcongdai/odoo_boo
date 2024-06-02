@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_s_sync_product_magento,s_sync_product_magento.s_sync_product_magento,model_s_sync_product_magento,,1,1,1,1
+access_channel_pos_mappings,access.channel.pos.mappings,model_channel_pos_mappings,,1,1,1,1
+access_channel_pick_mappings,access.channel.pick.mappings,model_channel_pick_mappings,,1,1,1,1
+access_s_channel_inventory_mappings,access.s.channel.inventory.mappings,model_s_channel_inventory_mappings,,1,1,1,1
+access_magento_web_stock,access.magento.web.stock,model_magento_web_stock,,1,1,1,1

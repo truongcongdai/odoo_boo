@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="s_pos_config_view_form_inherit" model="ir.ui.view">
+            <field name="name">s_pos_config_view_form_inherit</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='module_pos_restaurant']//ancestor::div[hasclass('o_setting_box')]" position="attributes">
+                    <attribute name="groups">base.group_no_one</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_configurator']//ancestor::div[hasclass('o_setting_box')]" position="attributes">
+                    <attribute name="groups">base.group_no_one</attribute>
+                </xpath>
+                <xpath expr="//field[@name='start_category']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='start_category']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='start_category']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='iface_print_auto']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="//div[@id='auto_printing']" position="after">
+                    <div class="col-12 col-lg-6 o_setting_box" id="diem_khong_lay_bill">
+                    <div class="o_setting_left_pane" ></div>
+                    <div class="o_setting_right_pane" >
+                        <label for="diem_khong_lay_bill" string="Số điểm không lấy bill"/>
+                        <div class="content-group">
+                            <div class="mt16" id="diem_khong_lay_bill">
+                                <field name="diem_khong_lay_bill"/>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </xpath>
+                <xpath expr="//div[@id='auto_printing']" position="before">
+                    <div class="col-12 col-lg-6 o_setting_box" id="khong_lay_bill">
+                        <div class="o_setting_left_pane" >
+                            <field name="s_set_bill"/>
+                        </div>
+                        <div class="o_setting_right_pane" >
+                            <label for="s_set_bill" string="Không lấy bill"/>
+                            <div class="content-group">
+                                Không lấy bill khi thanh toán
+                            </div>
+                        </div>
+
+                    </div>
+                </xpath>
+                <xpath expr="//div[@id='posbox_reference']/div[hasclass('o_setting_box')]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[@id='iface_big_scrollbars']" position="after">
+                    <div class="col-12 col-lg-6 o_setting_box" id="is_first_partner">
+                        <div class="o_setting_left_pane">
+                            <field name="is_first_partner"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="is_first_partner"/>
+                            <div class="text-muted">
+                                Chọn khách hàng được hiện đầu tiên
+                            </div>
+                            <field name="first_partner" domain="[('type', '!=', 'delivery')]"/>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//div[@id='iface_big_scrollbars']" position="after">
+                    <div class="col-12 col-lg-6 o_setting_box" id="is_create_customer_control">
+                        <div class="o_setting_left_pane">
+                            <field name="is_create_customer_control"/>
+                        </div><div class="o_setting_right_pane">
+                            <label for="is_create_customer_control"/>
+                            <div class="text-muted">
+                                Cho phép tạo khách hàng chỉ cho cấp quản lý
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='receipt_footer']" position="after">
+                    <div>
+                        <label string="Ảnh" for="receipt_footer" class="col-lg-2 o_light_label"/>
+                        <field name="s_image_footer" filename="s_image_footer_name" string="Ảnh chân trang"/>
+                        <field name="s_image_footer_name" invisible="1"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.actions.server" id="pos_config_add_ctkm">
+            <field name="name">Thêm chương trình khuyễn mãi</field>
+            <field name="model_id" ref="point_of_sale.model_pos_config"/>
+            <field name="binding_model_id" ref="point_of_sale.model_pos_config"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action_values = env.ref('advanced_pos.mass_action_insert_coupon_program').sudo().read()[0]
+                action_values['context'] = {'default_pos_ids': records.ids, 'create': False, 'edit': False}
+                action = action_values
+
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="pos_config_add_pricelist">
+            <field name="name">Áp dụng bảng giá</field>
+            <field name="model_id" ref="point_of_sale.model_pos_config"/>
+            <field name="binding_model_id" ref="point_of_sale.model_pos_config"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action_values = env.ref('advanced_pos.mass_action_insert_pricelist').sudo().read()[0]
+                action_values['context'] = {'default_pos_ids': records.ids, 'create': False, 'edit': False}
+                action = action_values
+
+            </field>
+        </record>
+    </data>
+</odoo>

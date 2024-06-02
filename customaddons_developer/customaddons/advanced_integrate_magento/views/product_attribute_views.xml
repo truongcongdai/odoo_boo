@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="s_product_attribute_view_form" model="ir.ui.view">
+        <field name="name">s.product.attribute.view.form</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='value_ids']/tree" position="inside">
+                <field name="code" />
+            </xpath>
+
+            <xpath expr="//field[@name='create_variant']" position="after">
+                <field name="status_product_attribute" widget="boolean_toggle" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="s_product_attribute_view_tree" model="ir.ui.view">
+        <field name="name">s.product.attribute.view.tree</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.attribute_tree_view"/>
+        <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='create_variant']" position="after">
+                <field name="status_product_attribute" widget="boolean_toggle" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="action_select_add_attribute_magento" model="ir.actions.server">
+        <field name="name">Thêm vào danh sách đồng bộ thuộc tính</field>
+        <field name="model_id" ref="model_product_attribute"/>
+        <field name="binding_model_id" ref="model_product_attribute"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.select_add_attribute_magento()</field>
+    </record>
+
+    <record id="action_select_cancel_attribute_magento" model="ir.actions.server">
+        <field name="name">Xóa khỏi danh sách đồng bộ thuộc tính</field>
+        <field name="model_id" ref="model_product_attribute"/>
+        <field name="binding_model_id" ref="model_product_attribute"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.select_cancel_attribute_magento()</field>
+    </record>
+
+</odoo>

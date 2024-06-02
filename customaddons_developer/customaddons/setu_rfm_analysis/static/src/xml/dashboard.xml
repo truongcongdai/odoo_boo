@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="setu_rfm_analysis.RfmDashboardMain">
+        <div class="o_dashboards">
+            <div class="container-fluid o_rfm_dashboard">
+                <t t-call="setu_rfm_analysis.dashboard_content"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="setu_rfm_analysis.dashboard_content">
+        <div class="o_rfm_dashboard_content">
+            <div class="row col-12">
+                <div id="segment_customer" class="col-lg-4 col-md-12"/>
+                <div id="segment_lead" class="col-lg-4 col-md-12"/>
+                <div id="segment_order" class="col-lg-4 col-md-12"/>
+            </div>
+            <br/>
+            <br/>
+            <div class="row col-12" name="bar_revenue_section" style="margin-top:30px ;">
+                <div id="segmant_revenue" class="col-lg-12"/>
+            </div>
+        </div>
+    </t>
+<!--    <t t-name="setu_rfm_analysis.DateRangeButtons">-->
+<!--        &lt;!&ndash; TODO: Hide in mobile as it is going to push in control panel and it breaks UI, maybe we will improve it in future &ndash;&gt;-->
+<!--        <div class="btn-group o_date_range_buttons d-none d-md-inline-flex float-right">-->
+<!--            <button class="btn btn-secondary js_date_range active" data-date="week">Last Week</button>-->
+<!--            <button class="btn btn-secondary js_date_range" data-date="month">Last Month</button>-->
+<!--            <button class="btn btn-secondary js_date_range" data-date="year">Last Year</button>-->
+<!--        </div>-->
+<!--    </t>-->
+
+</templates>

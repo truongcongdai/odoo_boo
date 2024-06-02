@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<data>
+
+		<record id="bravo_stock_picking_mapping_filter" model="ir.ui.view">
+            <field name="name">bravo_stock_picking_mapping.search</field>
+            <field name="model">bravo.stock.picking.mappings</field>
+            <field name="arch" type="xml">
+                <search string="Post API">
+                    <filter name="group_api" string="API" context="{'group_by':'post_api'}"/>
+					<filter name="need_resync_manual" string="Cần đồng bộ thủ công"
+                            domain="[('need_resync_manual', '=', True)]" />
+                </search>
+             </field>
+        </record>
+
+		<record id="bravo_stock_picking_mapping_form" model="ir.ui.view">
+			<field name="name">bravo_stock_picking_mapping.form</field>
+			<field name="model">bravo.stock.picking.mappings</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form edit="false">
+					<sheet>
+						<group>
+							<group>
+								<field name="picking_id"/>
+								<field name="move_id"/>
+								<field name="pos_order_id"/>
+								<field name="sale_order_id"/>
+								<field name="status"/>
+							</group>
+							<group>
+								<field name="post_api"/>
+								<field name="create_date"/>
+								<field name="write_date"/>
+								<field name="create_uid" widget="many2one_avatar_user"/>
+								<field name="need_resync_manual" widget="boolean_toggle" readonly="True"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="bravo_stock_picking_mapping_tree" model="ir.ui.view">
+			<field name="name">bravo.stock.picking.mappings.tree</field>
+			<field name="model">bravo.stock.picking.mappings</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Bravo stock picking Mapping"
+					  decoration-danger="status_code in ['10','11','99']"
+					  decoration-success="status_code == '00'">
+					<field name="picking_id"/>
+					<field name="move_id"/>
+					<field name="pos_order_id"/>
+					<field name="sale_order_id"/>
+					<field name="status"/>
+					<field name="status_code"/>
+					<field name="post_api"/>
+					<field name="create_date"/>
+					<field name="write_date"/>
+					<field name="create_uid" widget="many2one_avatar_user"/>
+				</tree>
+			</field>
+		</record>
+
+
+
+		<record id="bravo_stock_picking_mapping_action" model="ir.actions.act_window">
+			<field name="name">Bravo Mappings</field>
+			<field name="res_model">bravo.stock.picking.mappings</field>
+			<field name="context">{'search_default_group_api': 1}</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record model="ir.actions.server" id="bravo_stock_picking_mapping_action_status">
+			<field name="name">Cập nhật status code cho lịch sử đồng bộ Bravo</field>
+			<field name="model_id" ref="model_bravo_stock_picking_mappings"/>
+			<field name="binding_model_id" ref="model_bravo_stock_picking_mappings"/>
+			<field name="binding_view_types">list</field>
+			<field name="state">code</field>
+			<field name="code">
+				for rec in records:
+					rec.update_status_code()
+			</field>
+		</record>
+
+		<record model="ir.actions.server" id="bravo_stock_picking_mapping_action_resync_manual">
+			<field name="name">Đồng bộ lại</field>
+			<field name="model_id" ref="model_bravo_stock_picking_mappings"/>
+			<field name="binding_model_id" ref="model_bravo_stock_picking_mappings"/>
+			<field name="binding_view_types">list,form</field>
+			<field name="state">code</field>
+			<field name="code">
+				records._action_resync_manual()
+			</field>
+		</record>
+
+		<menuitem
+			id      ="bravo_mapping_root"
+			name    ="Bravo Mappings"
+			parent  ="odoo_multi_channel_sale.parent_menu_multi_channel"
+			action  ="bravo_stock_picking_mapping_action"
+			sequence="6"
+		/>
+
+		<menuitem id="bravo_stock_picking_mapping_menu" name="Lịch sử đồng bộ Bravo"
+					  parent="stock.menu_warehouse_report" action="bravo_stock_picking_mapping_action"
+					  sequence="10" groups="base.group_user"/>
+
+		<menuitem name="Đồng bộ Bravo"
+			id="bravo_stock_picking_mapping_menu_root"
+			web_icon="advanced_integrate_bravo,static/description/icon.png"
+			groups="base.group_user"
+			action="bravo_stock_picking_mapping_action"
+			sequence="100"/>
+
+	</data>
+</odoo>

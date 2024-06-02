@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="s_report_delivery_document" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div/div[@name='div_origin']" position="after">
+            <div t-if="o.s_origin" class="col-auto" name="div_s_origin">
+                <strong>Mã biên lai:</strong>
+                <p t-field="o.s_origin"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

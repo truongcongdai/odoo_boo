@@ -1,0 +1,57 @@
+<odoo>
+    <record model="ir.ui.view" id="s_stock_picking_form_view">
+        <field name="name">s.stock.picking.form.view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_validate']" position="after">
+<!--                <button type="object" name="btn_select_shipping_method" string="Shipping Method"-->
+<!--                        attrs="{'invisible': [('is_awaiting_shipment', '=', False)]}"/>-->
+                 <field name="marketplace_tiktok_order_status" invisible="1"/>
+                <button type="object" name="btn_shipping_label_tiktok" string="Shipping Label" attrs="{'invisible': ['|',('package_tiktok_id', '=', False),('marketplace_tiktok_order_status', '!=', '112')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='move_type']" position="after">
+                <field name="is_awaiting_shipment" invisible="1"/>
+                <field name="delivery_option"/>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <field name="s_tiktok_order_id" string="ID Đơn Hàng Tiktok" attrs="{'invisible': [('s_tiktok_order_id', '=', False)]}"/>
+                <field name="s_reverse_tiktok_order_id" string="ID Yêu Cầu Trả Hàng Tiktok" attrs="{'invisible': [('s_reverse_tiktok_order_id', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="is_tiktok_do_return" string="Là phiếu hoàn thành công từ Tiktok" attrs="{'invisible': [('is_tiktok_do_return', '=', False)]}"/>
+                <field name="package_status" invisible="1"/>
+                <field name="package_tiktok_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='shipment_status']" position="after">
+                <field name="tiktok_shipping_method" readonly="True" attrs="{'invisible': ['|',('tiktok_shipping_method', '=', False),('s_tiktok_order_id','=',False)]}"/>            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="advanced_inventory_s_stock_picking_form_inherit">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="advanced_inventory.s_stock_picking_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|','|','|','|',('state', '!=', 'done'),
+                    ('transfer_out_id', '!=', False),
+                    ('transfer_in_id', '!=', False),
+                    ('pos_order_id', '!=', False),
+                    ('is_return_magento', '=', True),
+                    ('package_tiktok_id', '!=', False)
+                    ]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="action_print_shipping_label_tiktok" model="ir.actions.server">-->
+<!--        <field name="name">Print Shipping Label Tiktok</field>-->
+<!--        <field name="model_id" ref="model_stock_picking"/>-->
+<!--        <field name="binding_model_id" ref="model_stock_picking"/>-->
+<!--        <field name="binding_view_types">list</field>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">action = records.btn_open_shipping_label_tiktok()</field>-->
+<!--    </record>-->
+
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="FreeProductPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup popup-selection popup-selection-free-product">
+                    <header class="drag-handle">
+                        <p>Sản phẩm được tặng</p>
+                    </header>
+<!--                    <t t-if="props.cancelFreeProduct === false and props.unavailableQty === false">-->
+<!--                        <p>Vui lòng chọn sản phẩm được tặng</p>-->
+<!--                        <div class="o_input col-xl-6">-->
+<!--                            <select id="s_free_product" style="width: 488px; padding:6px">-->
+<!--                                <option t-foreach="props.free_products" t-as="product" t-att-value="product.id" style="font-size:10px;">-->
+<!--                                    <t t-esc="product.display_name"/>-->
+<!--                                </option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <footer class="footer salePersonPopupFooter">-->
+<!--                            <div class="button confirm" t-on-click="confirm_free_product">-->
+<!--                                Xác nhận-->
+<!--                            </div>-->
+<!--                            <div class="button cancel" t-on-click="cancel_free_product">-->
+<!--                                Hủy-->
+<!--                            </div>-->
+<!--                        </footer>-->
+<!--                    </t>-->
+                    <t t-if="props.unavailableQty === true and props.cancelFreeProduct === false">
+                            <p class="tip_content">Sản phẩm không đủ tồn</p>
+                        <footer class="footer">
+                            <div class="button confirm" t-on-click="confirm_unavailable_qty">
+                                Xác nhận
+                            </div>
+                        </footer>
+                    </t>
+                    <t t-elif="props.unavailableQty === false and props.cancelFreeProduct === true">
+                        <p class="tip_content">Không áp dụng sản phẩm được tặng vào đơn hàng?</p>
+                        <footer class="footer salePersonPopupFooter">
+                            <div class="button confirm" t-on-click="confirm_free_product_popup">
+                                Xác nhận
+                            </div>
+                            <div class="button cancel" t-on-click="cancel_free_product_popup">
+                                Hủy
+                            </div>
+                        </footer>
+                    </t>
+                    <t t-else="">
+                        <p>Vui lòng chọn sản phẩm được tặng</p>
+                        <div class="o_input col-xl-6">
+                            <select id="s_free_product" style="width: 488px; padding:6px">
+                                <option t-foreach="props.free_products" t-as="product" t-att-value="product.id" style="font-size:10px;">
+                                    <t t-esc="product.default_code"/> - <t t-esc="product.display_name"/>
+                                </option>
+                            </select>
+                        </div>
+                        <footer class="footer salePersonPopupFooter">
+                            <div class="button confirm" t-on-click="confirm_free_product">
+                                Xác nhận
+                            </div>
+                            <div class="button cancel" t-on-click="cancel_free_product">
+                                Hủy
+                            </div>
+                        </footer>
+                    </t>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+</templates>

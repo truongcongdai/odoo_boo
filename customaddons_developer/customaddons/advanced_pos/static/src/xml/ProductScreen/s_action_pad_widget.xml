@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-esc='client.name']" position="after">
+            <div class="s_customer_information_pos">
+                <t t-if="client.is_connected_vani">
+                    <t t-if="!client.vani_connect_from">
+                        <p>New Vani</p>
+                    </t>
+                </t>
+                <t t-if="client.customer_ranked">
+                    <p>Hạng: <t t-esc="client.customer_ranked"/></p>
+                </t>
+                <t t-if="client.loyalty_points">
+                    <p>Điểm: <t t-esc="client.loyalty_points"/></p>
+                </t>
+                <t t-if="client.birthday">
+                    <p>Ngày sinh: <t t-esc="client.birthday"/></p>
+                </t>
+                <t t-if="client.phone">
+                    <p>Điện thoại: <t t-esc="client.phone"/></p>
+                </t>
+                <t t-if="client.is_new_customer">
+                    <p>Khách hàng mới</p>
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('actionpad')]//button[hasclass('pay')]" position="attributes">
+            <attribute name="t-on-click">trigger(props.actionToTrigger or 'click-pay') or _onClickPayRemoveProductList</attribute>
+        </xpath>
+    </t>
+</templates>
