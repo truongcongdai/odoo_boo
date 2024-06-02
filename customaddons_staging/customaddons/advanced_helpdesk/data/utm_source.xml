@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="utm_source_zalo" forcecreate="1" model="utm.source">
+            <field name="name">Zalo</field>
+        </record>
+    </data>
+</odoo>

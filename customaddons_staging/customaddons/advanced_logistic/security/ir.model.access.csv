@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_logistic_report,advanced_logistic_report,model_s_logistic_report,base.group_system,1,0,0,0
+access_s_logistic_tracking,advanced_logistic.s_logistic_tracking,model_s_logistic_tracking,base.group_user,1,1,0,0
+access_s_mass_action_infor_receiver,access.s_mass_action_infor_receiver,model_logistic_mass_action_infor_receiver,,1,1,1,1

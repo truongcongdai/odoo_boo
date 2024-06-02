@@ -1,0 +1,36 @@
+.order-selector {
+    background: #62425a;
+    padding-left: 45px;
+}
+
+.pos .order-button.square {
+    background: #8d7186;
+    color: white;
+}
+
+.pos .order-button {
+    background: #8d7186;
+}
+
+/*.pos .pos-topheader{*/
+/*    z-index: -1;*/
+/*}*/
+.pos .pos-topheader {
+    margin-top: 53px;
+}
+
+.pos .pos-content {
+    top: 100px;
+}
+
+.pos .order-selector {
+    max-height: 64px;
+}
+
+.orders.touch-scrollable {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+

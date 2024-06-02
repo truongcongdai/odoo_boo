@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_country_address_view_search" model="ir.ui.view">
+       <field name="name">res.country.address.view.search</field>
+       <field name="model">res.country.address</field>
+        <field name="arch" type="xml">
+            <search string="Country Address">
+                <field name="name" />
+                <separator />
+                <filter name="fltr_1" string="1. City-Province" domain="[('type', 'like', '1')]" />
+                <filter name="fltr_2" string="2. Sub City-Town-District" domain="[('type', 'like', '2')]" />
+                <filter name="fltr_3" string="3. Village-Burgh-Block" domain="[('type', 'like', '3')]" />
+                <separator />
+                <group expand="0" string="Group By">
+                    <filter name="grp_country" string="Country" context="{'group_by':'country_id'}"/>
+                    <filter name="grp_parent" string="Direct Under" context="{'group_by':'parent_id'}" />
+                </group>
+                <searchpanel>
+                    <field name="country_id" icon="fa-globe" enable_counters="1"/>
+                    <field name="type" icon="fa-map" enable_counters="1"/>
+                </searchpanel>
+            </search>
+       </field>
+    </record>
+
+    <record id="res_country_address_view_tree" model="ir.ui.view">
+        <field name="name">res.country.address.view.tree</field>
+        <field name="model">res.country.address</field>
+        <field name="arch" type="xml">
+            <tree string="Address" editable="bottom">
+                <field name="name" required="1" />
+                <field name="code" required="1" />
+                <field name="type" required="1" />
+                <field name="name_with_type" optional="show" />
+                <field name="parent_id" />
+                <field name="country_id" required="1" optional="hide" />
+                <field name="state_id" optional="show" />
+                <field name="slug_name" optional="hide" />
+                <field name="full_name" optional="hide" />
+                <field name="full_name_with_type" optional="hide" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="res_country_address_action" model="ir.actions.act_window">
+        <field name="name">Country Addresses</field>
+        <field name="res_model">res.country.address</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="res_country_address_menu"
+              name="Country Address"
+              parent="contacts.res_partner_menu_config"
+              action="res_country_address_action"
+              sequence="1000"/>
+
+</odoo>

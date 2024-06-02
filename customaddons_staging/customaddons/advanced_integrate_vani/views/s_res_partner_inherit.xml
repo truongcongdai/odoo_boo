@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="advanced_pos.res_partner_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_new_customer']" position="after">
+                <field name="is_connected_vani"/>
+                <field name="vani_connect_from"/>
+            </xpath>
+            <xpath expr="//field[@name='barcode']" position="before">
+                <field name="vanila_barcode"/>
+            </xpath>
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

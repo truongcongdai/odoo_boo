@@ -1,0 +1,15 @@
+<template>
+    <div t-name="IZIViewDashboard" class="izi_view_dashboard">
+        <div class="izi_view_dashboard_grid grid-stack">
+        </div>
+        <div class="izi_dashboard_script_editor" style="left: -1000px;">
+            <h4></h4>
+            <div class="izi_dashboard_script_editor_content" onmousedown="event.preventDefault(); event.stopPropagation();">
+                <div id="izi_script_editor"></div>
+            </div>
+            <div class="izi_update_script izi_btn izi_btn_purple collapsed">
+                <span class="material-icons izi_btn_icon_left">code</span> Update Script
+            </div>
+        </div>
+    </div>
+</template>

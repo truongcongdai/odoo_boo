@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_product_brand_tree_view" model="ir.ui.view">
+        <field name="name">s.product.brand.tree</field>
+        <field name="model">s.product.brand</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+    <record id="s_product_brand_act_window" model="ir.actions.act_window">
+        <field name="name">Thương hiệu</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">s.product.brand</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem name="#Thương hiệu" id="s_product_brand_menu" parent="advanced_inventory.s_product_information_menu" action="s_product_brand_act_window" sequence="3"/>
+</odoo>

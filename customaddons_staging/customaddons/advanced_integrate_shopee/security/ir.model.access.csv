@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_s_shopee_delivery_method,access.s_shopee_delivery_method,model_s_shopee_delivery_method,,1,1,1,1
+access_s_mass_action_infor_customer,access.s_mass_action_infor_customer,model_mass_action_infor_customer_shopee,,1,1,1,1
+access_s_action_print_shipping_label,access.s_action_print_shipping_label,model_shipping_label_report_shopee,,1,1,1,1
+access_s_error_shipping_label_shopee,access.error_shipping_label_shopee,model_error_shipping_label_shopee,,1,1,1,1
+access_s_sale_order_shopee_error,access_s_sale_order_shopee_error,model_s_sale_order_shopee_error,,1,1,1,1

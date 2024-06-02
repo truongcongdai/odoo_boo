@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.Orderline" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('product-name')]" position="after">
+            <span class="s_input-group">
+              <input type="button" value="-" class="s_button-minus" data-field="quantity" t-on-click="decrementValue"
+                     t-att-disabled="props.line.gift_card_id or props.line.coupon_id"/>
+                <input type="number" step="1" max="" t-att-value="props.line.quantity" t-att-name="props.line.id"
+                       class="quantity-field" readonly="1"/>
+                <input type="button" value="+" class="s_button-plus" data-field="quantity" t-on-click="incrementValue"
+                       t-att-disabled="props.line.gift_card_id or props.line.coupon_id"/>
+            </span>
+        </xpath>
+        <xpath expr="//ul[hasclass('info-list')]//li[hasclass('info')]" position="before">
+            <t t-if="props.line.get_color_variant()">
+                <span>Color: <t t-esc="props.line.get_color_variant()"/></span>
+                <br/>
+            </t>
+            <t t-if="props.line.get_size_variant()">
+                <span>Size: <t t-esc="props.line.get_size_variant()"/></span>
+            </t>
+        </xpath>
+        <xpath expr="//span[hasclass('product-name')]//t[@t-esc='props.line.get_full_product_name()']"
+               position="replace">
+            <div class="product-name-value">
+                <span>
+                    <t t-esc="props.line.get_full_product_name()"/>
+                    <t t-if="props.line.s_gift_card_code">
+                        - <t t-esc="props.line.s_gift_card_code"/>
+                    </t>
+                </span>
+            </div>
+        </xpath>
+        <xpath expr="//span[hasclass('product-name')]" position="inside">
+            <div class="product-sku-value">
+                <t t-if="props.line.get_sku_variant()">
+                    <span>SKU: </span>
+                    <t t-esc="props.line.get_sku_variant()"/>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>

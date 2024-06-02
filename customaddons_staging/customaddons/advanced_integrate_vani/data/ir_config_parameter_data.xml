@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="transactionType" model="ir.config_parameter" forcecreate="1">
+            <field name="key">integrate.transactionType</field>
+            <field name="value">EARN</field>
+        </record>
+
+        <record id="brandId" model="ir.config_parameter" forcecreate="1">
+            <field name="key">integrate.brandId</field>
+            <field name="value">98</field>
+        </record>
+
+        <record id="shopBrandName" model="ir.config_parameter" forcecreate="1">
+            <field name="key">integrate.shopBrandName</field>
+            <field name="value">BOO</field>
+        </record>
+
+        <record id="productCurrency" model="ir.config_parameter" forcecreate="1">
+            <field name="key">integrate.productCurrency</field>
+            <field name="value">VND</field>
+        </record>
+
+        <record id="cancelType" model="ir.config_parameter" forcecreate="1">
+            <field name="key">integrate.cancelType</field>
+            <field name="value">T</field>
+        </record>
+    </data>
+</odoo>

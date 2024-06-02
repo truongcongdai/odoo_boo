@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_order_tree_inherit" model="ir.ui.view">
+        <field name="name">pos.order.tree.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pos_reference']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="pos_reference"/>
+                <field name="pos_name"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="customer_phone"/>
+            </xpath>
+            <xpath expr="//field[@name='customer_phone']" position="after">
+                <field name="payment_method" string="Thanh toán"/>
+                <field name="payment_note_order" string="Ghi chú thanh toán"/>
+                <field name="applied_promotion_program"/>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="replace">
+                <field name="sale_person_id" widget="many2one_avatar_employee"/>
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">state == 'cancel'</attribute>
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-muted">state == 'done'</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="pos_order_view_search_inherit" model="ir.ui.view">
+        <field name="name">pos.order.view.search.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pos_reference']" position="after">
+                <field name="customer_phone"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="s_pos_order_access_right_act_view" model="ir.actions.act_window">
+        <field name="name">Đơn hàng (Thu ngân)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.order</field>
+        <field name="view_mode">tree,form,kanban</field>
+<!--        <field name="context">{'create': False,'edit': False, 'delete': False}</field>-->
+        <field name="domain">[('config_id.employee_ids.user_id.user_ids', 'in', uid)]</field>
+        <field name="search_view_id" ref="point_of_sale.view_pos_order_filter"/>
+    </record>
+    <menuitem id="s_pos_order_access_right_act_view_menu" name="Đơn hàng (Thu ngân)"
+              groups="advanced_sale.s_boo_group_thu_ngan"
+              parent="point_of_sale.menu_point_of_sale" action="s_pos_order_access_right_act_view"
+              sequence="2"/>
+    <!--    <record id="action_server_update_duplicate_pos_reference" model="ir.actions.server">-->
+    <!--        <field name="name">Sửa đơn trùng mã biên lai</field>-->
+    <!--        <field name="type">ir.actions.server</field>-->
+    <!--        <field name="model_id" ref="model_pos_order"/>-->
+    <!--        <field name="binding_model_id" ref="model_pos_order"/>-->
+    <!--        <field name="state">code</field>-->
+    <!--        <field name="code">-->
+    <!--            for rec in records:-->
+    <!--                rec.update_duplicate_pos_reference()-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="action_server_update_gift_card_id" model="ir.actions.server">-->
+    <!--        <field name="name">Cập nhật mã Gift Card trong đơn hàng</field>-->
+    <!--        <field name="type">ir.actions.server</field>-->
+    <!--        <field name="model_id" ref="model_pos_order"/>-->
+    <!--        <field name="binding_model_id" ref="model_pos_order"/>-->
+    <!--        <field name="state">code</field>-->
+    <!--        <field name="code">-->
+    <!--            for rec in records:-->
+    <!--                rec.update_gift_card_id()-->
+    <!--        </field>-->
+    <!--    </record>-->
+</odoo>

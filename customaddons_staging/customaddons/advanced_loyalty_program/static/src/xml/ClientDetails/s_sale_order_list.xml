@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="pos_sale.SaleOrderList" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('order-list')]" position="replace">
+            <div class="order-list-new">
+                <t t-foreach="props.orders" t-as="order" t-key="order.id">
+                    <t t-if="order.is_magento_order">
+                        <t t-if="order.sale_order_status == 'hoan_thanh' || order.sale_order_status == 'hoan_thanh_1_phan'">
+                            <SaleOrderRow order="order" highlightedOrder="highlightedOrder" />
+                        </t>
+                        <t t-else="">
+
+                        </t>
+                    </t>
+                    <t t-else="">
+
+                    </t>
+                </t>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

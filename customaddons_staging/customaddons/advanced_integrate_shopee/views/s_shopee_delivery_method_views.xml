@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_shopee_display_view_delivery_method_form" model="ir.ui.view">
+        <field name="name">s_display_view_stock_picking_form</field>
+        <field name="model">s.shopee.delivery.method</field>
+        <field name="arch" type="xml">
+            <form string="Phương thức nhận hàng Shopee">
+                <group>
+                    <group>
+                        <field name="shipping_method_shopee" required="1" readonly="0"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button name="action_push_delivery_method_shopee" string="Submit" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

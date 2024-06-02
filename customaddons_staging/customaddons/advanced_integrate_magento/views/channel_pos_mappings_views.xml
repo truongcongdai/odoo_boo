@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+		<record id="channel_pos_mappings_search" model="ir.ui.view">
+			<field name="name">channel.pos.mappings.search</field>
+			<field name="model">channel.pos.mappings</field>
+			<field name="arch" type="xml">
+				<search string="Channel Pos Mappings">
+					<field name ="pos_order_id"
+                           filter_domain="[('pos_order_id.name', '=ilike', self)]" />
+					<field name="odoo_partner_id"
+                           filter_domain="[('odoo_partner_id.name', '=ilike', self)]" />
+
+					<group expand="0" string="Group By...">
+						<filter
+							string ="Instance"
+							name   ="filter_by_channel_id"
+							context="{'group_by':'channel_id'}"
+						/>
+						<filter
+							string ="Need Update"
+							name   ="need_sync"
+							domain ="[]"
+							context="{'group_by':'need_sync'}"
+						/>
+					</group>
+                    <searchpanel>
+                        <field name="ecom_store" string="Channels" enable_counters="1"/>
+                        <field name="channel_id" string="Instances" enable_counters="1"/>
+                    </searchpanel>
+				</search>
+			</field>
+		</record>
+
+		<record id="channel_pos_mappings_form" model="ir.ui.view">
+			<field name="name">channel.pos.mappings.form</field>
+			<field name="model">channel.pos.mappings</field>
+			<field name="arch" type="xml">
+				<form edit="false">
+					<sheet>
+						<group>
+							<group>
+								<field name="channel_id"/>
+								<field name="ecom_store"/>
+							</group>
+							<group>
+								<field name="operation"/>
+								<field name="need_sync"/>
+							</group>
+						</group>
+						<group col="4">
+							<field name="store_pos_order_id"/>
+							<field name="pos_order_id"/>
+							<field name="odoo_pos_order_id" required="1" />
+							<field name="odoo_partner_id" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="channel_pos_mappings_tree" model="ir.ui.view">
+			<field name="name">channel.pos.mappings.tree</field>
+			<field name="model">channel.pos.mappings</field>
+			<field name="arch" type="xml">
+				<tree string="Channel order Mapping"
+                      decoration-danger="need_sync=='yes'" decoration-success="need_sync == 'no'">
+					<field name="channel_id"/>
+					<field name="store_pos_order_id" required="1" decoration-bf="1"/>
+					<field name="pos_order_id" decoration-bf="1"/>
+					<field name="odoo_partner_id" decoration-bf="1"/>
+                    <field name="operation" widget="badge"
+                           decoration-success="operation == 'import'"
+                           decoration-warning="operation == 'export'" optional="show"/>
+					<field name="create_date"/>
+					<field name="write_date"/>
+                    <field name="need_sync" widget="badge"
+                           decoration-success="need_sync == 'no'"
+                           decoration-danger="need_sync == 'yes'" optional="show"/>
+                    <field name="create_uid" widget="many2one_avatar_user"/>
+					<field name="id" optional="hide"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="channel_pos_mappings_pivot" model="ir.ui.view">
+			<field name="name">channel.pos.mappings.pivot</field>
+			<field name="model">channel.pos.mappings</field>
+			<field name="arch" type="xml">
+				<pivot>
+					<field name="channel_id" type = "col"/>
+					<field name="create_date" type= "row" interval ="day"/>
+				</pivot>
+			</field>
+		</record>
+
+		<record id="channel_pos_mappings_action" model="ir.actions.act_window">
+			<field name="name">Channel PoS Mappings</field>
+			<field name="res_model">channel.pos.mappings</field>
+			<field name="view_mode">tree,form,pivot</field>
+		</record>
+
+		<menuitem id="channel_pos_mappings_menu" name="PoS Order"
+			parent="odoo_multi_channel_sale.menu_id_channel_mappings"
+			action="channel_pos_mappings_action" sequence="100" />
+	</data>
+</odoo>

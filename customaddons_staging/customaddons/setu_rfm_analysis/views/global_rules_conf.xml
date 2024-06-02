@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="global_segment_rules_form_view" model="ir.ui.view">
+            <field name="name">global.rule.conf.form</field>
+            <field name="model">rfm.global.conf</field>
+            <field name="arch" type="xml">
+                <form string="Global RFM Rules">
+<!--                    <script>-->
+<!--                        $(document).ready(function(){-->
+<!--                        $('.modal-dialog').css({'height': 'max-content'});-->
+<!--                        $('.modal-content').css({'height': 'max-content','width': 'max-content'});-->
+<!--                        $('.modal-body').css({'height': 'max-content','width': 'max-content'});-->
+<!--                        });-->
+<!--                    </script>-->
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="global_for_company"/>
+                            </group>
+                            <group>
+                                <field name="global_for_sales_team"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="global_rule_lines" nolabel="1">
+                                <tree editable="bottom" create="0" delete="0">
+                                    <field name="segment_id" readonly="1"/>
+                                    <field name="from_days" string="Recency From (In Days)"/>
+                                    <field name="to_days" string="Recency To (In Days)"/>
+                                    <field name="from_frequency"/>
+                                    <field name="to_frequency"/>
+                                    <field name="from_amount"/>
+                                    <field name="to_amount"/>
+                                    <field name="from_atv" string="From ATV"/>
+                                    <field name="to_atv" string="To ATV"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="make_global_rule"
+                                attrs="{'invisible':[('global_for_company','=',False),('global_for_sales_team','=',False)]}"
+                                string="Make Global Rule" type="object" class="oe_highlight"/>
+                        <button string="Close" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="actions_rfm_global_rule_server" model="ir.actions.server">
+            <field name="name">Global Rules</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_rfm_global_conf"/>
+            <field name="state">code</field>
+            <field name="code">action = model.create_open_global_conf_wizard()</field>
+        </record>
+
+        <record id="global_segment_rules_act_window" model="ir.actions.act_window">
+            <field name="name">Global RFM Rules</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rfm.global.conf</field>
+            <field name="target">new</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <menuitem name="Set Global RFM Rules"
+                  id="global_segment_rules_menu"
+                  parent="setu_rfm_analysis_configuration_menu"
+                  action="actions_rfm_global_rule_server"
+                  groups="setu_rfm_analysis.group_dynamic_rules"
+        />
+
+    </data>
+</odoo>

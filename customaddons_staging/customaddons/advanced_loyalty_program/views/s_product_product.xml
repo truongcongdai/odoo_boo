@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_product_product_reward_form_inherit" model="ir.ui.view">
+            <field name="name">s.product.product.reward.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+               <xpath expr="//label[@for='purchase_ok']" position="after">
+                    <field name="s_loyalty_product_reward" attrs="{'invisible': [('detailed_type','!=', 'service')]}"/>
+                    <label for="s_loyalty_product_reward" string="Sản phẩm quy đổi điểm" attrs="{'invisible': [('detailed_type','!=', 'service')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

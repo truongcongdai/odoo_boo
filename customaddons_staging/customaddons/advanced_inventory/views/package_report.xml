@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_report_stock_picking_package" model="ir.actions.report">
+            <field name="name">## Mẫu phiếu xuất kho</field>
+            <field name="model">s.stock.picking.package</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">advanced_inventory.report_stock_picking_package</field>
+            <field name="report_file">advanced_inventory.report_stock_picking_package</field>
+                        <field name="binding_model_id" ref="model_s_stock_picking_package"/>
+                        <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_stock_picking_package">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <style type="text/css">
+                        .tg {border-collapse:collapse; border-spacing:0; width:800px; height: 400px; }
+                        .tg td{border-color:black;border-style:solid;border-width:2px;font-size:14px;
+                        overflow:hidden;padding:10px 5px;word-break:normal;}
+                        .tg th{border-color:black;border-style:solid;border-width:2px;font-size:14px;
+                        font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+                        .tg .tg-0lax{text-align:left;vertical-align:top}
+                    </style>
+                    <div style="font-family: 'Open Sans';" class="page">
+                        <table class="tg">
+                            <colgroup>
+                                <col span="1" style="width:60%"/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="tg-0lax">
+                                        <b t-field="o.stock_picking_id.transfer_out_id.location_out_id.warehouse_id"
+                                           style="font-size: 20px"/>
+                                    </th>
+                                    <th class="tg-0lax">Date:
+                                        <b t-field="o.create_date"/>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="tg-0lax" colspan="2" style="font-size: 20px">Đơn hàng:
+                                        <t t-foreach="o.stock_picking_id" t-as="stock">
+                                            <t t-if="stock.transfer_out_id">
+                                                <span t-esc="stock.name"/>
+                                            </t>
+
+                                        </t>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0lax">
+                                        <p style="font-size: 20px">Người nhận:
+                                            <span t-field="o.recipient_id.name"/>
+                                        </p>
+                                        <p style="font-size: 20px">SĐT:
+                                            <span t-field="o.recipient_id.phone" style="font-size: 20px"/>
+                                        </p>
+                                        <p style="font-size: 20px">Địa chỉ:
+                                            <span t-field="o.recipient_id.contact_address" style="font-size: 20px; "/>
+                                        </p>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <img t-att-src="'data:image/png;base64,%s' % to_text(o.qrcode)"/>
+                                        <span t-field="o.sequence"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="tg-0lax" style="font-size: 30px; font-weight: bold;">
+                                        <span t-field="o.quantity_product"/>
+                                        CHIẾC
+                                    </td>
+                                    <td class="tg-0lax" style="font-size: 20px">Số SKU:
+                                        <span t-field="o.quantity_product"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0lax">
+                                        <span style="font-size: 20px; font-weight: bold;"
+                                              t-field="o.recipient_id.name"/>
+                                    </td>
+                                    <td class="tg-0lax">CARTON:
+                                        <span style="font-weight: bold;" t-field="o.carton"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

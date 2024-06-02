@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="s_view_report_dashboard_order_pivot" model="ir.ui.view">
+         <field name="name">s.report.dashboard.order.pivot</field>
+         <field name="model">s.report.dashboard.order</field>
+         <field name="arch" type="xml">
+             <pivot string="Report Order" sample="1">
+                 <field name="pos_source_id" type="row"/>
+                 <field name="pos_date" interval="month" type="row"/>
+                 <field name="pos_order_id" type="measure"/>
+                 <field name="sale_order_id_dashboard" type="measure"/>
+                 <field name="tong_chiet_khau" type="measure"/>
+                 <field name="tong_doanh_so" type="measure"/>
+                 <field name="doanh_thu_chuan" type="measure"/>
+                 <field name="count_don_km" type="measure"/>
+                 <field name="so_luong_san_pham" type="measure"/>
+                 <field name="tong_doanh_so_chua_thue" type="measure"/>
+<!--                 <field name="quoc_gia_khach_hang" type="measure"/>-->
+<!--                 <field name="don_ban_buon" type="measure"/>-->
+<!--                 <field name="mau_sac_sp" type="measure"/>-->
+             </pivot>
+         </field>
+    </record>
+
+    <record id="s_view_report_dashboard_order_view_tree" model="ir.ui.view">
+        <field name="name">s.report.dashboard.order.view.tree</field>
+        <field name="model">s.report.dashboard.order</field>
+        <field name="arch" type="xml">
+            <tree string="Dashboard Analysis">
+                <field name="pos_date" widget="date"/>
+                <field name="pos_order_id" optional="show"/>
+                <field name="sale_order_id_dashboard" optional="show"/>
+                <field name="pos_partner_id" optional="show"/>
+                <field name="pos_user_id" optional="show" widget="many2one_avatar_user"/>
+                <field name="pos_team_id" optional="show"/>
+                <field name="pos_company_id" optional="show" groups="base.group_multi_company"/>
+                <field name="tong_doanh_so_chua_thue" optional="hide"/>
+                <field name="tong_chiet_khau" optional="hide"/>
+                <field name="tong_doanh_so" optional="hide"/>
+                <field name="doanh_thu_chuan" optional="show"/>
+                <field name="pos_state" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="s_view_report_dashboard_order_search_inherit" model="ir.ui.view">
+        <field name="name">s.report.dashboard.order.search</field>
+        <field name="model">s.report.dashboard.order</field>
+        <field name="arch" type="xml">
+            <search string="Point of Sale Analysis">
+                <group expand="1" string="Group By">
+                    <filter string="Tình trạng đơn hàng" name="tinh_trang_don_hang" context="{'group_by':'tinh_trang_don_hang'}"/>
+                    <filter string="Hạng khách hàng" name="pos_customer_ranked" context="{'group_by':'pos_customer_ranked'}"/>
+                    <filter string="Nguồn" name="pos_source_id" context="{'group_by':'pos_source_id'}"/>
+                    <filter string="Ngày đặt hàng" name="pos_date" context="{'group_by':'pos_date'}"/>
+<!--                    <filter name="filter_date" date="pos_date"/>-->
+                    <filter string="Nhân viên kinh doanh" name="pos_user_id" context="{'group_by':'pos_user_id'}"/>
+                    <filter string="Đội kinh doanh" name="pos_team_id" context="{'group_by':'pos_team_id'}"/>
+                    <filter string="Khách hàng" name="pos_partner_id" context="{'group_by':'pos_partner_id'}"/>
+                    <filter string="Sản phẩm" name="pos_product_id" context="{'group_by':'pos_product_id'}"/>
+                    <filter string="Trạng thái" name="pos_state" context="{'group_by':'pos_state'}"/>
+                    <filter string="Thương hiệu" name="thuong_hieu_name" context="{'group_by':'thuong_hieu_name'}"/>
+                    <filter string="Kích thước" name="kich_thuoc_sp" context="{'group_by':'kich_thuoc_sp'}"/>
+                    <filter string="Màu sắc" name="mau_sac_sp" context="{'group_by':'mau_sac_sp'}"/>
+                    <filter string="Nhóm sản phẩm" name="product_categ_id" context="{'group_by':'product_categ_id'}"/>
+                    <filter string="Chương trình khuyến mãi" name="program" context="{'group_by':'coupon_program_name'}"/>
+                    <filter string="Đơn đổi trả" name="don_doi_tra" context="{'group_by':'don_doi_tra'}"/>
+                    <filter string="Điểm bán hàng đơn POS" name="pos_name" context="{'group_by':'pos_name'}"/>
+                    <filter string="Đơn bán buôn" name="don_ban_buon" context="{'group_by':'don_ban_buon'}"/>
+                    <filter string="Quốc gia khách hàng" name="quoc_gia_khach_hang" context="{'group_by':'quoc_gia_khach_hang'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.menu" id="sale_enterprise.menu_sale_report_dashboard">
+        <field name="active" eval="False"/>
+    </record>
+
+    <record id="s_action_report_dashboard_order" model="ir.actions.act_window">
+        <field name="name">Order Dashboard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">s.report.dashboard.order</field>
+        <field name="view_mode">pivot</field>
+        <field name="search_view_id" ref="s_view_report_dashboard_order_search_inherit"/>
+        <field name="context">{'group_by':[], }</field>
+    </record>
+
+    <menuitem name="Dashboard" id="s_menu_report_dashboard_order" parent="sale.menu_sale_report" action="s_action_report_dashboard_order" sequence="0"/>
+</odoo>

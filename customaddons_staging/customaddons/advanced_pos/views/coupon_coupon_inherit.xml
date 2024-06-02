@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_coupon_view_tree_inherit" model="ir.ui.view">
+            <field name="name">sale.coupon.view.tree.inherit</field>
+            <field name="model">coupon.coupon</field>
+            <field name="inherit_id" ref="sale_coupon.sale_coupon_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="s_coupon_coupon_tree_inherit" model="ir.ui.view">
+            <field name="name">s.coupon.coupon.tree.inherit</field>
+            <field name="model">coupon.coupon</field>
+            <field name="inherit_id" ref="coupon.coupon_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+                <xpath expr="//field[@name='code']" position="before">
+                    <field name="boo_code"/>
+                </xpath>
+                <xpath expr="//field[@name='code']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="s_order_reference"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="s_coupon_coupon_form_inherit" model="ir.ui.view">
+            <field name="name">s.coupon.coupon.form.inherit</field>
+            <field name="model">coupon.coupon</field>
+            <field name="inherit_id" ref="coupon.coupon_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="boo_code"/>
+                </xpath>
+                <xpath expr="//field[@name='code']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_coupon_coupon_search" model="ir.ui.view">
+            <field name="name">coupon.coupon.search</field>
+            <field name="model">coupon.coupon</field>
+            <field name="arch" type="xml">
+                <search string="Coupon Programs">
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_coupon_programs" string="Coupon Programs" context="{'group_by':'program_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="s_coupon_coupon_view_search_inherit" model="ir.ui.view">
+            <field name="name">s.coupon.coupon.view.search.inherit</field>
+            <field name="model">coupon.coupon</field>
+            <field name="inherit_id" ref="advanced_pos.view_coupon_coupon_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="boo_code" filter_domain="[('boo_code','=like',self)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="coupon_boo_code_action" model="ir.actions.act_window">
+            <field name="name">Mã Coupon</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">coupon.coupon</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Mã Coupon"
+                  id="coupon_boo_code_menu"
+                  parent="point_of_sale.pos_config_menu_catalog"
+                  action="coupon_boo_code_action" sequence="91"/>
+    </data>
+</odoo>

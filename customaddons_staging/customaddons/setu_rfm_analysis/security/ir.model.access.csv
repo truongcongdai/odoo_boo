@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_setu_rfm_segment,setu.rfm.segment,model_setu_rfm_segment,group_setu_rfm_analysis_user,1,1,1,1
+access_setu_rfm_score,setu.rfm.score,model_setu_rfm_score,group_setu_rfm_analysis_user,1,1,0,0
+access_res_partner_rfm_segment_history,res.partner.rfm.segment.history,model_res_partner_rfm_segment_history,group_setu_rfm_analysis_user,1,1,0,0
+access_team_customer_segment,team.customer.segment,model_team_customer_segment,group_setu_rfm_analysis_user,1,1,1,1
+access_rfm_yearly_analysis_by_segment,rfm.yearly.analysis.by.segment,model_rfm_yearly_analysis_by_segment,group_setu_rfm_analysis_user,1,1,1,1
+access_rfm_yearly_analysis_by_segment_team,rfm.yearly.analysis.by.segment.team,model_rfm_yearly_analysis_by_segment_team,group_setu_rfm_analysis_user,1,1,1,1
+access_update_customer_segment,update.customer.segment,model_update_customer_segment,group_setu_rfm_analysis_user,1,1,1,1
+access_rfm_segment_configuration,access_rfm_segment_configuration,model_rfm_segment_configuration,,1,1,1,1
+access_rfm_segment_team_configuration,access_rfm_segment_team_configuration,model_rfm_segment_team_configuration,,1,1,1,1
+access_rfm_partner_history,access_rfm_partner_history,model_rfm_partner_history,,1,1,1,1
+access_rfm_partner_team_history,access_rfm_partner_team_history,model_rfm_partner_team_history,,1,1,1,1
+access_partner_segments,access_partner_segments,model_partner_segments,,1,1,1,1
+access_copy_rule_conf,access_copy_rule_conf,model_copy_rule_conf,,1,1,1,1
+access_rfm_global_conf,access_rfm_global_conf,model_rfm_global_conf,base.group_user,1,1,1,1
+access_rfm_global_conf_line,access_rfm_global_conf_line,model_rfm_global_conf_line,base.group_user,1,1,1,1
+access_setu_rfm_configuration,access_setu_rfm_configuration,model_setu_rfm_configuration,base.group_user,1,1,1,1

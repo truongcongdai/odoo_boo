@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="s_act_report_xml_view_tree" model="ir.ui.view">
+            <field name="name">ir.actions.res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Contacts" class="s_contacts_access" export_xlsx="0">
+                    <field name="display_name" string="Name"/>
+                    <field name="phone" optional="show"/>
+                    <field name="email" optional="show"/>
+                    <field name="rfm_segment_id"/>
+                    <field name="rfm_score_id"/>
+                    <field name="user_id"/>
+                    <field name="activity_ids" optional="show" widget="list_activity"/>
+                    <field name="city" optional="show"/>
+                    <field name="state_id" optional="hide" readonly="1"/>
+                    <field name="country_id" optional="show" readonly="1"/>
+                    <field name="vat" optional="hide" readonly="1"/>
+                    <field name="category_id" optional="hide" widget="many2many_tags"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="s_res_partner_access_right_act_view" model="ir.actions.act_window">
+            <field name="name">Khách hàng (Ecom)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'create': False,'edit': False, 'delete': False}</field>
+            <field name="view_id" ref="s_act_report_xml_view_tree"/>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        </record>
+        <menuitem id="s_res_partner_access_right_act_view_menu" name="Khách hàng (Ecom)"
+                  groups="advanced_sale.s_boo_group_ecom,advanced_sale.s_boo_group_area_manager"
+                  parent="sale.sale_order_menu" action="s_res_partner_access_right_act_view"
+                  sequence="4"/>
+    </data>
+</odoo>

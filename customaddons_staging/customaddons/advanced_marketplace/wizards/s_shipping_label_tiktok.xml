@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_shipping_label_tiktok" model="ir.ui.view">
+        <field name="name">shipping.label.tiktok</field>
+        <field name="model">shipping.label.tiktok</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0">
+                <group>
+                    <field name="file_name" invisible="1"/>
+                    <field name="binary" string="File" widget="binary" filename="file_name" readonly="1"/>
+                    <field name="print_label_error">
+                        <tree editable="bottom">
+                            <field name="name" readonly="1"/>
+                            <field name="floor_ecommerce" readonly="1"/>
+                            <field name="message_error" readonly="1"/>
+                         </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

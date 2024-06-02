@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="s_view_order_form" model="ir.ui.view">
+        <field name="name">s.view.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('invoice_status', '!=', 'to invoice'),
+                    ('is_magento_order','=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send']" position="after">
+                <button name="create_return_sale_order" id="create_return_sale_order"
+                            string="Tạo đơn trả hàng" class="btn-primary" type="object"
+                            groups="advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom"
+                            attrs="{'invisible': ['|','|','|','|','|',('state', '!=', 'sale'),('is_done_delivery', '=', False),
+                            ('is_return_order', '=', True),('count_return_order', '>', 0),('is_done_do', '=', False),'&amp;', ('is_magento_order', '=', False), ('is_ecommerce_order', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="payment_method" readonly="1"
+                       attrs="{'invisible': [('is_magento_order', '=', False)], 'required': [('is_magento_order', '=', True)]}" />
+                <field name="shipment_status_date" invisible="1"/>
+                <field name="completed_date" attrs="{'invisible': [('completed_date', '=', False)]}"/>
+                <field name="sale_order_status" readonly="True" />
+                <field name="is_done_do" invisible="1" />
+                <field name="s_url_pod" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']/field[@name='order_line']/tree/field[@name='product_template_id']" position="after">
+                <field name="s_product_barcode"/>
+                <field name="m2_url" optional="hide" widget="url" />
+                <field name="pod_image_url" optional="hide" widget="url" />
+                <field name="is_magento_order" invisible="1" />
+            </xpath>
+            <xpath expr="//group[@name='note_group']" position="after">
+                <group col="6">
+                    <group colspan="4">
+                        <field name="customer_pickup_date" readonly="1"
+                               attrs="{'invisible': [('customer_pickup_date', '=', False)]}" />
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='is_magento_order']" position="after">
+                <field name="m2_so_id" readonly="1" force_save="1" attrs="{'invisible': [('m2_so_id', '=', False)]}"/>
+            </xpath>
+<!--            <xpath expr="//group[@name='sale_header']//group[@name='partner_details']//field[@name='partner_shipping_id']" position="after">-->
+<!--                <field name="warehouse_id"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='warehouse_id']" position="attributes">-->
+<!--                <attribute name="attrs">{'readonly': ['|',('is_magento_order','=', True),('is_return_order','=', False)]}</attribute>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="s_view_order_tree" model="ir.ui.view">
+        <field name="name">s.view.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree" />
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="s_promo_program_m2" />
+                <field name="m2_so_id" />
+                <field name="shipment_status_date" invisible="1"/>
+                <field name="completed_date" />
+                <field name="sale_order_status" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="s_phone_m2" groups="advanced_sale.s_boo_group_administration,advanced_sale.s_boo_group_ecom,
+                        advanced_sale.s_boo_group_area_manager,advanced_sale.s_boo_group_hang_hoa,advanced_sale.s_boo_group_dieu_phoi,
+                        advanced_sale.s_boo_group_ke_toan"/>
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">state == 'cancel' or sale_order_status == 'huy'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_select_record_update_so_completed_date" model="ir.actions.server">
+        <field name="name">Cập nhật ngày hoàn thành đơn hàng</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records._compute_stock_picking_date_done()</field>
+    </record>
+
+    <record id="s_view_sales_order_filter_magento" model="ir.ui.view">
+        <field name="name">s_view_sales_order_filter_magento</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="Tình trạng đơn hàng" name="sale_order_status" domain="[]" context="{'group_by': 'sale_order_status'}"/>
+                <group string="Tình trạng đơn hàng">
+                    <filter name="moi" string="Đơn mới" domain="[('sale_order_status', '=', 'moi')]"/>
+                    <filter name="dang_xu_ly" string="Đơn đang xử lý" domain="[('sale_order_status', '=', 'dang_xu_ly')]"/>
+                    <filter name="dang_giao_hang" string="Đơn đang giao hàng" domain="[('sale_order_status', '=', 'dang_giao_hang')]"/>
+                    <filter name="da_giao_hang" string="Đơn đã giao hàng" domain="[('sale_order_status', '=', 'da_giao_hang')]"/>
+                    <filter name="hoan_thanh" string="Đơn hoàn thành" domain="[('sale_order_status', '=', 'hoan_thanh')]"/>
+                    <filter name="giao_hang_that_bai" string="Đơn hoàn" domain="[('sale_order_status', '=', 'giao_hang_that_bai')]"/>
+                    <filter name="huy" string="Đơn hủy" domain="[('sale_order_status', '=', 'huy')]"/>
+                    <filter name="closed" string="Đơn đóng" domain="[('sale_order_status', '=', 'closed')]"/>
+                </group>
+                <field name="s_phone_m2"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

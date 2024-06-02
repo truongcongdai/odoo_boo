@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="s_marketing_campaign_inherit_view_form" model="ir.ui.view">
+        <field name="name">s.marketing.campaign.inherit.view.form</field>
+        <field name="model">marketing.campaign</field>
+        <field name="inherit_id" ref="marketing_automation.marketing_campaign_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='model_id']" position="after">
+                <field name="s_is_completed_buy" widget="boolean_toggle"/>
+                <div class="o_td_label">
+                    <label for="apply_order" string="Áp dụng cho"
+                           attrs="{'invisible': [('s_is_completed_buy', '=', False)]}"/>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <field name="apply_order"
+                               attrs="{'invisible':[('s_is_completed_buy', '=', False)],'required':[('s_is_completed_buy','=',True)]}"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

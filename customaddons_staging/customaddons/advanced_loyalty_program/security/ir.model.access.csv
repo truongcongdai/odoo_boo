@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_s_rule_point,access_s_rule_point,model_s_rule_point,,1,1,1,1
+accesss_s_reset_res_partner_rank,advanced_pos.s_reset_res_partner_rank,model_reset_partner_rank,base.group_user,1,1,1,1
+access_advanced_pos_s_customer_rank,advanced_pos.s_customer_rank,model_s_customer_rank,base.group_user,1,1,1,1
+access_s_res_partner_otp,access_s_res_partner_otp,model_s_res_partner_otp,,1,0,0,0

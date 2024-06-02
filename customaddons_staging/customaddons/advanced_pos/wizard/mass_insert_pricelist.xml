@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_mass_insert_pricelist_form_view" model="ir.ui.view">
+            <field name="name">mass.insert.pricelist.form</field>
+            <field name="model">mass.insert.pricelist</field>
+            <field name="arch" type="xml">
+                <form string="Bảng giá" create="false" edit="false">
+                    <sheet>
+                        <group>
+                            <field name="pricelist_id"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="confirm_pricelist" string="Xác nhận" class="btn btn-primary" type="object"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_action_insert_pricelist" model="ir.actions.act_window">
+            <field name="name">Áp dụng bảng giá</field>
+            <field name="res_model">mass.insert.pricelist</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

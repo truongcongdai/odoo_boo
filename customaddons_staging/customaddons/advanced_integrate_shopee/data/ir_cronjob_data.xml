@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="s_cron_sync_product_shopee" forcecreate='True' model="ir.cron">
+            <field name="name">###Shopee Integrate - Synchronizing Product</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_sync_product_shopee()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+        <record id="cronjob_update_stock_skus_general_product_shopee" forcecreate='True' model="ir.cron">
+            <field name="name">###Shopee Integrate - Synchronizing Update Stock Product</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">model.cronjob_update_stock_skus_general_product_shopee()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+        <record id="cronjob_refresh_token_shope" forcecreate='True' model="ir.cron">
+            <field name="name">###Shopee Integrate - Refresh Token Shopee</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="base.model_ir_config_parameter"/>
+            <field name="state">code</field>
+            <field name="code">model.btn_refresh_token_shopee()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+        <record id="s_cronjob_recreating_order_shopee_error_token" forcecreate='True' model="ir.cron">
+            <field name="name">###Shopee Integrate - Recreating Order Error Token</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_s_sale_order_shopee_error"/>
+            <field name="state">code</field>
+            <field name="code">model._cronjob_recreating_order_shopee_error_token()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+        <record id="cronjob_shopee_update_stock_when_transfer" forcecreate='True' model="ir.cron">
+            <field name="name">###Shopee Integrate - Synchronizing Update Stock Product When Transfer</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_stock_quant"/>
+            <field name="state">code</field>
+            <field name="code">model.Shopee_push_transfer_qty()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+        <record id="cronjob_shopee_update_stock_at_the_end_of_the_day" forcecreate='True' model="ir.cron">
+            <field name="name">###Shopee Integrate - Synchronizing Update Stock at the end of the day</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">model.cronjob_sync_stock_according_time_setting_shopee()</field>
+            <field eval="True" name="doall"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="s_stock_delivery_type_sequence_form_view" model="ir.ui.view">
+            <field name="name">s.stock.type.delivery.priority.form</field>
+            <field name="model">s.stock.type.delivery.priority</field>
+            <field name="arch" type="xml">
+                <form string="Mức độ ưu tiên">
+                    <sheet>
+                        <div>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <group string="Thời gian thực hiện">
+                                <field name="thoi_gian_thuc_hien"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="s_stock_delivery_type_sequence_tree_view" model="ir.ui.view">
+            <field name="name">s.stock.type.delivery.priority.tree</field>
+            <field name="model">s.stock.type.delivery.priority</field>
+            <field name="arch" type="xml">
+                <tree string="Mức độ ưu tiên">
+                    <field name="name"/>
+                    <field name="thoi_gian_thuc_hien"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="_stock_delivery_type_sequence_kanban_view" model="ir.ui.view">
+            <field name="name">s.stock.type.delivery.priority.kanban</field>
+            <field name="model">s.stock.type.delivery.priority</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="thoi_gian_thuc_hien"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="o_kanban_record_top ">
+                                    <h1>
+                                        <field name="name"/>
+                                    </h1>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span>Thời gian thực hiện (giờ):</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span>
+                                            <field name="thoi_gian_thuc_hien"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="s_stock_type_sequence_act_window" model="ir.actions.act_window">
+            <field name="name">Mức độ ưu tiên</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">s.stock.type.delivery.priority</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <menuitem name="###Mức độ ưu tiên" id="s_stock_type_sequence_menu" sequence="999" parent="stock.menu_warehouse_config"
+                  action="s_stock_type_sequence_act_window"/>
+
+    </data>
+</odoo>
